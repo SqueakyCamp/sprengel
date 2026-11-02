@@ -18,7 +18,7 @@ c = importlib.util.module_from_spec(spec); spec.loader.exec_module(c)
 FILES = {
     "e":"Geschichte der Sozialen Arbeit Einführung WS 26&27.pdf","a1":"Armenfürsorge I.pdf","a2":"Armenfürsorge II.pdf",
     "eb":"Vom sozialen Ehrenamt zum Frauenberuf.pdf","rw":"Fürsorge im Roten Wien ohne Abb-1.pdf","t":"Fürsorge in Totalitären Regimen.pdf",
-    "n":"Fürsorge in der Nachkriegszeit& Wirtschaftswunder.pdf","zs":"Von der Fürsorge zur Sozialarbeit.pdf","z":"Zeittafel.Sozialarbeit.pdf","lf":"Leitfragen & Lernziele_Prüfung.pdf",
+    "n":"Fürsorge in der Nachkriegszeit& Wirtschaftswunder.pdf","zs":"Von der Fürsorge zur Sozialarbeit.pdf","z":"Zeittafel.Sozialarbeit.pdf","lf":"Leitfragen & Lernziele_Prüfung.pdf","j":"100-jahre-jugendamt.pdf",
 }
 TEXT = {}
 for d, fn in FILES.items():
@@ -99,13 +99,17 @@ for i, k in enumerate(c.CARDS):
     if cid in seen:
         errors.append(f"{label}: doppelte Karte")
     seen.add(cid)
-    out_cards.append({**k, "id": cid, "src": src})
+    out_cards.append({**k, "id": cid, "src": src, "extra": all(d == "j" for d, _ in src)})
 
 for l in c.LFS:
     for p in l["points"]:
         check_src(f"LF{l['n']}", p["src"])
         check_numbers(f"LF{l['n']}", p["t"], p["src"])
         check_words(f"LF{l['n']}", p["t"], p["src"])
+    for p in l.get("deep", []):
+        check_src(f"LF{l['n']} deep", p["src"])
+        check_numbers(f"LF{l['n']} deep", p["t"], p["src"])
+        check_words(f"LF{l['n']} deep", p["t"], p["src"])
 if sorted(x["n"] for x in c.LFS) != list(range(1, 27)):
     errors.append("Nicht alle 26 Leitfragen vorhanden")
 for x in c.PEOPLE + c.TERMS + c.TIMELINE + c.TRAPS:
@@ -123,7 +127,8 @@ for lf, n in cover.items():
     if n < 2:
         errors.append(f"Leitfrage {lf} hat nur {n} Quizkarten")
 
-ch_out = [dict(id=a, name=b, span=d, line=e, docs=f, sober=g) for a, b, d, e, f, g in c.CHAPTERS]
+BOOK = {"mon": 9, "ber": 11, "rot": 18, "aut": 30, "ns": 35, "nach": 45, "sa": 60, "heute": 77}
+ch_out = [dict(id=a, name=b, span=d, line=e, docs=f, sober=g, book=BOOK.get(a)) for a, b, d, e, f, g in c.CHAPTERS]
 data = dict(course=c.COURSE, chapters=ch_out, topics=c.TOPICS, cards=out_cards, leitfragen=c.LFS,
             people=c.PEOPLE, terms=c.TERMS, timeline=c.TIMELINE, traps=c.TRAPS)
 (ROOT / "site/data").mkdir(exist_ok=True, parents=True)

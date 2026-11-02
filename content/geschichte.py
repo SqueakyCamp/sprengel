@@ -1,6 +1,6 @@
 # Lerninhalte "Geschichte der Sozialen Arbeit". Alles stammt aus den LV-Unterlagen; jede Karte verweist auf Folien.
 # tools/build_content.py macht daraus site/data/geschichte.json und prueft die Verweise gegen den Folientext.
-# Dokumente: e Einfuehrung, a1/a2 Armenfuersorge, eb Ehrenamt, rw Rotes Wien, t Totalitaere Regime,
+# Dokumente: j Zusatztext 100 Jahre Jugendamt, e Einfuehrung, a1/a2 Armenfuersorge, eb Ehrenamt, rw Rotes Wien, t Totalitaere Regime,
 #            n Nachkrieg, zs Von der Fuersorge zur Sozialarbeit, z Zeittafel
 
 CHAPTERS = [
@@ -14,6 +14,7 @@ CHAPTERS = [
     ("ns",   "Nationalsozialismus", "1938–1945", "Selektion, Erfassung, Spiegelgrund", ["t"], True),
     ("nach", "Nachkrieg und Wirtschaftswunder", "1945–1968", "Kontinuitäten, Amtskapperl, Case Work", ["n"], False),
     ("sa",   "Von der Fürsorge zur Sozialarbeit", "1968–2000", "Öffnet die Heime, doppeltes Mandat, Heim 2000", ["zs"], False),
+    ("heute","Aufarbeitung und Gegenwart", "seit 2000", "Heimkinder, Kommissionen, Kinderschutz heute", ["j"], True),
 ]
 
 TOPICS = []
@@ -98,7 +99,7 @@ LF(6, "Was versteht Ilse Arlt unter Bedürfnishemmschwelle?",
     ("Hilfe soll nicht erst bei offensichtlicher Notlage einsetzen, sondern als Prophylaxe wirken.", [("eb",20)]),
     ("Maßstab ist der Katalog der dreizehn Bedürfnisklassen, die allen Menschen gemeinsam sind und je nach Alter, Schicht usw. variieren.", [("eb",18)]),
     ("Die genaue Kenntnis der Bedürfnisse widerlegt Annahmen über selbstverschuldete Armut und Vorurteile über „die Armen“ als homogene Gruppe.", [("eb",18)])], "ber",
-   note="Der Begriff „Bedürfnishemmschwelle“ selbst kommt in den Unterlagen nur in der Leitfrage vor. Die Punkte hier sind das, was die Folien zum Thema hergeben. Schau bitte zusätzlich in deine Mitschrift oder den Reader, ob es eine genaue Definition gibt.")
+   note="Der Begriff „Bedürfnishemmschwelle“ selbst kommt in den Unterlagen nur in der Leitfrage vor, auch nicht im Zusatztext. Die Punkte hier sind das, was die Folien zum Thema hergeben. Schau bitte zusätzlich in deine Mitschrift oder den Reader, ob es eine genaue Definition gibt.")
 
 LF(7, "Nennen Sie bitte erste methodische Grundlagen der Fürsorge (internationale Vorbilder).",
    "Elberfelder System, Settlements und die Einzelfallhilfe von Mary Richmond.",
@@ -497,7 +498,7 @@ ORD("ber-ja",[24,5],"Von den ersten Kursen zum Jugendamt: Was kam wann?",[("1912
 # ---------------------------------------------------------------- Rotes Wien
 
 T("rot-kontext","rot","Das Rote Wien",
-  "Nach dem Wahlsieg 1919 war Wien die einzige Millionenstadt unter rein sozialdemokratischer Verwaltung, ab 1921 ein eigenes Bundesland. Nach dem Krieg herrschten Hunger, Inflation und Wohnungsnot. Die Breitner-Steuern finanzierten Wohnbau und Fürsorge.",
+  "Nach dem Wahlsieg 1919 war Wien die einzige Millionenstadt unter rein sozialdemokratischer Verwaltung und wurde bald ein eigenes Bundesland. Nach dem Krieg herrschten Hunger, Inflation und Wohnungsnot. Die Breitner-Steuern finanzierten Wohnbau und Fürsorge.",
   [("rw",2),("rw",3),("rw",6)])
 T("rot-anrecht","rot","Anrecht statt Almosen",
   "Das Wohlfahrtsamt von Julius Tandler verband alle Einrichtungen zu einem engen Netz. Das allgemeine Anrecht auf Fürsorge war ein zentraler Wendepunkt: weg von individueller Wohltat, hin zur kollektiven Hilfeleistung. Die Kinder haben Anrecht, die Gesellschaft ist ihr Sachwalter.",
@@ -527,7 +528,7 @@ T("rot-heime","rot","Heime statt Anstalten",
   "Als zentrale Leistung gilt die Umgestaltung der Fremdunterbringung: mehr Licht, mehr Platz, Unterscheidung nach heilpädagogischen Gesichtspunkten. Tandlers Motto lautete „Wer Kindern Paläste baut, reißt Kerkermauern nieder!“. Trotzdem blieb der Mangel an Plätzen groß.",
   [("rw",19),("rw",30),("rw",31)])
 T("rot-kuest","rot","Die KÜST",
-  "Die Kinderübernahmestelle von 1925 war das „Juwel der modernen Kinderfürsorge“ und Drehscheibe für abgenommene Kinder. Nach drei bis sechs Wochen Beobachtung und Tests wurde über Pflegefamilie oder Heim entschieden. Die Folie nennt sie eine „panoptische Anlage“, das Kind wurde zum Objekt.",
+  "Die Kinderübernahmestelle von 1925 war das „Juwel der modernen Kinderfürsorge“ und Drehscheibe für abgenommene Kinder. Nach einigen Wochen Beobachtung und Tests wurde über Pflegefamilie oder Heim entschieden. Die Folie nennt sie eine „panoptische Anlage“, das Kind wurde zum Objekt.",
   [("rw",33),("rw",34),("rw",35)])
 T("rot-neu","rot","Was vom Roten Wien bleibt",
   "Die letzte Folie listet die Neuerungen für die Praxis auf: Heimbauten, Jugendfürsorge bis 18, Familienfürsorge, Zusammenarbeit der Stellen, Vereinheitlichung im Jugendamt, Ziehkindergesetz und mehr Berufsfürsorgerinnen. Einiges davon wirkte über Jahrzehnte.",
@@ -568,7 +569,7 @@ MC("rot-dwor",[],"Wo erwarb Rosa Dworschak ihre Fürsorgeausbildung?","Bei Ilse 
 TF("rot-dwor",[],"Der historische Name des Barackenlagers in Ottakring ist laut Folie Ausdruck rassistisch-eugenischer Ideologie.",True,"Die Folie kürzt ihn deshalb ab und nennt ihn problematisch. Das Lager wurde 1952 abgerissen.",[("rw",25),("rw",26)])
 MC("rot-heime",[11],"Was gilt als zentrale Leistung des Roten Wien in der Fremdunterbringung?","Schrittweise Umgestaltung von Anstalten zu Heimen",["Völlige Abschaffung der Kindesabnahme","Unterbringung aller Kinder bei Verwandten","Schließung aller Pflegefamilien"],"Bisher wurden abgenommene Kinder primär in Anstalten verwahrt.",[("rw",30)])
 MC("rot-heime",[11],"Wo stand „Wer Kindern Paläste baut, reißt Kerkermauern nieder!“?","Beim Eingang der Kinderübernahmestelle",["Auf dem Rathaus","Am Karl-Marx-Hof","Im Jugendamt Ottakring"],"Das ist Tandlers Motto, am Eingang der KÜST.",[("rw",30)])
-MC("rot-kuest",[11],"Wofür diente die KÜST als „Drehscheibe“?","Abklärung nach drei bis sechs Wochen über Pflegefamilie oder Heim",["Vermittlung von Lehrstellen für Jugendliche","Aufnahme von Müttern zur Entbindung","Ausbildung von Hilfsfürsorgerinnen"],"Basis waren psychologische Testungen. Das überstellte Kind wurde Objekt der Beobachtung.")
+MC("rot-kuest",[11],"Wofür diente die KÜST als „Drehscheibe“?","Abklärung über die weitere Unterbringung in Pflegefamilie oder Heim",["Vermittlung von Lehrstellen für Jugendliche","Aufnahme von Müttern zur Entbindung","Ausbildung von Hilfsfürsorgerinnen"],"Basis waren psychologische Testungen. Das überstellte Kind wurde Objekt der Beobachtung.")
 TF("rot-kuest",[11],"Die Begutachtung auf Basis der KÜST-Tests blieb jahrzehntelang üblich.",True,"Die Folie vermerkt eine jahrzehntelange Begutachtung, etwa mit Kleinkindertests von Bühler und Hetzer.",[("rw",34)])
 MC("rot-kuest",[],"Wie beschreibt eine ehemalige Verbindungsfürsorgerin den Aufenthalt in der KÜST?","Körperlich gut behandelt, aber wie „in einer Glasbox“",["Hart, doch sehr kindgerecht","Liebevoll, aber gesundheitlich gefährlich","Völlig frei von jeder Beobachtung"],"Das Zitat zeigt die Spannung: Die Betreuung konzentrierte sich primär auf das gesundheitliche Wohl.",[("rw",35)])
 MC("rot-kuest",[11],"Welche Funktion hatte das Kinderheim Schloss Wilhelminenberg ab 1927?","Heilpädagogische Beobachtungsstelle für „auffällige“ Kinder",["Ausbildungsstätte für Fürsorgerinnen","Sitz der Wiener Sängerknaben","Mutter-Kind-Heim für 25 Mütter"],"Klassifizierung mit defizitorientierten Testverfahren. Erst 1934 kam es an die Sängerknaben.",[("rw",36),("t",2)])
@@ -834,6 +835,8 @@ for p in [
     ("August Aichhorn","gest. 1949","Psychoanalytische Sozialarbeit, Oberhollabrunn, Erziehungsberatung, Kinderstube.",[("rw",18),("rw",20),("rw",24),("rw",38)]),
     ("Rosa Dworschak","1896–1990","Sprengelfürsorgerin, Dorfgeschichten, Child Guidance Klinik, Vermittlerin des Case Work.",[("rw",25),("rw",28),("n",39)]),
     ("Franz Winkelmayer","","Erste Erziehungsberatung 1919, 1943 kommissarische Leitung am Spiegelgrund.",[("rw",18)]),
+    ("Max Winter","1870–1937","Sozialreporter, 1919 Vizebürgermeister, prangerte die alte Kinderübernahmsstelle an.",[("j",14)]),
+    ("Charlotte Bühler und Hildegard Hetzer","","Entwickelten auf Basis der Kinderbeobachtung an der KÜST psychologische Testverfahren.",[("j",25)]),
     ("Otto Zipser","geb. 1928","Zeitzeuge, 1940 zur „Beobachtung“ in die Anstalt Am Steinhof eingewiesen.",[("t",39),("t",40)]),
 ]:
     PEOPLE.append(dict(name=p[0], dates=p[1], text=p[2], src=p[3]))
@@ -862,7 +865,9 @@ for t in [
     ("Sozialanpassung","Maßstab der Nachkriegszeit für Jugendliche, an Stelle der NS-„Asozialität“.",[("n",36)]),
     ("Amtskapperl","Fürsorge, die ihre Macht ausschöpft, in den Worten von Fürsorgerinnen.",[("n",25),("n",46)]),
     ("Totale Institution","Bezeichnung für das Heim mit Gewalt und Kontrolle.",[("n",53)]),
-    ("Vieraugenprinzip","Zwei Sozialarbeiter*innen besuchen Familien anlassbezogen.",[("zs",29)]),
+    ("Vieraugenprinzip","Zwei Sozialarbeiter*innen besuchen Familien anlassbezogen.",[("zs",29),("j",76)]),
+    ("Clearing","Abklärung und Aufgabenteilung in den Regionalstellen, löste das alte Sprengelmodell ab.",[("j",70)]),
+    ("Fürsorgeassistentin","1968 eingestellte Kräfte, die die Ausbildung berufsbegleitend nachholen mussten.",[("j",64)]),
 ]:
     TERMS.append(dict(term=t[0], text=t[1], src=t[2]))
 
@@ -882,7 +887,7 @@ for y, txt, s, ch in [
     ("1917","Wiener Jugendamt, Ehe- und Kinderlosigkeit als Bedingung, „Social Diagnosis“",[("z",1),("eb",25),("a2",39)],"ber"),
     ("1918","Akademie für soziale Verwaltung, Oberhollabrunn",[("eb",27),("rw",38)],"ber"),
     ("1919","Sozialdemokratische Mehrheit in Wien, erste Erziehungsberatung",[("rw",2),("rw",18)],"rot"),
-    ("1921","Wohlfahrtsamt, Wien wird Bundesland",[("rw",2),("rw",8)],"rot"),
+    ("1921","Wiener Wohlfahrtsamt",[("rw",8)],"rot"),
     ("1925","Kinderübernahmestelle (KÜST)",[("rw",33)],"rot"),
     ("1926","Kinderstube, Hilfsfürsorgerinnen",[("rw",16),("rw",24)],"rot"),
     ("1927","Säuglingswäschepaket, Schloss Wilhelminenberg",[("rw",14),("rw",36)],"rot"),
@@ -894,6 +899,7 @@ for y, txt, s, ch in [
     ("1947","Generalamnestie",[("n",6)],"nach"),
     ("1948/49","Ausbildung auch für Männer",[("n",9)],"nach"),
     ("1949","Institut für Erziehungshilfe",[("n",39)],"nach"),
+    ("1928","Jugendstrafrecht",[("j",27)],"rot"),
     ("1950","Schutz der Jugend gegen sittliche Gefährdung",[("n",38)],"nach"),
     ("1954","Neues Jugendwohlfahrtsgesetz, Puppenadoption",[("n",27),("n",30)],"nach"),
     ("1957","Modellversuch Case Work in Hernals",[("n",45)],"nach"),
@@ -907,24 +913,203 @@ for y, txt, s, ch in [
     ("1995","Beginn der Reform Heim 2000",[("z",4)],"sa"),
     ("2000","MAG ELF, Wickelrucksack",[("zs",24),("zs",25)],"sa"),
     ("2002","Letztes Wiener Großheim schließt, FH-Studiengänge",[("zs",29),("z",4)],"sa"),
-    ("2013","Lindenhof schließt",[("zs",29)],"sa"),
+    ("2010","Heimkinder gehen an die Öffentlichkeit, Aufarbeitung beginnt",[("j",77)],"heute"),
+    ("2013","Lindenhof schließt, Tag der offenen Tür für ehemalige Heim- und Pflegekinder",[("zs",29),("j",78)],"heute"),
     ("2018","Wiener Kinder- und Jugendhilfe",[("z",5)],"sa"),
 ]:
     TIMELINE.append(dict(y=y, t=txt, src=s, ch=ch))
 
 for title, text, src in [
     ("Heimatrecht: 1863 oder 1865?","Leitfrage und Foliensatz nennen 1863, die Zeittafel 1865. Nimm 1863, so steht es in der Leitfrage.",[("a1",7),("z",1)]),
-    ("Generalvormundschaft: 1921 oder 1922?","Die Folie zum Roten Wien nennt 1921, die Zeittafel 1922. In der App wird das Jahr nicht abgefragt.",[("rw",12),("z",2)]),
-    ("Berufstitel Sozialarbeiterin: 1968 oder 1976?","Die Folie nennt 1968, die Zeittafel 1976 zusammen mit den Akademien. In der App wird das Jahr nicht abgefragt.",[("zs",6),("z",3)]),
+    ("Generalvormundschaft: 1921 oder 1922?","Folie und Zusatztext nennen 1921, der Text sogar den 10. 2. 1921, die Zeittafel 1922. Die Folie sagt zudem Vormundschaft bis zur Volljährigkeit mit 21, der Text bis zum 18. Lebensjahr. Das Jahr wird in der App nicht abgefragt.",[("rw",12),("j",21),("z",2)]),
+    ("Berufstitel Sozialarbeiterin: 1968, 1976 oder 1981?","Die Folie nennt 1968, die Zeittafel 1976 zusammen mit den Akademien, der Zusatztext „offiziell“ erst 1981. Eine Karte fragt die Angabe aus dem Zusatztext ab und nennt sie als solche. Am sichersten beschreibst du es als Prozess: um 1968 an den Schulen, 1976 mit den Akademien, offiziell später.",[("zs",6),("z",3),("j",61)]),
     ("Lehranstalt: 1962 oder 1963?","Nachkriegsfolie und Zeittafel nennen 1962, der Foliensatz „Von der Fürsorge zur Sozialarbeit“ „seit 1963“.",[("n",41),("z",3),("zs",14)]),
-    ("Erste Berufsvormundschaft: Penzing oder Rudolfsheim?","Die Folie nennt Ottakring 1913 und Penzing 1914, die Zeittafel Ottakring und Rudolfsheim 1913/14 und zudem eine Einführung 1910.",[("eb",4),("z",1)]),
-    ("Jugendamt: 1916 oder 1917?","1916 wird das Amt ein selbständiges Referat „städtisches Jugendamt“, die Gründung des Wiener Jugendamtes datiert die Zeittafel und die Folie „Geburt“ mit 1917.",[("eb",22),("eb",26),("z",1)]),
+    ("Erste Berufsvormundschaft: Penzing oder Rudolfsheim?","Folie und Zusatztext nennen Ottakring 1913 und Penzing 1914, die Zeittafel Ottakring und Rudolfsheim 1913/14 und zudem eine Einführung 1910.",[("eb",4),("j",10),("z",1)]),
+    ("Jugendamt: 1916 oder 1917, und welcher April?","1916 wird das Amt ein selbständiges Referat „städtisches Jugendamt“, die Gründung datieren Zeittafel und Folie mit 1917. Beim Tag schwanken die Unterlagen: Überschrift und Vorwort des Zusatztexts nennen den 27. 4., sein Fließtext auch den 17. 4. und 24. 4., die Folie den 17. 4. Merke dir April 1917.",[("eb",22),("eb",26),("z",1),("j",5),("j",15)]),
     ("Zukunftswerkstatt: 1988 oder 1989?","Die Zeittafel nennt die Werkstatt 1988, die Folie den Bericht von 1989. Beides passt zusammen, wenn der Bericht ein Jahr später kam, klar sagen es die Folien aber nicht.",[("z",4),("zs",27)]),
-    ("Tippfehler auf den Folien","Aichhorns Lebensdaten stehen als „1978–1949“ auf der Folie. Auf der Folie zum Altamont Hotel steht „Addams“, gemeint ist dem Zusammenhang nach Richmond. Ellen Key erscheint als „Kay“.",[("rw",20),("a2",37),("a2",5)]),
-    ("„100 Jahre Jugendamt“ fehlt noch","Der Zusatztext war nicht in der Zip-Datei, darum stammt nichts in dieser App daraus. Laut Einführung gehört er zur Prüfungsbasis, genau wie die Texte aus dem Reader.",[("e",2)]),
-    ("„Bedürfnishemmschwelle“","Der Begriff aus Leitfrage 6 steht nicht auf den Folien. Lies die Musterantwort als Annäherung und ergänze sie aus deiner Mitschrift.",[("eb",20)]),
+    ("Tippfehler in den Unterlagen","Aichhorns Lebensdaten stehen in Folie und Zusatztext als „1978–1949“. Auf der Folie zum Altamont Hotel steht „Addams“, gemeint ist dem Zusammenhang nach Richmond. Ellen Key erscheint als „Kay“.",[("rw",20),("a2",37),("a2",5)]),
+    ("Wien als Bundesland: 1921 oder 1922?","Die Folie nennt den 1. 1. 1921, der Zusatztext den 1. 1. 1922.",[("rw",2),("j",18)]),
+    ("KÜST: wie lange blieben Kinder?","Die Folie nennt drei bis sechs Wochen, der Zusatztext einen dreiwöchigen Aufenthalt.",[("rw",33),("j",25)]),
+    ("Arlts Schule nach dem Krieg","Der Zusatztext nennt Wiedereröffnung 1945 und Schließung 1948, die Zeittafel 1946 und 1949. Den Renner-Preis datiert der Text auf 1954, die Folie auf 1955.",[("j",12),("z",3),("eb",21)]),
+    ("Amtszeiten und kleine Abweichungen","Tandler: bis 1934 auf der Folie, bis 1933 im Zusatztext. Breitner: ab 1919 auf der Folie, ab 1918 im Zusatztext. Öffentliche Heime im NS: 52 im Jahr 1942 auf der Folie, im Jahr 1941 im Zusatztext.",[("rw",6),("rw",8),("j",19),("t",15),("j",36)]),
+    ("Der Reader fehlt noch","Laut Einführung gehören auch die Texte aus dem Reader zur Prüfungsbasis. Sie waren nicht in den Unterlagen, darum stammt nichts in dieser App daraus.",[("e",2)]),
+    ("„Bedürfnishemmschwelle“","Der Begriff aus Leitfrage 6 steht weder auf den Folien noch im Zusatztext. Lies die Musterantwort als Annäherung und ergänze sie aus deiner Mitschrift.",[("eb",20),("j",12)]),
 ]:
     TRAPS.append(dict(title=title, text=text, src=src))
+
+# ---------------------------------------------------------------- Zusatztext "100 Jahre Wiener Jugendamt" (Dokument j)
+# Seitenzahlen sind PDF-Seiten und entsprechen den gedruckten Seiten. Karten nur aus dem Text gelten als Zusatz (extra)
+# und zaehlen nicht gegen den Stempel.
+
+def DEEP(n, text, src):
+    next(l for l in LFS if l["n"] == n).setdefault("deep", []).append(dict(t=text, src=src))
+
+DEEP(1, "Die Armenversorgung beruhte auf unsystematischer Zusammenarbeit öffentlicher, kirchlicher und privater Stellen, die auf „freier Liebestätigkeit“ basierten.", [("j",9)])
+DEEP(2, "Bis zur Reform im Roten Wien lag die Kinder- und Jugendfürsorge mehrheitlich im Bereich der Armenpflege; das Heimatrecht blieb bis 1938 in Kraft.", [("j",9)])
+DEEP(4, "Das Heimatrecht blieb in der Fassung von 1896 bis 1938 in Kraft und setzte einen zehnjährigen Aufenthalt voraus, statt an Geburt oder Verehelichung gebunden zu sein.", [("j",9)])
+DEEP(5, "Anlass waren willkürlich einsetzende private Wohlfahrt, fehlendes Fachpersonal und falsche Alltagstheorien über Armut. Die Schule war zugleich als Forschungseinrichtung gedacht.", [("j",11)])
+DEEP(5, "Ihre „Volkspflege“ meinte individuelle Hilfe und ist inhaltlich das Gegenteil der späteren NS-Fürsorge am „Volkskörper“, auch wenn die Begriffe ähnlich klingen.", [("j",16)])
+DEEP(6, "Auch der Zusatztext verwendet das Wort nicht, bestätigt aber: Hilfe soll prophylaktisch wirken und erst nach genauer Abklärung, der „sozialen Diagnose“, ansetzen.", [("j",12)])
+DEEP(8, "Mütter waren Männern rechtlich nicht gleichgestellt und hatten bis 1918 kein Wahlrecht. Schon die ersten Ansätze standen im Spannungsfeld von Hilfe und Kontrolle.", [("j",9),("j",10)])
+DEEP(9, "Auf die ehrenamtliche Armenpflege bestand kein Rechtsanspruch, dafür war sie nicht an das Heimatrecht gebunden. Waisenmütter hatten keine berufliche Ausbildung.", [("j",9)])
+DEEP(10, "Die Reform sollte auch die sozialistische Idee des „Neuen Menschen“ voranbringen. Investitionen galten als „produktiv“, weil sie laut Tandler das Volk arbeitsfähig machen.", [("j",18),("j",20)])
+DEEP(11, "Das Wiener Modell erlangte in Österreich und Europa Vorbildcharakter und prägte Theorie und Praxis für mehrere Jahrzehnte. Der Aufbau der Fürsorgeerziehung war entscheidend für das Jugendstrafrecht von 1928.", [("j",27)])
+DEEP(11, "Auch Hierarchie und geschlechtsspezifische Arbeitsteilung im Amt blieben jahrzehntelang kaum hinterfragt: Männer im Innendienst, Fürsorgerinnen im Außendienst.", [("j",21)])
+DEEP(12, "Tandler nahm widersprüchliche Positionen ein, etwa zur Sterilisation. Die Fürsorge des Roten Wien soll aber nicht mit der „negativen Eugenik“ der NS-Vernichtungspolitik gleichgesetzt werden.", [("j",20)])
+DEEP(12, "Eugenische Bewegungen gab es seit Ende des 19. Jahrhunderts in vielen Ländern und in allen politischen Lagern.", [("j",20)])
+DEEP(13, "Zunächst war er der einzige Erziehungsberater. Anliegen war es, Familien zu unterstützen und Heimunterbringungen zu umgehen.", [("j",22),("j",23)])
+DEEP(14, "Das Säuglingswäschepaket ging nur noch an „bedürftige“ Mütter, das Josefswerk führte „Ehetauglichkeitsprüfungen“ durch, das Fürsorgebuch sollte den Fürsorgekataster ablösen.", [("j",31),("j",32)])
+DEEP(15, "Das Jugendamt wurde dem Gesundheitsamt unterstellt, um rassenhygienische Ideale wirksam umzusetzen. Am Ende war es „durchaus mitverantwortlich“ an der Rassenpolitik.", [("j",35),("j",41)])
+DEEP(15, "Die Ausbildung führte zum Titel „Volkspflegerin“, Aufnahmekriterien waren „deutschblütige Abstammung“ und gute Gesundheit. Die Aufnahmeprüfung prüfte vor allem die politische Haltung.", [("j",37),("j",38)])
+DEEP(16, "Das immanente Pendeln zwischen Kontrolle und Hilfe schlug eindeutig in Richtung totalitärer Kontrolle aus. Das Jugendamt musste Eltern verständigen, „wenn ihre Kinder an Lungenentzündung verstorben sind“, was eine Fürsorgerin makaber nennt.", [("j",41)])
+DEEP(16, "Der Erziehungsberater begutachtete alle neu überstellten Kinder. Diese Machtbefugnis prägte Heimeinweisungen bis in die 1970er Jahre.", [("j",36)])
+DEEP(17, "Aus der Verordnung von 1940 wurden nur offensichtliche NS-Bezüge gestrichen. Die in der NS-Zeit eingeführte Teilung in ORGA und Fachfürsorgerin blieb bis 1971 bestehen.", [("j",45),("j",57)])
+DEEP(18, "Gutachten als Grundlage der Fremdunterbringung unterschieden sich in der Bewertung der Kinder kaum von jenen der NS-Zeit.", [("j",58)])
+DEEP(19, "Der Text nennt schon für die Anfänge das „Spannungsfeld von Hilfe und Kontrolle“, das die Praxis jahrzehntelang prägte, und das Pendeln einen seit jeher immanenten Teil der Jugendwohlfahrt.", [("j",10),("j",79)])
+DEEP(20, "Heute stehen laut Vorwort Kinderrechte, Beteiligung von Kindern und Eltern und Transparenz im Mittelpunkt: „Kinder schützen, Eltern unterstützen“.", [("j",5)])
+DEEP(21, "Die Hauptaufgabe Kinderschutz wird offen benannt, die Entwicklung hat sich auch praktisch weit von primärer Kontrolle wegbewegt.", [("j",79)])
+DEEP(22, "1914 besuchten ehrenamtliche Volkspflegerinnen von Arlt nun alle Wöchnerinnen, sofern nicht von vornherein keine Bedürftigkeit anzunehmen war. Im NS diente der Dienst auch der Vorauswahl für die HJ.", [("j",13),("j",40)])
+DEEP(23, "Die „Berufspflegerin“ gilt als „Erfindung der kommunalen Verwaltung“; zugleich leitet sich der Beruf aus dem bürgerlichen weiblichen Ehrenamt ab. Bis in die 1970er blieb er fast ausschließlich weiblich.", [("j",11),("j",67)])
+DEEP(24, "Offiziell ersetzte der Titel „Sozialarbeiter“ die „Fürsorgerin“ erst 1981. Leitende Stellen gingen erst ab Mitte der 1980er an Sozialarbeiter*innen statt an Berufsfremde.", [("j",61),("j",67)])
+DEEP(25, "Zugleich ein „Entidealisierungsschock“: Junge Sozialarbeiter*innen erlebten die Realität im Amt noch Anfang der 1980er als schockierend, und viele alte Großheime blieben bis Mitte der 1970er autoritär.", [("j",60),("j",66)])
+DEEP(26, "Die Idee, aus „Parteien“ mögen „Klienten“ werden, ließ in der Praxis lange auf sich warten. Das Institut für Erziehungshilfe hatte für viele Fürsorgerinnen Modellcharakter.", [("j",55),("j",56)])
+
+T("j-kost","mon","Kostkinder im Ersten Weltkrieg",
+  "Der Zusatztext zeigt, wie stark die Fremdunterbringung im Krieg zunahm: von 4.732 Pflegekindern im Jahr 1914 auf 8.325 im Jahr 1918, die Mehrheit am Land. Die alte Kinderübernahmsstelle war stark überfüllt. Der Sozialreporter Max Winter nannte sie eine Schande für Wien.",
+  [("j",14)])
+T("j-anfang","ber","Die Anfänge: 1907 bis 1917",
+  "Vor der Berufsvormundschaft fehlte jede gesetzliche Jugendfürsorge über Vormundschaftsfragen hinaus. Auf die Zentralstelle für Kinderschutz von 1907 folgte 1912 der Beschluss zur Berufsvormundschaft. Der Ausbaubeschluss von 1917 gilt als Geburtstag des Wiener Jugendamtes, die Umsetzung folgte aber erst im Roten Wien.",
+  [("j",9),("j",10),("j",15)])
+T("j-beruf","ber","Wie der Frauenberuf entstand",
+  "Der Beruf hat zwei Wurzeln: die Stellen der Gemeinde ab 1913 und das bürgerliche weibliche Ehrenamt. Die bürgerliche Frauenbewegung war der wesentliche Motor. Geistige Mütterlichkeit und Hilfe zur Selbsthilfe gelten als erste methodisch-theoretische Leitlinien.",
+  [("j",11)])
+T("j-arlt","ber","Arlts weiterer Weg",
+  "Ilse Arlt studierte ohne Matura Nationalökonomie und Sozialwissenschaften. Wegen der jüdischen Herkunft ihrer Mutter erhielt sie 1938 Schreib- und Berufsverbot, die Schule wurde geschlossen. Ihre „Volkspflege“ meinte individuelle Hilfe und hat inhaltlich nichts mit dem späteren NS-Begriff gemein.",
+  [("j",11),("j",12),("j",16)])
+T("j-paket","rot","Das Wäschepaket als Politik",
+  "Das Paket von 1927 wurde über die Pferderennsteuer finanziert und ging an alle Wiener Mütter. Die Fürsorgerin überbrachte als Beauftragte des Bürgermeisters die Glückwünsche der Stadt. In zwei Jahren wurden 54.739 Pakete übergeben.",
+  [("j",19)])
+T("j-amt","rot","Hierarchie im Bezirksjugendamt",
+  "An der Spitze stand ein Jurist oder Rechtsfürsorger, Männer arbeiteten überwiegend im Innendienst. Die ausschließlich weiblichen Fürsorgerinnen waren vor allem im Außendienst. Diese Aufteilung blieb jahrzehntelang kaum hinterfragt, und die Hilfsfürsorgerinnen sollten den Kontakt zu den Müttern verbessern.",
+  [("j",21),("j",22)])
+T("j-eugenik","rot","Eugenik einordnen",
+  "Eugenische Bewegungen gab es seit Ende des 19. Jahrhunderts in vielen Ländern und allen politischen Lagern. Im Roten Wien ging es vor allem um Geburtenförderung und um weniger Säuglingssterblichkeit. Tandler vertrat auch widersprüchliche Positionen, das soll aber nicht mit der NS-Vernichtungspolitik gleichgesetzt werden.",
+  [("j",20)])
+T("j-kuest","rot","Die KÜST aus Sicht der Kinder",
+  "Frau Jindra kam als Kind dreimal in die KÜST, weil ihre Familie an Tuberkulose erkrankt war. Sie erinnert sich an einen „furchtbaren Glaspalast“, an Isolation und Einsamkeit. Auch die uniformierte Kleidung vom Jugendamt machte sie später als Pflegekind erkennbar und stigmatisierte sie.",
+  [("j",25),("j",26)])
+T("j-straf","rot","Jugendstrafrecht und Fürsorgeerziehung",
+  "Bis 1928 fielen Jugendliche ab dem 14. Lebensjahr unter das Erwachsenenstrafrecht. Der Aufbau der Fürsorgeerziehung war entscheidend dafür, dass die Gefängnisstrafen für Jugendliche abgeschafft wurden. Das Wiener Modell erlangte in Österreich und Europa Vorbildcharakter.",
+  [("j",27)])
+T("j-aut","aut","Weniger Mittel, mehr Kirche",
+  "Der enorme Anstieg der Not traf auf eine drastische Kürzung öffentlicher Mittel. Das Wäschepaket ging nur noch an „bedürftige“ Mütter. Das katholische Josefswerk beriet zu christlicher Ehe und führte gesundheitliche „Ehetauglichkeitsprüfungen“ durch, auch Absolventinnen der Ausbildung fanden kaum Stellen.",
+  [("j",30),("j",31),("j",32)])
+T("j-ns-struktur","ns","Dem Gesundheitsamt unterstellt",
+  "Der Regimewechsel brachte keinen grundsätzlichen Bruch im Fürsorgesystem. Das Jugendamt wurde dem Gesundheitsamt unterstellt, um rassenhygienische Ideale wirksam umzusetzen. Der Erziehungsberater bekam große Macht über Heimeinweisungen, die bis in die 1970er nachwirkte.",
+  [("j",35),("j",36)])
+T("j-volkspfl","ns","Die „Volkspflegerin“",
+  "Die neue Soziale Frauenschule diente der ideologischen Gleichschaltung einer neuen Generation. Die schulischen Voraussetzungen lagen deutlich unter jenen vor 1938, wichtig waren gute Gesundheit und „deutschblütige Abstammung“. Die Aufnahmeprüfung prüfte vor allem die politische Haltung.",
+  [("j",37),("j",38)])
+T("j-verantw","ns","Mitverantwortung",
+  "Viele verstanden ihre Arbeit als Pflichterfüllung, und nicht alle identifizierten sich mit der Ideologie. Trotzdem war das Jugendamt laut Text letztlich mitverantwortlich an der Rassenpolitik. Die Fürsorgerinnen dürften mehrheitlich von Deportation und Vernichtung erfahren haben.",
+  [("j",41)])
+T("j-nach","nach","Neuanfang mit alten Mustern",
+  "Aus der Verordnung von 1940 wurden nach 1945 nur offensichtliche NS-Bezüge gestrichen. Chancen auf einen Posten hingen laut Erzählungen auch von Beziehungen und politischer Protektion ab. Die Aufnahmebedingungen der Schulen wurden erhöht, weil das NS-Ausbildungsniveau gering gewesen war.",
+  [("j",45),("j",46)])
+T("j-taschengeld","nach","Das Taschengeld",
+  "Um Nachwuchs zu gewinnen, gab das Jugendamt finanziell schwachen Schüler*innen Stipendien und ein Taschengeld. Daran hing die Pflicht, danach fünf Jahre im Amt zu arbeiten. Die Maßnahme erwies sich als kontraproduktiv und wurde erst mit dem Ansturm auf die Sozialakademien abgeschafft.",
+  [("j",56),("j",65)])
+T("j-parteien","nach","Aus Parteien sollen Klienten werden",
+  "Case Work sollte bis 1960 zumindest theoretisch alle Bezirksjugendämter erreichen, die praktische Umsetzung dauerte aber lange. Die in der NS-Zeit eingeführte Aufteilung in Organisations- und Erziehungsfachfürsorgerin blieb bis 1971 bestehen. Erst dann wurde sie zur Leitenden Sozialarbeiterin zusammengelegt.",
+  [("j",56),("j",57)])
+T("j-wilhelm","nach","Spiegelgrund nach dem Krieg",
+  "Ein Schreiben von 1950 zeigt die Kontinuität der Einrichtungen: Für schwer erziehbare Kinder, die noch am Spiegelgrund waren, sollte das Schloss Wilhelminenberg bereitgestellt werden. Im selben Schreiben geht es um 260 schlecht versorgte Pflegekinder im Jennersdorfer Bezirk.",
+  [("j",49)])
+T("j-wegen","sa","Der Wiener Weg",
+  "Der „Wiener Weg der Jugendwohlfahrt“ sollte von Zwang und Kontrolle zu Freiwilligkeit und Beratung führen. Außenstellen und niederschwellige Angebote sollten die Angst nehmen, Hilfe zu holen, denn das Bild des Amtes war sehr negativ. In der Praxis hielten manche weiter an Kontrolle fest.",
+  [("j",60)])
+T("j-schock","sa","Zwischen Ideal und Wirklichkeit",
+  "Viele junge Sozialarbeiter*innen erlebten beim Eintritt ins Amt einen „Entidealisierungsschock“. Konflikte gab es auch mit Sozialpädagog*innen und um die Einschätzung von Gefahr bei häuslicher Gewalt. Erst im Krisenzentrum FIDUZ wurde die lange Konkurrenz der Berufsgruppen überwunden.",
+  [("j",66),("j",67),("j",74)])
+T("j-titel","sa","Der lange Weg zum Berufstitel",
+  "An den Schulen wurde schon „Sozialarbeit“ gelehrt, offiziell ersetzte der neue Titel die „Fürsorgerin“ laut Text aber erst 1981. Um den Mangel auszugleichen, stellte das Jugendamt 1968 zwanzig „Fürsorgeassistentinnen“ ein, die die Ausbildung nachholen mussten.",
+  [("j",61),("j",64)])
+T("j-clearing","sa","Regionalstellen und Clearing",
+  "Bezirksjugendämter wurden zu Regionalstellen für Soziale Arbeit mit Familien, die Dezernate werden seit 1998 von der eigenen Berufsgruppe geleitet. Das Clearing löste das alte Sprengelmodell ab, nicht ohne Konflikt: Eine langjährige Mitarbeiterin hielt den Begriff für Klient*innen für irreführend.",
+  [("j",69),("j",70)])
+T("j-heim","sa","Warum die Großheime schließen mussten",
+  "Eine Studie von 1992 zeigte negative Folgen der Heimunterbringung für die gesamte Biographie. Im selben Jahr stieg die Zahl der Abnahmen auf 1.000, die alte KÜST „platzte aus allen Nähten“. Der erste Tag der Fremdunterbringung soll nun auch der Beginn der Rückführungsarbeit sein.",
+  [("j",73),("j",74)])
+T("h-aufarbeitung","heute","Ein Amt stellt sich seiner Geschichte",
+  "2010 wandten sich ehemalige Wiener Heimkinder an die Öffentlichkeit. Der „Weiße Ring“ übernahm Prüfung und Entschädigung, die Historikerkommission unter Reinhard Sieder die Aufarbeitung. Dazu kamen die Kommission Wilhelminenberg und eine Studie zu Pflegekindern an der FH Campus Wien.",
+  [("j",77)])
+T("h-folgen","heute","„Damit es sich nicht wiederholt“",
+  "2013 lud das Jugendamt ehemalige Heim- und Pflegekinder unter diesem Motto zu einem Tag der offenen Tür. Seit 2012 gibt es verpflichtende jährliche interne Revisionen. Der Text betont, es gehe nun darum, strukturelle Probleme aufzudecken, nicht nur Fehler Einzelner zu suchen.",
+  [("j",78)])
+T("h-umf","heute","Unbegleitete minderjährige Flüchtlinge",
+  "Flüchtlinge beschäftigten das Jugendamt immer wieder, etwa 1956 und 1968. Seit 1969 gehört die Betreuung unbegleiteter Minderjähriger zum Auftrag. 2003 entstand die „Drehscheibe“, seit 2004 obliegen dem Amt die Rechtsvertretung im Asylverfahren sowie die Unterbringung, und 2015 kam eine Koordinierungsstelle hinzu.",
+  [("j",78)])
+T("h-heute","heute","Kinder schützen, Eltern unterstützen",
+  "Stärkung der Kinderrechte, Beteiligung und Transparenz sind aktuelle Leitlinien. Das Vier-Augen-Prinzip, die Gefährdungsabklärung und die Krisenzentren waren Wiener Neuerungen, die überwiegend in das Bundes-Kinder- und Jugendhilfegesetz eingingen. Die Autorin hält trotz der dunklen Flecken fest, dass sehr vielen Kindern geholfen wurde.",
+  [("j",5),("j",7),("j",79)])
+T("h-ambulant","heute","Neue Hilfen für Familien",
+  "Neue Projekte gingen nach Begleitung und Evaluierung in den Regelbetrieb über: Mobile Arbeit mit Familien 2005, FIT-Familienintensivtraining 2007 und „Frühe Förderung“ 2008. Für Kinder auf dem Weg in ein Krisenzentrum entstand 2007 die Stofffigur MAG ELFE, und Besuchscafés erleichtern den Kontakt zu getrennten Eltern.",
+  [("j",71),("j",75),("j",76)])
+
+MC("j-kost",[],"Wie entwickelte sich die Zahl der Pflegekinder im Ersten Weltkrieg?","Von 4.732 im Jahr 1914 auf 8.325 im Jahr 1918",["Von 8.325 im Jahr 1914 auf 4.732 im Jahr 1918","Sie blieb bei rund 4.700 konstant","Von 1.010 auf 2.000"],"Weil Wiener Pflegeparteien fehlten, kam die Mehrheit aufs Land.")
+TF("j-kost",[],"Max Winter schrieb über die alte Kinderübernahmsstelle, Wien habe „keine größere Schande“ als dieses Haus.",True,"Ein Kommissionsbericht nannte das Haus sogar eine „Mördergrube“.")
+MC("j-anfang",[8],"Was fehlte vor der Berufsvormundschaft laut Text?","Eine gesetzliche Jugendfürsorge, die über Vormundschaftsfragen hinausging",["Jede Form privater Wohltätigkeit","Jede Vormundschaft über uneheliche Kinder","Ärzte in den Wiener Gebärkliniken"],"Es ging bis dahin nur um die wirtschaftliche Absicherung.",[("j",9)])
+MC("j-anfang",[24],"Welches Datum nennt die Überschrift als Geburtstag des Wiener Jugendamtes?","Der Ausbaubeschluss vom 27. April 1917",["Die Wahl vom 4. Mai 1919","Der Beschluss vom 7. August 1912","Die Gründung des Wohlfahrtsamtes 1921"],"Im Fließtext stehen auch andere Tage im April, siehe Stolperfallen. Die Umsetzung gelang bis Kriegsende nur teilweise.",[("j",15)])
+MC("j-beruf",[23],"Wie nennt der Text die „Berufspflegerin“ auch?","Eine „Erfindung der kommunalen Verwaltung“",["Eine Erfindung der Kirche","Eine Idee von Mary Richmond","Eine Vorgabe des Ministeriums"],"Parallel leitet sich der Beruf aber aus dem bürgerlichen weiblichen Ehrenamt ab.")
+TF("j-beruf",[23],"Die bürgerliche Frauenbewegung war laut Text die zentrale gesellschaftspolitische Kraft für den weiblichen Fürsorgeberuf.",True,"Sie verhalf Frauen zu besseren Bildungs- und Berufsmöglichkeiten.")
+MC("j-arlt",[5],"Wie unterscheidet sich Arlts „Volkspflege“ von der späteren NS-Fürsorge?","Sie meint individuelle Hilfe statt der Idee des „Volkskörpers“",["Sie war eine frühere Form derselben Rassenpflege","Sie galt nur für Männer im Staatsdienst","Sie lehnte jede wissenschaftliche Forschung ab"],"Die Begriffe waren semantisch ähnlich, aber inhaltlich diametral entgegengesetzt.",[("j",16)])
+MC("j-arlt",[],"Was geschah 1938 mit Ilse Arlt?","Schule geschlossen, Schreib- und Berufsverbot",["Berufung an die neue Soziale Frauenschule","Emigration nach Chicago zu Addams","Leitung des Gaujugendamtes"],"Grund war die jüdische Herkunft mütterlicherseits.",[("j",12)])
+TF("j-arlt",[5],"Arlts Schule war zugleich als Forschungseinrichtung konzipiert.",True,"Forschung und praktische Anwendbarkeit prägen auch ihre beiden Lehrbücher.",[("j",11),("j",12)])
+MC("j-paket",[12,22],"Wie wurde das Säuglingswäschepaket von 1927 finanziert?","Über die Pferderennsteuer",["Über Spenden aus Amerika","Über den Waisenkinderfonds","Über Beiträge der Mütter"],"Ein Beispiel für die „Breitner-Luxussteuern“: Verteilung von oben nach unten.")
+TF("j-paket",[22],"Die Fürsorgerin übergab das Paket als Beauftragte des Bürgermeisters mit den Glückwünschen der Stadt.",True,"Hilfe und Zugang zur Familie zugleich: „die Glückwünsche Wiens zur Ankunft des neuen Staatsbürgers“.")
+MC("j-amt",[23],"Wie war die Arbeit im Bezirksjugendamt aufgeteilt?","Männer überwiegend im Innendienst, Fürsorgerinnen vor allem im Außendienst",["Frauen leiteten alle Ämter, Männer machten Hausbesuche","Männer und Frauen wechselten wöchentlich","Hausbesuche machten ausschließlich Ärzte"],"Diese Arbeitsteilung wurde jahrzehntelang kaum hinterfragt.",[("j",21)])
+MC("j-amt",[10],"Warum gab es ab 1926 Hilfsfürsorgerinnen?","Der Kontakt zwischen bürgerlichen Fürsorgerinnen und Klientinnen sollte besser werden",["Die Fürsorgerinnen sollten nur noch im Amt sitzen","Ausländische Hilfsaktionen verlangten mehr Personal","Ärzte wollten weniger Untersuchungen"],"Sie stammten aus dem Arbeitermilieu, waren aber schlechter gestellt.",[("j",21),("j",22)])
+TF("j-eugenik",[12],"Laut Text kann man die theoretischen Grundlagen der Fürsorge im Roten Wien mit der „negativen Eugenik“ des NS gleichsetzen.",False,"Der Text warnt ausdrücklich vor dieser Gleichsetzung, auch wenn Tandler problematische Begriffe verwendete.")
+MC("j-eugenik",[12],"Wo gab es laut Text eugenische Bewegungen?","In vielen Ländern und innerhalb aller politischen Lager",["Nur im deutschsprachigen Raum","Nur in der Sozialdemokratie","Nur in der katholischen Kirche"],"Die Programme waren vor allem „positive Eugenik“, also Geburtenförderung.")
+MC("j-kuest",[11],"Wie erinnert sich Frau Jindra an die KÜST?","Als „furchtbaren Glaspalast“, mit Isolation und Einsamkeit",["Als schönste Zeit ihrer Kindheit","Als gewöhnliche Schule im Bezirk","Sie war dort als Erzieherin tätig"],"Der Text stellt das gegen das zeitgenössische Lob als „Juwel“.",[("j",26)])
+TF("j-kuest",[],"Die Kinder in der KÜST standen zugleich für kinderpsychologische Studien zur Verfügung.",True,"Charlotte Bühler und Hildegard Hetzer entwickelten auf dieser Basis Testverfahren.",[("j",25)])
+MC("j-straf",[11,13],"Was änderte sich 1928 für Jugendliche?","Ein Jugendstrafrecht wurde verabschiedet",["Sie wurden ab 12 Jahren strafmündig","Alle Besserungsanstalten wurden erweitert","Sie erhielten das Wahlrecht"],"Bis dahin fielen sie ab dem 14. Lebensjahr unter das Erwachsenenstrafrecht.")
+MC("j-aut",[14],"An wen ging das Säuglingswäschepaket im Austrofaschismus?","Nur noch an „bedürftige“ Mütter",["An alle Wiener Mütter","Nur an kinderreiche Väter","Nur an Mitglieder der Vaterländischen Front"],"Ein Beispiel für die Rücknahme des allgemeinen Anrechts.",[("j",31)])
+MC("j-aut",[14],"Welche Prüfungen fanden im Rahmen der katholischen Eheberatung statt?","Gesundheitliche „Ehetauglichkeitsprüfungen“",["Kostenlose Führerscheinprüfungen","Prüfungen im Fach Volkswirtschaft","Aufnahmeprüfungen für die Pichlschule"],"Das Josefswerk beriet in rechtlichen und seelsorgerischen Fragen zur christlichen Ehe.",[("j",31)])
+TF("j-aut",[14],"Auch Absolventinnen der Fürsorgeausbildung waren in der Krise von Arbeitslosigkeit betroffen.",True,"Im öffentlichen Dienst gab es keine freien Stellen für Fürsorgerinnen.",[("j",32)])
+MC("j-ns-struktur",[15],"Warum wurde das Jugendamt dem Gesundheitsamt unterstellt?","Primär zur wirksamen Umsetzung rassenhygienischer Ideale",["Weil es zu wenige Ärzte gab","Um Geld für Kindergärten zu sparen","Auf Wunsch der Fürsorgerinnen"],"Fürsorgerinnen arbeiteten dadurch zugleich in der Gesundheitsfürsorge.",[("j",35)])
+TF("j-ns-struktur",[15],"Der Regimewechsel 1938 bewirkte laut Text grundsätzlich einen Bruch mit dem bisherigen Fürsorgesystem.",False,"Einrichtungen bestanden mehr oder weniger weiter. Entscheidend war die neue ideologische Ausrichtung.",[("j",35)])
+MC("j-ns-struktur",[16,18],"Welche Macht bekam der Erziehungsberater im NS?","Seine Gutachten entschieden mit über die Unterbringung",["Er durfte Gesetze erlassen","Er leitete die Polizei","Er hatte keinerlei Einfluss"],"Das bestimmte die Praxis der Heimeinweisungen bis in die 1970er Jahre mit.",[("j",36)])
+MC("j-volkspfl",[15],"Worauf zielte die Aufnahmeprüfung der Sozialen Frauenschule im NS?","Primär auf die politisch-ideologische Haltung",["Vor allem auf Fremdsprachen","Auf die Kenntnis von Arlts Schriften","Auf Erfahrung in Psychoanalyse"],"Die schulischen Voraussetzungen lagen deutlich unter jenen vor 1938.",[("j",38)])
+MC("j-volkspfl",[15],"Was geschah 1943 mit dem Begriff „Heim“?","Er wurde neuerlich festgesetzt, was der Text zynisch nennt",["Er wurde durch „Akademie“ ersetzt","Er wurde erstmals überhaupt verwendet","Er wurde für alle Schulen vorgeschrieben"],"Rotes Wien: „Heim“. Ständestaat: wieder „Anstalt“. Ab 1. April 1943 wieder „Heim“.",[("j",37)])
+TF("j-volkspfl",[15],"Die Einführung der Hilfsfürsorgerinnen erwies sich im NS als verhängnisvoll, weil Hauptfürsorgerinnen auf diesen Status herabgesetzt wurden.",True,"Beide Kategorien wurden vereinheitlicht.",[("j",38)])
+TF("j-verantw",[15],"Laut Text war das Wiener Jugendamt an der Umsetzung der NS-Rassenpolitik letztlich durchaus mitverantwortlich.",True,"Das gilt auch, wenn nicht alle sich mit der Ideologie identifizierten und viele die Arbeit als Pflichterfüllung sahen.")
+MC("j-verantw",[16],"Woran erfuhren Fürsorgerinnen spätestens von der Vernichtung?","Wenn dem Jugendamt der Tod eines Mündels übermittelt wurde",["Durch offizielle Rundschreiben an alle Bürger","Durch Berichte in der Arbeiterzeitung","Erst durch Prozesse nach 1945"],"Das Jugendamt musste dann die Eltern verständigen, was eine Fürsorgerin im Rückblick makaber nennt.")
+MC("j-nach",[17],"Was änderte sich 1945 an der Jugendwohlfahrtsverordnung von 1940?","Gestrichen wurden nur offensichtliche ideologische NS-Bezüge",["Sie wurde vollständig aufgehoben","Sie wurde durch das Heimatrecht ersetzt","Sie galt nur noch für Pflegekinder"],"Sie blieb gesetzliche Grundlage der öffentlichen Jugendwohlfahrt.",[("j",45)])
+TF("j-nach",[17],"Nach 1945 wurden die Aufnahmebedingungen der Fürsorgeschulen erhöht, unter anderem wegen des geringen Niveaus der NS-Ausbildung.",True,"Verlangt wurden etwa die Vollendung des 18. Lebensjahres und eine Aufnahmeprüfung.",[("j",46)])
+MC("j-taschengeld",[],"Woran war das Taschengeld für Schüler*innen geknüpft?","An fünf Jahre Arbeit im Jugendamt nach der Ausbildung",["An den Eintritt in eine Partei","An ein Studium im Ausland","An den Verzicht auf den Berufstitel"],"Alle befanden, eine Stellung „quasi als Leibeigener“ sei nicht erstrebenswert.")
+MC("j-parteien",[26],"Welche Idee steht hinter „aus Parteien sollen Klienten werden“?","Case Work: ein anderes Verhältnis zu den Menschen im Amt",["Mitarbeiter*innen sollen Parteimitglieder werden","Jugendämter sollen politisch neutral wählen","Klient*innen sollen Gebühren zahlen"],"Die praktische Umsetzung ließ laut Text noch lange auf sich warten.",[("j",56)])
+MC("j-parteien",[17],"Bis wann blieb die NS-Teilung in Organisations- und Erziehungsfachfürsorgerin bestehen?","Bis 1971",["Bis 1945","Bis 1954","Bis 2002"],"Dann wurden beide Aufgaben in der Leitenden Sozialarbeiterin zusammengelegt.",[("j",57)])
+TF("j-wilhelm",[17],"Ein Schreiben von 1950 sieht das Schloss Wilhelminenberg für schwer erziehbare Kinder vor, die noch am Spiegelgrund waren.",True,"Das zeigt, wie Einrichtungen auch nach dem Krieg weiterliefen.")
+MC("j-wegen",[25,20],"Was ist der „Wiener Weg der Jugendwohlfahrt“?","Von Zwang und Kontrolle zu Freiwilligkeit und Beratung",["Von Pflegefamilien zurück zu Großheimen","Von der Beratung zur strengen Nachschau","Von der Stadt Wien zur Bundesverwaltung"],"Kontrollierende Eingriffe sollten nur noch im äußersten Notfall stattfinden.")
+TF("j-wegen",[25],"Ab den 1970ern gab es in der Praxis keine alten Kontrolltraditionen mehr.",False,"Mitunter wurde weiter daran festgehalten, viele Großheime blieben bis Mitte der 1970er autoritär.")
+MC("j-schock",[25],"Was erlebten viele junge Sozialarbeiter*innen beim Eintritt ins Amt?","Einen „Entidealisierungsschock“",["Sofortige Beförderung zur Amtsleitung","Weniger Arbeit als im Studium erwartet","Ein Amt ganz ohne Hierarchie"],"Die Realität lag weit von ihren Vorstellungen entfernt.",[("j",66)])
+MC("j-schock",[],"Wo wurde die lange Konkurrenz von Sozialarbeit und Sozialpädagogik erstmals überwunden?","Im Krisenzentrum FIDUZ, wo beide erstmals zusammenarbeiteten",["In der Stadt des Kindes","In der Kinderstube von 1926","In der KÜST ab 1925"],"Multiprofessionelle Teams sind seither Standard.",[("j",74)])
+MC("j-titel",[24],"Wann ersetzte der neue Berufstitel laut Zusatztext offiziell die „Fürsorgerin“?","1981",["1912","1945","2002"],"Andere Unterlagen nennen 1968 und 1976, siehe Stolperfallen.",[("j",61)])
+MC("j-titel",[24],"Was waren die 1968 eingestellten „Fürsorgeassistentinnen“?","Kräfte, die die Ausbildung binnen fünf Jahren berufsbegleitend nachholen mussten",["Ärztinnen in Mutterberatungsstellen","Sekretärinnen der Amtsleiter","Praktikantinnen ohne Bezahlung"],"So sollte der anhaltende Personalmangel ausgeglichen werden.",[("j",64)])
+MC("j-clearing",[],"Was löste das Clearingmodell ab?","Das alte Sprengelmodell",["Das Vieraugenprinzip","Die Krisenzentren","Die Paar- und Familienberatung"],"Die Aufgabenteilung wurde in den 1990er Jahren in Ottakring erprobt.",[("j",70)])
+MC("j-heim",[20],"Was zeigte die Studie zur Heimunterbringung von 1992?","Negative Folgen für die Gesamtbiographie ehemaliger Heimkinder",["Dass Großheime Kosten sparen","Dass Heime bei Kindern beliebt sind","Dass keine Reform nötig ist"],"Die Ablehnung richtete sich gegen das System Heim selbst.",[("j",73)])
+TF("j-heim",[20],"Heute soll der erste Tag der Fremdunterbringung auch der Beginn der Rückführungsarbeit zu den Eltern sein.",True,"Das passt zum Motto „so kurz wie möglich“.",[("j",74)])
+MC("j-heim",[],"Wie modifizierte eine Sozialpädagogin Tandlers Satz für die Zeit nach der KÜST?","„Wer Kindern Wohngemeinschaften und Krisenzentren baut, reißt Heimmauern nieder“",["„Wer Kindern Heime baut, spart Paläste“","„Wer Kindern Häuser baut, braucht keine Eltern“","„Wer Kindern Kasernen baut, schützt die Stadt“"],"Die KÜST wurde 1999 geschlossen, einst als „Juwel“ gefeiert.",[("j",73)])
+MC("h-aufarbeitung",[],"Was begann 2010?","Ehemalige Wiener Heimkinder machten ihre Gewalterfahrungen öffentlich",["Die erste Heimreform in Wien","Die Schließung der KÜST","Der Modellversuch in Hernals"],"Daraufhin wurden der Weiße Ring und die Historikerkommission eingesetzt.")
+MATCH("h-aufarbeitung",[],"Wer übernahm was bei der Aufarbeitung?",[("Weißer Ring","Prüfung und Entschädigungszahlungen"),("Reinhard Sieder","Historikerkommission zur Heimerziehung"),("Barbara Helige","Kommission Wilhelminenberg"),("FH Campus Wien","Untersuchung zu Pflegekindern")],"Viele ehemalige Heimkinder nahmen zudem Einsicht in ihre Kinderakten.")
+MC("h-folgen",[],"Was wurde 2012 in sozialpädagogischen Einrichtungen eingeführt?","Verpflichtende jährliche interne Revisionen",["Das Taschengeld für Jugendliche","Die Puppenadoption","Das Fürsorgebuch"],"Es geht darum, strukturelle Probleme aufzudecken.")
+TF("h-folgen",[],"Das Motto des Tags der offenen Tür 2013 lautete „Damit es sich nicht wiederholt“.",True,"Eingeladen waren ehemalige Heim- und Pflegekinder.")
+MC("h-umf",[],"Was obliegt dem Jugendamt seit der Grundversorgung von 2004?","Rechtsvertretung im Asylverfahren und Unterbringung",["Die Abschiebung Minderjähriger","Nur die Ausstellung von Reisepässen","Gar keine Aufgaben mehr"],"Die Betreuung übernahm laut Text der Fonds Soziales Wien.")
+ORD("h-umf",[],"Reihe die Schritte bei unbegleiteten Minderjährigen.",[("1969","Betreuung wird zusätzlicher Arbeitsauftrag"),("2003","„Drehscheibe“ für Krisenaufnahme"),("2004","Grundversorgung tritt in Kraft"),("2015","Koordinierungsstelle in der MAG ELF")],"Flüchtlinge waren nach beiden Weltkriegen und danach wiederholt eine zentrale Aufgabe.")
+MC("h-heute",[20,21],"Wie lautet das heutige Motto der Wiener Kinder- und Jugendhilfe?","„Kinder schützen, Eltern unterstützen“",["„Erst die Familie, dann das Amt“","„Erfassen und erheben“","„Familie ist Privatsache“"],"Das Vorwort nennt dazu Kinderrechte, Beteiligung und Transparenz.",[("j",5),("j",7)])
+TF("h-heute",[20],"Das Vier-Augen-Prinzip und die Krisenzentren gelten laut Vorwort als Wiener Innovationen.",True,"Sie fanden überwiegend Eingang in das Bundes-Kinder- und Jugendhilfegesetz.",[("j",7)])
+MC("h-ambulant",[],"Was ist das FIT-Familienintensivtraining?","Aufsuchende und reflexive Erziehungsberatung",["Ein Sportangebot für Heimkinder","Eine Prüfung für Pflegeeltern","Eine Kontrolle durch die Polizei"],"Es entstand 2007 aus einem Pilotprojekt.",[("j",76)])
 
 COURSE = dict(
     id="geschichte",

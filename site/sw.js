@@ -1,5 +1,5 @@
 // App-Dateien: Netz zuerst, damit Updates ankommen. Folien: aus dem Cache, weil sie sich nicht aendern.
-const SHELL = "sprengel-shell-1";
+const SHELL = "sprengel-shell-2";
 const SLIDES = "sprengel-slides-1";
 const FILES = ["./", "index.html", "style.css", "app.js", "manifest.webmanifest", "data/geschichte.json", "slides/manifest.json", "slides/salt.txt", "slides/check.bin",
   "fonts/big-shoulders-display-latin-800-normal.woff2", "fonts/atkinson-hyperlegible-latin-400-normal.woff2", "fonts/atkinson-hyperlegible-latin-700-normal.woff2", "icons/icon.svg", "icons/icon-192.png"];

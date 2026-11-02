@@ -69,7 +69,7 @@ const cardsIn = ch => D.cards.filter(k => topicOf(k.topic).ch === ch);
 const learned = k => (S.cards[k.id]?.box || 0) >= 2;
 function chapterPct(ch) { const c = cardsIn(ch); return c.filter(learned).length / c.length; }
 function lfScore(n) {
-  const cards = D.cards.filter(k => k.lf.includes(n));
+  const cards = D.cards.filter(k => k.lf.includes(n) && !k.extra); // Zusatztext zaehlt nicht gegen den Stempel
   const quiz = cards.length ? cards.filter(learned).length / cards.length : 0;
   const open = S.lfOpen[n]?.best || 0;
   return Math.round((quiz * .4 + open * .6) * 100);
@@ -177,8 +177,8 @@ const wrongCards = () => D.cards.filter(k => S.cards[k.id]?.seen && S.cards[k.id
 function pick(pool, n) {
   const due = shuffle(pool.filter(isDue)).sort((a, b) => S.cards[a.id].box - S.cards[b.id].box);
   const fresh = shuffle(pool.filter(isNew));
-  // Fokus: vier von fuenf neuen Karten gehoeren zu einer Leitfrage
-  const withLf = fresh.filter(k => k.lf.length), noLf = fresh.filter(k => !k.lf.length);
+  // Fokus: vier von fuenf neuen Karten gehoeren zu einer Leitfrage und kommen aus den Folien
+  const withLf = fresh.filter(k => k.lf.length && !k.extra), noLf = fresh.filter(k => !k.lf.length || k.extra);
   const mixed = []; let i = 0;
   while (withLf.length || noLf.length) { mixed.push(((i++ % 5 === 4 && noLf.length) || !withLf.length) ? noLf.shift() : withLf.shift()); }
   const later = shuffle(pool.filter(k => !isDue(k) && !isNew(k))).sort((a, b) => S.cards[a.id].box - S.cards[b.id].box);
@@ -248,7 +248,7 @@ function renderCard() {
   window.scrollTo(0, 0);
   if (k.type === "open") return renderOpen(k);
   const t = topicOf(k.topic);
-  const head = runHeader(k) + `<div class="tag">${esc(t.title)}</div>`;
+  const head = runHeader(k) + cardTag(k);
   if (k.type === "mc") {
     R.state.opts = shuffle([k.right, ...k.wrong]);
     main.innerHTML = `<div class="run">${head}<p class="q">${esc(k.q)}</p><div class="grow"></div>
@@ -270,14 +270,15 @@ function renderCard() {
     renderMatch(k, head);
   }
 }
-function renderOrd(k, head = runHeader(k) + `<div class="tag">${esc(topicOf(k.topic).title)}</div>`) {
+const cardTag = k => `<div class="tag">${esc(topicOf(k.topic).title)}${k.extra ? ", aus dem Zusatztext" : ""}</div>`;
+function renderOrd(k, head = runHeader(k) + cardTag(k)) {
   const s = R.state;
   main.innerHTML = `<div class="run">${head}<p class="q">${esc(k.q)}</p><p class="tag" style="margin-top:4px">Tippe vom frühesten zum spätesten Ereignis.</p>
     <div class="seq" style="margin-top:12px">${k.items.map((_, i) => { const it = s.seq[i]; return `<button class="slot ${it !== undefined ? "full" : ""}" ${it !== undefined ? `data-ord-out="${i}"` : "disabled"}><span class="n">${i + 1}</span><span>${it !== undefined ? esc(k.items[it][1]) : ""}</span></button>`; }).join("")}</div>
     <div class="grow"></div><div class="pool">${s.pool.filter(i => !s.seq.includes(i)).map(i => `<button class="opt" data-ord="${i}">${esc(k.items[i][1])}</button>`).join("")}</div>
     <div style="margin-top:12px"><button class="btn" data-check-ord ${s.seq.length < k.items.length ? "disabled" : ""}>Reihenfolge prüfen</button></div></div>`;
 }
-function renderMatch(k, head = runHeader(k) + `<div class="tag">${esc(topicOf(k.topic).title)}</div>`) {
+function renderMatch(k, head = runHeader(k) + cardTag(k)) {
   const s = R.state;
   main.innerHTML = `<div class="run">${head}<p class="q">${esc(k.q)}</p><div class="grow"></div>
     <div class="pairs"><div class="col">${s.left.map(i => `<button class="pair ${s.done.has(i) ? "ok" : ""} ${s.sel === i ? "sel" : ""}" ${s.done.has(i) ? "disabled" : ""} data-ml="${i}">${esc(k.pairs[i][0])}</button>`).join("")}</div>
@@ -320,6 +321,7 @@ function renderOpen(k) {
     <textarea id="mine" placeholder="${k.exam ? "Schreib deine Antwort wie in der Prüfung." : "Stichworte tippen oder im Kopf antworten."}">${esc(prev)}</textarea>
     <div class="grow"></div><div style="margin-top:12px"><button class="btn" data-reveal>Antwort aufdecken</button></div></div>`;
 }
+const deepBlock = l => l.deep ? `<p class="tag">Vertiefung aus dem Zusatztext, zählt nicht für den Stempel</p><ul class="points">${l.deep.map(p => `<li class="point ro">${esc(p.t)}${chips(p.src)}</li>`).join("")}</ul>` : "";
 function revealOpen(k) {
   const l = k.leit, mine = $("#mine")?.value.trim();
   R.state.mine = mine;
@@ -329,6 +331,7 @@ function revealOpen(k) {
     ${l.note ? `<div class="note">${esc(l.note)}</div>` : ""}
     <p class="tag">Hake an, was du selbst genannt hättest.</p>
     <ul class="points">${l.points.map((p, i) => `<li class="point"><label><input type="checkbox" data-pt="${i}"><span>${esc(p.t)}</span></label>${chips(p.src)}</li>`).join("")}</ul>
+    ${deepBlock(l)}
     <div class="sticky"><button class="btn" data-open-done>Selbsteinschätzung speichern</button></div></div>`;
   window.scrollTo(0, 0);
 }
@@ -369,7 +372,7 @@ function renderArrive() {
     ${badge.length ? `<div class="badges">${badge.map(b => `<div class="badge on"><b>${esc(b[1])}</b>${esc(b[2])}</div>`).join("")}</div>` : ""}
     ${missedTopics.length || missedLf.length ? `<section class="review"><h2>Noch einmal nachlesen</h2>
       <ul>${missedLf.map(l => `<li><button class="back" data-go="#/lf/${l.n}">Leitfrage ${l.n}</button></li>`).join("")}</ul>
-      <div class="reading">${missedTopics.slice(0, 3).map(context).join("")}</div></section>` : ""}
+      <div class="reading">${missedTopics.slice(0, 3).map(t => context(t)).join("")}</div></section>` : ""}
     <div style="margin-top:22px"><button class="btn" data-run="5">Noch 5 Minuten</button><button class="btn ghost" data-go="#/">Zur Linie</button></div></div>`;
   renderNav("home");
   window.scrollTo(0, 0);
@@ -399,15 +402,15 @@ function viewLfDetail(n) {
       <details ${seen ? "open" : ""} data-peek="${n}"><summary style="cursor:pointer;min-height:36px">Antwort anzeigen</summary>
       <p class="gist">${esc(l.gist)}</p>
       ${l.note ? `<div class="note">${esc(l.note)}</div>` : ""}
-      <ul class="points">${l.points.map(p => `<li class="point ro">${esc(p.t)}${chips(p.src)}</li>`).join("")}</ul></details>
+      <ul class="points">${l.points.map(p => `<li class="point ro">${esc(p.t)}${chips(p.src)}</li>`).join("")}</ul>${deepBlock(l)}</details>
     </section>
-    <section class="section"><h2>Einordnung</h2><div class="reading">${tids.slice(0, 5).map(context).join("")}</div></section></div>`;
+    <section class="section"><h2>Einordnung</h2><div class="reading">${tids.slice(0, 5).map(t => context(t)).join("")}</div></section></div>`;
 }
 
 /* ---------- Stoff ---------- */
 let stoffTab = "linie";
 function viewStoff() {
-  const tabs = [["linie", "Stationen"], ["zeit", "Zeitstrahl"], ["personen", "Personen"], ["begriffe", "Begriffe"], ["fallen", "Stolperfallen"], ["folien", "Folien"]];
+  const tabs = [["linie", "Stationen"], ["zeit", "Zeitstrahl"], ["personen", "Personen"], ["begriffe", "Begriffe"], ["fallen", "Stolperfallen"], ["folien", "Folien und Texte"]];
   let body = "";
   if (stoffTab === "linie") body = `<ol class="line">${D.chapters.map(c => `<li class="stop"><span class="dot"></span><button data-go="#/stoff/${c.id}"><h3>${esc(c.name)}</h3><div class="span">${esc(c.span)}</div></button></li>`).join("")}</ol>`;
   if (stoffTab === "zeit") body = `<ol class="tl">${D.timeline.map(x => `<li><span class="y">${esc(x.y)}</span><span class="c">${esc(x.t)}${chips(x.src)}</span></li>`).join("")}</ol>`;
@@ -425,9 +428,9 @@ function viewChapter(id) {
   const lfs = D.leitfragen.filter(l => l.ch === id);
   main.innerHTML = `<div class="pad"><button class="back" data-go="#/stoff">Stoff</button>
     <h1 class="h1" style="margin-top:6px">${esc(c.name)}</h1><p class="lead">${esc(c.span)}, ${Math.round(chapterPct(id) * 100)} % gelernt</p>
-    <div class="pcta"><button class="btn" data-ch-run="${id}">Diese Station üben</button><button class="btn ghost" data-slide="${c.docs[0]}:1">Foliensatz öffnen</button></div>
+    <div class="pcta"><button class="btn" data-ch-run="${id}">Diese Station üben</button>${c.docs[0] === "j" ? "" : `<button class="btn ghost" data-slide="${c.docs[0]}:1">Foliensatz öffnen</button>`}${c.book ? `<button class="btn ghost" data-slide="j:${c.book}">Im Zusatztext lesen</button>` : ""}</div>
     ${lfs.length ? `<section class="section"><h2>Leitfragen dazu</h2><ol class="lflist" style="margin-top:0">${lfs.map(l => `<li class="${stamped(l.n) ? "done" : ""}"><button data-go="#/lf/${l.n}"><span class="n">${l.n}</span><span>${esc(l.q)}</span></button></li>`).join("")}</ol></section>` : ""}
-    <section class="section"><h2>Zusammenfassung</h2><div class="reading">${tp.map(context).join("")}</div></section></div>`;
+    <section class="section"><h2>Zusammenfassung</h2><div class="reading">${tp.map(t => context(t)).join("")}</div></section></div>`;
 }
 
 /* ---------- Ich ---------- */
@@ -443,7 +446,7 @@ function viewMe() {
       <p class="small" style="margin-top:6px">Termine laut Einführungsfolie. Dazu kommt die schriftliche Reflexion mit mindestens 3500 Zeichen.</p></section>
     <section class="section"><h2>Folien</h2>
       ${S.key ? `<p>Folien sind freigeschaltet.</p>` : `<p>Folien sind gesperrt. Gib den Code ein, um sie zu öffnen.</p><form class="field-row" data-unlock-form><input type="text" name="code" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Zugangscode" aria-label="Zugangscode"><button class="btn small">Freischalten</button></form><p class="small" data-unlock-msg></p>`}
-      ${S.key ? `<div class="field-row"><button class="btn small ghost" data-offline>${S.offline ? "Folien neu für offline laden" : "Alle Folien für offline laden (ca. 30 MB)"}</button></div><div id="dl" hidden><div class="progress"><i style="width:0"></i></div><p class="small" style="margin-top:4px"></p></div>` : ""}
+      ${S.key ? `<div class="field-row"><button class="btn small ghost" data-offline>${S.offline ? "Folien und Texte neu für offline laden" : "Alle Folien und Texte für offline laden (ca. 45 MB)"}</button></div><div id="dl" hidden><div class="progress"><i style="width:0"></i></div><p class="small" style="margin-top:4px"></p></div>` : ""}
     </section>
     <section class="section"><h2>Fortschritt übertragen</h2>
       <p class="small">Dein Fortschritt liegt nur auf diesem Gerät. Kopiere den Text zum Handy oder Laptop, um dort weiterzulernen.</p>
@@ -452,7 +455,7 @@ function viewMe() {
       <div class="field-row"><button class="btn small ghost" data-import>Sicherung übernehmen</button><button class="btn small ghost" data-reset>Fortschritt löschen</button></div><p class="small" id="bakmsg"></p>
     </section>
     <section class="section"><h2>Woher der Inhalt kommt</h2>
-      <p class="small">${esc(D.course.name)}, ${esc(D.course.term)}, ${esc(D.course.lecturer)}. Fragen und Zusammenfassungen wurden aus den Folien und der Zeittafel geschrieben und jeweils mit den Seiten verknüpft. Der Zusatztext „100 Jahre Jugendamt“ und der Reader sind noch nicht enthalten.</p></section></div>`;
+      <p class="small">${esc(D.course.name)}, ${esc(D.course.term)}, ${esc(D.course.lecturer)}. Fragen und Zusammenfassungen wurden aus den Folien, der Zeittafel und dem Zusatztext „100 Jahre Wiener Jugendamt“ geschrieben und jeweils mit den Seiten verknüpft. Karten aus dem Zusatztext sind gekennzeichnet und kommen seltener. Der Reader ist noch nicht enthalten.</p></section></div>`;
 }
 
 /* ---------- Folienansicht ---------- */
@@ -502,7 +505,7 @@ async function renderSlide() {
   } catch { if (seq === V.seq) slideError(); }
 }
 function slideError() {
-  slideChrome(`<div class="v-msg"><h2>Folie nicht verfügbar</h2><p>Diese Seite ist nicht auf dem Gerät gespeichert und es gibt gerade kein Netz. Unter „Ich“ kannst du alle Folien für offline laden.</p></div>`);
+  slideChrome(`<div class="v-msg"><h2>Folie nicht verfügbar</h2><p>Diese Seite ist nicht auf dem Gerät gespeichert und es gibt gerade kein Netz. Unter „Ich“ kannst du alle Folien und Texte für offline laden.</p></div>`);
 }
 async function handleUnlock(form) {
   const msg = form.parentElement.querySelector("[data-unlock-msg]"), code = form.code.value;
@@ -532,7 +535,7 @@ async function downloadAll() {
       txt.textContent = `${done} von ${urls.length} Dateien`;
     }
   }));
-  txt.textContent = failed ? `${failed} Dateien fehlen noch. Versuch es mit besserem Netz nochmal.` : "Alle Folien sind auf dem Gerät gespeichert.";
+  txt.textContent = failed ? `${failed} Dateien fehlen noch. Versuch es mit besserem Netz nochmal.` : "Alle Folien und Texte sind auf dem Gerät gespeichert.";
   if (!failed) { S.offline = true; save(); }
 }
 

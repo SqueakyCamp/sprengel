@@ -20,6 +20,7 @@ DOCS = {  # id -> (Datei, Anzeigename)
     "zs": ("Von der Fürsorge zur Sozialarbeit.pdf", "Von der Fürsorge zur Sozialarbeit"),
     "z":  ("Zeittafel.Sozialarbeit.pdf", "Zeittafel"),
     "lf": ("Leitfragen & Lernziele_Prüfung.pdf", "Leitfragen & Lernziele"),
+    "j":  ("100-jahre-jugendamt.pdf", "Zusatztext: 100 Jahre Jugendamt"),
 }
 WIDTH = 1280
 
@@ -54,10 +55,16 @@ def main():
     def seal(b):
         iv = secrets.token_bytes(12)
         return iv + a.encrypt(iv, b, None)
-    (ROOT / "site/slides/check.bin").write_bytes(seal(b"sprengel-ok"))
-    manifest = {"iters": iters, "docs": {}}
+    if not sys.argv[1:]:
+        (ROOT / "site/slides/check.bin").write_bytes(seal(b"sprengel-ok"))
+    # Mit Dokument-IDs als Argument nur diese neu bauen, damit sich die uebrigen Dateien nicht aendern.
+    only = set(sys.argv[1:])
+    mf = ROOT / "site/slides/manifest.json"
+    manifest = json.loads(mf.read_text()) if only and mf.exists() else {"iters": iters, "docs": {}}
     total = 0
     for did, (fn, name) in DOCS.items():
+        if only and did not in only:
+            continue
         pdf = pymupdf.open(ROOT / "source" / fn)
         out = ROOT / "site/slides" / did
         out.mkdir(parents=True, exist_ok=True)

@@ -8,6 +8,8 @@ Mobiles Lernzentrum fuer das Studium Soziale Arbeit, statisch auf GitHub Pages. 
 - `site/`: die App (Vanilla JS, kein Build), `sw.js` fuer offline. Fortschritt nur im localStorage.
 - Deploy: Push auf `main`, Action veroeffentlicht `site/`.
 
+Dokument `j` ist der Zusatztext „100 Jahre Wiener Jugendamt“ (Seiten entsprechen dem Druck). Karten nur daraus sind `extra`: gekennzeichnet, seltener, zaehlen nicht gegen den Stempel. `build_slides.py j` baut einzelne Dokumente, ohne die uebrigen Dateien zu aendern.
+
 Regeln:
 - Inhalt kommt nur aus den LV-Unterlagen. Widersprueche zwischen Unterlagen kommen in `TRAPS`, nicht stillschweigend aufloesen.
 - `source/` und `.slide-passphrase` bleiben ausserhalb von Git: Die Folien gehoeren der Lehrveranstaltung, das Repo ist oeffentlich.
