@@ -1,0 +1,61 @@
+{
+ "iters": 200000,
+ "docs": {
+  "e": {
+   "name": "Einführung",
+   "pages": 20,
+   "blank": []
+  },
+  "a1": {
+   "name": "Armenfürsorge I",
+   "pages": 31,
+   "blank": []
+  },
+  "a2": {
+   "name": "Armenfürsorge II",
+   "pages": 60,
+   "blank": [
+    15,
+    41,
+    42
+   ]
+  },
+  "eb": {
+   "name": "Vom Ehrenamt zum Frauenberuf",
+   "pages": 29,
+   "blank": []
+  },
+  "rw": {
+   "name": "Fürsorge im Roten Wien",
+   "pages": 40,
+   "blank": []
+  },
+  "t": {
+   "name": "Fürsorge in totalitären Regimen",
+   "pages": 44,
+   "blank": [
+    20
+   ]
+  },
+  "n": {
+   "name": "Nachkriegszeit & Wirtschaftswunder",
+   "pages": 53,
+   "blank": []
+  },
+  "zs": {
+   "name": "Von der Fürsorge zur Sozialarbeit",
+   "pages": 32,
+   "blank": []
+  },
+  "z": {
+   "name": "Zeittafel",
+   "pages": 5,
+   "blank": []
+  },
+  "lf": {
+   "name": "Leitfragen & Lernziele",
+   "pages": 2,
+   "blank": []
+  }
+ }
+}

@@ -1,0 +1,4 @@
+source/
+.slide-passphrase
+__pycache__/
+*.pyc
