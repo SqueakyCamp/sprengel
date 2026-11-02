@@ -145,9 +145,9 @@ body.running .main { padding-bottom: 0; }
 .pool { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
 
 /* Paare */
-.pairs { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 8px; }
+.pairs { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 8px; }
 .pairs .col { display: flex; flex-direction: column; gap: 8px; }
-.pair { width: 100%; flex: 1; background: var(--surface); border-radius: 10px; padding: 10px; min-height: 56px; box-shadow: inset 0 0 0 1.5px var(--line); font-size: .95rem; line-height: 1.25; }
+.pair { width: 100%; flex: 1 1 auto; hyphens: auto; background: var(--surface); border-radius: 10px; padding: 10px; min-height: 56px; box-shadow: inset 0 0 0 1.5px var(--line); font-size: .95rem; line-height: 1.25; }
 .pair.sel { box-shadow: inset 0 0 0 3px var(--ink); }
 .pair.ok { background: var(--right-bg); box-shadow: none; color: var(--soft); }
 .pair.bad { animation: nope .3s; background: var(--wrong-bg); }

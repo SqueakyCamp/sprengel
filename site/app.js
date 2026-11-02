@@ -142,8 +142,8 @@ function viewHome() {
       <div class="goal"><div class="bar"><i style="width:${Math.min(100, today / DAILY_GOAL * 100)}%"></i></div><span>Heute ${Math.min(today, DAILY_GOAL)} von ${DAILY_GOAL} XP</span></div>
     </div>
     <div class="starts">
-      <button class="start" data-run="5"><b>5 Min</b><span>Kurze Fahrt, 8 Karten</span></button>
-      <button class="start alt" data-run="10"><b>10 Min</b><span>Lange Fahrt, 15 Karten</span></button>
+      <button class="start" data-run="5"><b>5 Min</b><span>8 Karten</span></button>
+      <button class="start alt" data-run="10"><b>10 Min</b><span>15 Karten</span></button>
     </div>
     <div class="quick">
       ${wrong ? `<button data-run="wrong">Fehler üben (${wrong})</button>` : ""}
