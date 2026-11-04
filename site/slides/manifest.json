@@ -61,6 +61,210 @@
    "name": "Zusatztext: 100 Jahre Jugendamt",
    "pages": 86,
    "blank": []
+  },
+  "msp": {
+   "name": "MatSi Präsentation",
+   "pages": 75,
+   "blank": [],
+   "extra": false
+  },
+  "msk": {
+   "name": "MatSi Skriptum",
+   "pages": 136,
+   "blank": [],
+   "extra": false
+  },
+  "rv": {
+   "name": "Recht: Folien Verfassung",
+   "pages": 86,
+   "blank": [],
+   "extra": false
+  },
+  "r2": {
+   "name": "Recht: Skript Teil 2",
+   "pages": 82,
+   "blank": [],
+   "extra": false
+  },
+  "r3": {
+   "name": "Recht: Skript Teil 3",
+   "pages": 36,
+   "blank": [],
+   "extra": false
+  },
+  "f2": {
+   "name": "Fernlehre 2",
+   "pages": 8,
+   "blank": [],
+   "extra": false
+  },
+  "f3": {
+   "name": "Fernlehre 3",
+   "pages": 7,
+   "blank": [],
+   "extra": false
+  },
+  "f4": {
+   "name": "Fernlehre 4",
+   "pages": 5,
+   "blank": [],
+   "extra": false
+  },
+  "f5": {
+   "name": "Fernlehre 5",
+   "pages": 4,
+   "blank": [],
+   "extra": false
+  },
+  "f6": {
+   "name": "Fernlehre 6",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "f7": {
+   "name": "Fernlehre 7",
+   "pages": 5,
+   "blank": [],
+   "extra": false
+  },
+  "s1": {
+   "name": "SoPol Einheit 1",
+   "pages": 12,
+   "blank": [],
+   "extra": false
+  },
+  "s2": {
+   "name": "SoPol Einheit 2",
+   "pages": 29,
+   "blank": [],
+   "extra": false
+  },
+  "s3": {
+   "name": "SoPol Einheit 3",
+   "pages": 24,
+   "blank": [],
+   "extra": false
+  },
+  "s4": {
+   "name": "SoPol Einheit 4",
+   "pages": 20,
+   "blank": [],
+   "extra": false
+  },
+  "s5": {
+   "name": "SoPol Einheit 5",
+   "pages": 18,
+   "blank": [],
+   "extra": false
+  },
+  "s6": {
+   "name": "SoPol Einheit 6",
+   "pages": 17,
+   "blank": [],
+   "extra": false
+  },
+  "zb": {
+   "name": "Zusatztext: Bettinger 2010",
+   "pages": 10,
+   "blank": [],
+   "extra": true
+  },
+  "zf": {
+   "name": "Zusatztext: Falter 24/24",
+   "pages": 1,
+   "blank": [],
+   "extra": true
+  },
+  "zn": {
+   "name": "Zusatztext: Nullmeier 2019",
+   "pages": 19,
+   "blank": [],
+   "extra": true
+  },
+  "zt": {
+   "name": "Zusatztext: Tálos/Obinger 2020",
+   "pages": 8,
+   "blank": [],
+   "extra": true
+  },
+  "zw": {
+   "name": "Zusatztext: Wirtschaft & Gesellschaft 2023",
+   "pages": 32,
+   "blank": [],
+   "extra": true
+  },
+  "cr": {
+   "name": "Fallanalyseraster",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "c1": {
+   "name": "Fall 1: Herr Z.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "c2": {
+   "name": "Fall 2: Herr K.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "c3": {
+   "name": "Fall 3: Herr M.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "c4": {
+   "name": "Fall 4: Herr B.",
+   "pages": 2,
+   "blank": [],
+   "extra": false
+  },
+  "c5": {
+   "name": "Fall 5: Frau M.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "c6": {
+   "name": "Fall 6: Herr F.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "c7": {
+   "name": "Fall 7: Herr C.",
+   "pages": 2,
+   "blank": [],
+   "extra": false
+  },
+  "c8": {
+   "name": "Fall 8: Frau E.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "c9": {
+   "name": "Fall 9: Frau K.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "cu": {
+   "name": "Übungsfall: Frau S.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
+  },
+  "cb": {
+   "name": "Fall Sozialzentrum: Frau A.",
+   "pages": 1,
+   "blank": [],
+   "extra": false
   }
  }
 }

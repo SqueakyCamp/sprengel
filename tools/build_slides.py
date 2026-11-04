@@ -23,6 +23,10 @@ DOCS = {  # id -> (Datei, Anzeigename)
     "j":  ("100-jahre-jugendamt.pdf", "Zusatztext: 100 Jahre Jugendamt"),
 }
 WIDTH = 1280
+sys.path.insert(0, str(ROOT / "content"))
+import docs as GS
+for _id, (_fn, _name, _extra) in GS.DOCS.items():
+    DOCS[_id] = ("gs/" + _fn, _name)
 
 def clean(t):
     """Fuegt die zerhackten Zeilen der Folien zu lesbaren Absaetzen zusammen."""
@@ -70,6 +74,7 @@ def main():
         out.mkdir(parents=True, exist_ok=True)
         texts = {}
         blank = []
+        ocr = json.loads((ROOT / "source/gs" / GS.OCR[did]).read_text()) if did in GS.OCR else None
         for i, page in enumerate(pdf):
             n = i + 1
             m = WIDTH / page.rect.width
@@ -80,11 +85,13 @@ def main():
             (out / f"{n:03d}.bin").write_bytes(seal(data))
             total += len(data)
             texts[n] = clean(page.get_text())
+            if ocr and not texts[n]:
+                texts[n] = clean("\n".join(ocr.get(str(n), [])))
             s = pix.samples
             if min(s[::997]) > 245:
                 blank.append(n)
         (out / "text.bin").write_bytes(seal(json.dumps(texts, ensure_ascii=False).encode()))
-        manifest["docs"][did] = {"name": name, "pages": len(pdf), "blank": blank}
+        manifest["docs"][did] = {"name": name, "pages": len(pdf), "blank": blank, "extra": did in GS.EXTRA}
         print(did, name, len(pdf), "blank:", blank, flush=True)
     (ROOT / "site/slides/manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1))
     print("MB", round(total / 1e6, 1))
