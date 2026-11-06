@@ -146,11 +146,13 @@ function coursePct(c) { const m = c.cards.filter(k => !k.extra); return m.length
 const lfKey = (n, c = D) => c.course.id === "geschichte" ? n : c.course.id + ":" + n;
 function lfScore(n, c = D) {
   const cards = c.cards.filter(k => k.lf.includes(n) && !k.extra); // Zusatztext zaehlt nicht gegen den Stempel
-  const open = S.lfOpen[lfKey(n, c)]?.best || 0;
+  const open = openCredit(S.lfOpen[lfKey(n, c)]?.best || 0);
   if (!cards.length) return Math.round(open * 100);
   const quiz = cards.filter(learned).length / cards.length;
   return Math.round((quiz * .4 + open * .6) * 100);
 }
+const OPEN_FULL = .7; // wer das meiste nennt, bekommt die volle Punktzahl
+const openCredit = r => Math.min(1, r / OPEN_FULL);
 const stamped = (n, c = D) => lfScore(n, c) >= 80;
 const stampCount = (c = D) => c.leitfragen.filter(l => stamped(l.n, c)).length;
 const openName = (c = D) => c.course.openName || "Leitfrage";
@@ -380,16 +382,25 @@ const wrongCards = ids => ids.flatMap(id => DATA[id].cards).filter(k => S.cards[
 
 function pick(pool, n) {
   const due = shuffle(pool.filter(isDue)).sort((a, b) => S.cards[a.id].box - S.cards[b.id].box);
-  const fresh = shuffle(pool.filter(isNew));
-  // Fokus: vier von fuenf neuen Karten gehoeren zu einer Frage und kommen aus den Hauptunterlagen
-  const withLf = fresh.filter(k => k.lf.length && !k.extra), noLf = fresh.filter(k => !k.lf.length || k.extra);
-  const mixed = []; let i = 0;
-  while (withLf.length || noLf.length) { mixed.push(((i++ % 5 === 4 && noLf.length) || !withLf.length) ? noLf.shift() : withLf.shift()); }
-  const later = shuffle(pool.filter(k => !isDue(k) && !isNew(k))).sort((a, b) => S.cards[a.id].box - S.cards[b.id].box);
-  const dueShare = due.slice(0, Math.ceil(n * .6));
-  const out = [...dueShare, ...mixed.slice(0, n - dueShare.length)];
+  const fresh = freshMix(pool);
+  // Neue Karten haben Vorrang: hoechstens gut ein Drittel faellige Wiederholungen, solange es Neues gibt
+  const dueShare = due.slice(0, fresh.length ? Math.ceil(n * .35) : n);
+  const out = [...dueShare, ...fresh.slice(0, n - dueShare.length)];
+  const later = shuffle(pool.filter(k => !isDue(k) && !isNew(k))).sort((a, b) => S.cards[a.id].box - S.cards[b.id].box || S.cards[a.id].due - S.cards[b.id].due);
   for (const k of [...due.slice(dueShare.length), ...later]) { if (out.length >= n) break; if (!out.includes(k)) out.push(k); }
   return spread(shuffle(out.slice(0, n)));
+}
+function freshMix(pool) { // neue Karten reihum aus den Themen, die du am wenigsten kennst; Zusatztext nur jede fuenfte
+  const byTopic = new Map();
+  for (const k of pool) { const t = byTopic.get(k.topic) || { seen: 0, all: 0, fresh: [] }; t.all++; if (isNew(k)) { if (!k.extra) t.fresh.push(k); } else t.seen++; byTopic.set(k.topic, t); }
+  const topics = shuffle([...byTopic.values()].filter(t => t.fresh.length)).sort((a, b) => a.seen / a.all - b.seen / b.all);
+  topics.forEach(t => t.fresh = shuffle(t.fresh));
+  const main = [];
+  for (let round = 0; main.length < pool.length && topics.some(t => t.fresh.length); round++) for (const t of topics) if (t.fresh.length) main.push(t.fresh.shift());
+  const extra = shuffle(pool.filter(k => isNew(k) && k.extra)), out = [];
+  let i = 0;
+  while (main.length || extra.length) out.push(((i++ % 5 === 4 && extra.length) || !main.length) ? extra.shift() : main.shift());
+  return out;
 }
 function spread(list) { // gleiche Themen nicht direkt hintereinander
   const out = [], rest = [...list];
@@ -600,7 +611,7 @@ function revealOpen(k) {
     ${mine ? `<div class="mine">${esc(mine)}</div>` : ""}
     ${l.gist ? `<p class="gist">${esc(l.gist)}</p>` : ""}
     ${l.note ? `<div class="note">${esc(l.note)}</div>` : ""}
-    <p class="tag">${k.caseStep ? "Das wären mögliche Punkte. Hake an, was du ähnlich hattest." : "Hake an, was du selbst genannt hättest."}</p>
+    <p class="tag">${k.caseStep ? "Das wären mögliche Punkte. Hake an, was du ähnlich hattest." : "Hake an, was du selbst genannt hättest. Ab 70 % der Punkte zählt die Antwort voll."}</p>
     <ul class="points">${l.points.map((p, i) => `<li class="point"><label><input type="checkbox" data-pt="${i}"><span>${lensBadge(p)}${esc(p.t)}</span></label>${chips(p.src)}</li>`).join("")}</ul>
     ${deepBlock(l)}
     <div class="sticky"><button class="btn" data-open-done>Selbsteinschätzung speichern</button></div></div>`;
@@ -615,7 +626,7 @@ function finishOpen(k) {
     rec.tries++; rec.best = Math.max(rec.best, ratio); rec.last = ratio; S.lfOpen[key] = rec;
     S.opens++; questTick("opens");
   }
-  const gain = Math.round(10 + ratio * 25);
+  const gain = Math.round(10 + (k.caseStep ? ratio : openCredit(ratio)) * 25);
   R.xp += gain; addXp(gain, l.course); R.total++; if (ratio >= .6) R.right++;
   if (ratio < .6) R.missed.push(k);
   if (k.exam) { R.examPts[0] += ratio; R.examPts[1]++; }
@@ -678,7 +689,7 @@ function viewLfDetail(n) {
     <h1 class="h1" style="font-size:1.95rem;margin-top:6px">${esc(openName())} ${n}</h1>
     ${l.group ? `<p class="small">${esc(l.group)}</p>` : ""}
     <p class="q" style="margin-top:8px">${esc(l.q)}</p>
-    <p class="small" style="margin-top:6px">${lfScore(n)} % bis zum Stempel gesammelt${open ? `, zuletzt ${Math.round(open.last * 100)} % der Punkte genannt` : ""}</p>
+    <p class="small" style="margin-top:6px">${lfScore(n)} % bis zum Stempel gesammelt (ab 80 %; freie Antwort zählt 60 %, Quizkarten 40 %, ab 70 % der Punkte gilt die Antwort als voll)${open ? `, zuletzt ${Math.round(open.last * 100)} % der Punkte genannt` : ""}</p>
     <div class="pcta"><button class="btn" data-open-run="${n}">Frei beantworten</button>${cards.length ? `<button class="btn ghost" data-lf-run="${n}">${cards.length} Quizkarten üben</button>` : ""}</div>
     <section class="section"><h2>Musterantwort</h2>
       <details ${seen ? "open" : ""} data-peek="${lfKey(n)}"><summary style="cursor:pointer;min-height:36px">Antwort anzeigen</summary>
@@ -706,6 +717,12 @@ function viewStoff() {
   main.innerHTML = `<div class="pad"><h1 class="h1">Stoff</h1>
     <div class="tabs">${tabs.map(([k, v]) => `<button aria-pressed="${stoffTab === k}" data-stoff-tab="${k}">${v}</button>`).join("")}</div>${body}</div>`;
 }
+function chapterDocs(c) { // Startseite je Dokument: erste zitierte Seite der Kapitelthemen
+  const src = D.topics.filter(t => t.ch === c.id).flatMap(t => t.src).filter(([d]) => M.docs[d] && d !== "j" && !d.startsWith("@"));
+  const own = c.docs.filter(d => src.some(s => s[0] === d)), order = own.length ? own : [...new Set(src.map(s => s[0]))].slice(0, 1);
+  if (!order.length) return c.docs[0] && c.docs[0] !== "j" && M.docs[c.docs[0]] ? [[c.docs[0], 1]] : [];
+  return order.slice(0, 2).map(d => [d, Math.min(...src.filter(s => s[0] === d).map(s => s[1]))]);
+}
 function viewChapter(id) {
   const c = chapterOf(id), cid = D.course.id;
   if (!c) return viewStoff();
@@ -715,7 +732,7 @@ function viewChapter(id) {
   const hasCards = cardsIn(id).length > 0;
   main.innerHTML = `<div class="pad"><button class="back" data-go="#/${cid}/stoff">Stoff</button>
     <h1 class="h1" style="margin-top:6px">${esc(c.name)}</h1><p class="lead">${esc(c.span)}, ${Math.round(chapterPct(id) * 100)} % gelernt</p>
-    <div class="pcta">${hasCards ? `<button class="btn" data-ch-run="${id}">${cid === "geschichte" ? "Diese Station üben" : "Dieses Kapitel üben"}</button>` : ""}${!c.docs[0] || c.docs[0] === "j" ? "" : `<button class="btn ghost" data-slide="${c.docs[0]}:1">Dokument öffnen</button>`}${c.book ? `<button class="btn ghost" data-slide="j:${c.book}">Im Zusatztext lesen</button>` : ""}</div>
+    <div class="pcta">${hasCards ? `<button class="btn" data-ch-run="${id}">${cid === "geschichte" ? "Diese Station üben" : "Dieses Kapitel üben"}</button>` : ""}${chapterDocs(c).map(([d, p], i) => `<button class="btn ghost" data-slide="${d}:${p}">${i ? `${esc(docName(d))}, S. ${p}` : `Dokument öffnen, S. ${p}`}</button>`).join("")}${c.book ? `<button class="btn ghost" data-slide="j:${c.book}">Im Zusatztext lesen</button>` : ""}</div>
     ${lfs.length ? `<section class="section"><h2>${esc(D.course.openNamePl || "Leitfragen")} dazu</h2><ol class="lflist" style="margin-top:0">${lfs.map(l => `<li class="${stamped(l.n) ? "done" : ""}"><button data-go="#/${cid}/lf/${l.n}"><span class="n">${l.n}</span><span>${esc(l.q)}</span></button></li>`).join("")}</ol></section>` : ""}
     <section class="section"><h2>Zusammenfassung</h2><div class="reading">${tp.map(t => context(t)).join("")}</div></section></div>`;
 }
