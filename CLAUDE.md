@@ -14,6 +14,9 @@ Dokument `j` ist der Zusatztext „100 Jahre Wiener Jugendamt“ (Seiten entspre
 
 - `content/matsi.py`, `recht.py`, `sopol.py`, `faelle.py`: Kursinhalte mit den Bausteinen aus `content/dsl.py`. `content/links.py`: Exkurse zwischen LVs. `content/docs.py`: Dokumente (`source/gs/`), Web-Quellen, Grafikzahlen.
 - `tools/build_all.py` baut diese Kurse und `links.json`. Harte Pruefung: Seite existiert, jede Zahl steht auf einer zitierten Seite. Grafikzahlen in `docs.FIG`, gerechnete Fallwerte in `docs.DERIVED`. Geschichte baut weiter `tools/build_content.py`.
+- MatSi: Betraege nicht abfragen (aendern sich jaehrlich), nur Regeln, Prozentsaetze, Fristen; Betraege duerfen in Erklaerungen stehen. Keine `calc`-Karten in MatSi.
+- Fragen muessen ohne Nachbarkarte verstaendlich sein (keine Titel wie „Welches Regime?“). Erklaerungen 2 bis 3 Saetze. Jeder Punkt einer offenen Frage soll auch als Quizkarte (mit `lf`) vorkommen.
+- App: Kapitel-Button oeffnet die erste zitierte Seite der Kapitelthemen; neue Karten haben Vorrang (max. 35 % faellige, reihum aus wenig gesehenen Themen); offene Antwort zaehlt ab 70 % der Punkte voll (`OPEN_FULL`). Bei App-Aenderungen `SHELL` in `sw.js` hochzaehlen.
 - Karten-Typen zusaetzlich zu Geschichte: `bucket` (zuordnen), `chain` (Fallkette), `calc` (Rechnen). Ein `ord` ohne Jahreszahlen nimmt die Listenreihenfolge.
 - Neue Fernlehren oder Einheiten: PDF nach `source/gs/`, in `docs.py` eintragen, `build_slides.py <id>` und Inhalte ergaenzen; den Eintrag mit `pending=True` im Kurs ersetzen. Es fehlen noch 4 Fernlehren und 4 SoPol-Einheiten.
 - Bettinger und Talos/Obinger sind Scans: Ihr OCR-Text liegt in `source/gs/*.ocr.json`.
