@@ -8,17 +8,22 @@ Mobiles Lernzentrum fuer das Studium Soziale Arbeit, statisch auf GitHub Pages. 
 - `site/`: die App (Vanilla JS, kein Build), `sw.js` fuer offline. Fortschritt nur im localStorage.
 - Deploy: Push auf `main`, Action veroeffentlicht `site/`.
 
-Dokument `j` ist der Zusatztext „100 Jahre Wiener Jugendamt“ (Seiten entsprechen dem Druck). Karten nur daraus sind `extra`: gekennzeichnet, seltener, zaehlen nicht gegen den Stempel. `build_slides.py j` baut einzelne Dokumente, ohne die uebrigen Dateien zu aendern.
+Dokument `j` ist der Zusatztext „100 Jahre Wiener Jugendamt“ (Seiten entsprechen dem Druck). Zusatztexte und Web-Zusatzquellen sind nur Lese- und Belegquellen: keine Quizkarten, die sich nur auf sie stuetzen (Wunsch vom 8.11.2026). `build_slides.py j` baut einzelne Dokumente, ohne die uebrigen Dateien zu aendern.
 
 ## Modul Grundsicherung
 
-- `content/matsi.py`, `recht.py`, `sopol.py`, `faelle.py`: Kursinhalte mit den Bausteinen aus `content/dsl.py`. `content/links.py`: Exkurse zwischen LVs. `content/docs.py`: Dokumente (`source/gs/`), Web-Quellen, Grafikzahlen.
+- `content/matsi.py` (+ `matsi_plus.py`), `recht.py` (+ `recht_fl.py`, Fernlehren 8 bis 11), `sopol.py`, `faelle.py`: Kursinhalte mit den Bausteinen aus `content/dsl.py`. `content/links.py`: Exkurse zwischen LVs. `content/docs.py`: Dokumente (`source/gs/`), Web-Quellen, Grafikzahlen.
 - `tools/build_all.py` baut diese Kurse und `links.json`. Harte Pruefung: Seite existiert, jede Zahl steht auf einer zitierten Seite. Grafikzahlen in `docs.FIG`, gerechnete Fallwerte in `docs.DERIVED`. Geschichte baut weiter `tools/build_content.py`.
 - MatSi: Betraege nicht abfragen (aendern sich jaehrlich), nur Regeln, Prozentsaetze, Fristen; Betraege duerfen in Erklaerungen stehen. Keine `calc`-Karten in MatSi.
 - Fragen muessen ohne Nachbarkarte verstaendlich sein (keine Titel wie „Welches Regime?“). Erklaerungen 2 bis 3 Saetze. Jeder Punkt einer offenen Frage soll auch als Quizkarte (mit `lf`) vorkommen.
 - App: Kapitel-Button oeffnet die erste zitierte Seite der Kapitelthemen; neue Karten haben Vorrang (max. 35 % faellige, reihum aus wenig gesehenen Themen); offene Antwort zaehlt ab 70 % der Punkte voll (`OPEN_FULL`). Bei App-Aenderungen `SHELL` in `sw.js` hochzaehlen.
 - Karten-Typen zusaetzlich zu Geschichte: `bucket` (zuordnen), `chain` (Fallkette), `calc` (Rechnen). Ein `ord` ohne Jahreszahlen nimmt die Listenreihenfolge.
-- Neue Fernlehren oder Einheiten: PDF nach `source/gs/`, in `docs.py` eintragen, `build_slides.py <id>` und Inhalte ergaenzen; den Eintrag mit `pending=True` im Kurs ersetzen. Es fehlen noch 4 Fernlehren und 4 SoPol-Einheiten.
+- Kurzname MATS (nicht MatSi), so an der FH. Der Kurs-id bleibt `matsi`.
+- Erklaerungen, Themen und Exkurse ausfuehrlich in ganzen Saetzen, Niveau wie MATS; keine Stichwortketten.
+- Modul-Mix: Karten der Fallwerkstatt nur mit `solo=True` (ohne Fall verstaendlich), keine Fallketten und Reihungen.
+- Fernlehren 8 bis 11 kamen ohne Musterantworten: Antworten von Claude aus Skripten und RIS-Gesetzestexten (`@kschg`, `@mrg` usw. in `docs.WEB`). Recht-Skript Teil 2: PDF-Seite = gedruckte Seite + 1, Verweise nutzen die PDF-Seite.
+- Studierenden-Fragensammlungen (z. B. „Potenzielle Prüfungsfragen MATS“) nur als Themenhinweis, nie als Quelle oder Dokument.
+- Neue Fernlehren oder Einheiten: PDF nach `source/gs/`, in `docs.py` eintragen, `build_slides.py <id>` und Inhalte ergaenzen; den Eintrag mit `pending=True` im Kurs ersetzen. Es fehlen noch SoPol-Einheiten (Klima, Gesundheit, Wiederholung) und die Armut-Folien.
 - Bettinger und Talos/Obinger sind Scans: Ihr OCR-Text liegt in `source/gs/*.ocr.json`.
 - Fall-Loesungspunkte stammen von Claude, nicht von den Lehrenden; das steht auch in der App.
 - Notizen aus den PDFs sind nachrangig und als „Deine Notiz“ gekennzeichnet. Bei Widerspruechen in `TRAP`.

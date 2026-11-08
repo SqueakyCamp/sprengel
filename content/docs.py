@@ -1,8 +1,8 @@
 """Alle Dokumente der Grundsicherungs-LVs. id -> (Datei unter source/gs/, Anzeigename, Zusatz?)"""
 DOCS = {
   # Materielle Sicherung
-  "msp": ("SA29VZPräsentation_MatSi__202610.pdf", "MatSi Präsentation", False),
-  "msk": ("Edits - Materielle Sicherung_Skriptum_WiSe2026_27.pdf", "MatSi Skriptum", False),
+  "msp": ("SA29VZPräsentation_MatSi__202610.pdf", "MATS Präsentation", False),
+  "msk": ("Edits - Materielle Sicherung_Skriptum_WiSe2026_27.pdf", "MATS Skriptum", False),
   # Recht
   "rv": ("Verfassung 2026_neu.pdf", "Recht: Folien Verfassung", False),
   "r2": ("Skript Grundsicherung Teil 2 _2026_2027.pdf", "Recht: Skript Teil 2", False),
@@ -45,6 +45,15 @@ EXTRA = {k for k, v in DOCS.items() if v[2]}
 WEB = {
   "armut": ("Armutskonferenz: aktuelle Armuts- und Verteilungszahlen", "https://www.armutskonferenz.at/armut-in-oesterreich/aktuelle-armuts-und-verteilungszahlen.html"),
   "wk": ("wahlkabine.at: Standpunkte Nationalratswahl 2024", "https://wahlkabine.at/nationalratswahl-2024/stellungnahmen"),
+  # Gesetzestexte im RIS, fuer die Fernlehren 8 bis 11
+  "kschg": ("RIS: Konsumentenschutzgesetz (§§ 1, 6, 25a bis 25d)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002462"),
+  "abgb": ("RIS: ABGB (§§ 234, 864a, 879, 922, 1118, 1295, 1355, 1356)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001622"),
+  "mrg": ("RIS: Mietrechtsgesetz (§§ 1, 11, 29, 30, 33)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002531"),
+  "fagg": ("RIS: Fern- und Auswärtsgeschäfte-Gesetz (§§ 1, 3, 11)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=20008847"),
+  "io": ("RIS: Insolvenzordnung (§§ 28, 29, 43, 199)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001736"),
+  "eheg": ("RIS: Ehegesetz (§ 98 Ausfallsbürgschaft)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001871"),
+  "mschg": ("RIS: Mutterschutzgesetz (§§ 15, 15a Karenz)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10008464"),
+  "shneu": ("Bundeskanzleramt: Ministerratsvortrag zur Sozialhilfe NEU", "https://www.bundeskanzleramt.gv.at/dam/jcr:4aedd2b4-539a-4e30-81e4-53fae18b6699/21a_1_mrv.pdf"),
 }
 # Nur zum Weiterlesen, daraus stammt keine Aussage in der App.
 MORE = {
@@ -62,4 +71,6 @@ FIG = {
 }
 FIG[("s4", 19)] = "59 20 8 16 48 60 84 57 51 25 23 5 37 40 68 41 31"
 # Gerechnete Werte aus den Fallbeispielen; stehen auf keiner Seite, sind aber geprueft: 1229,89-1050 und 1229,89+2*332,07; 40*30.
-DERIVED = {"179,89", "1.894,03", "1.200"}
+DERIVED = {"179,89", "1.894,03", "1.200", "132,07", "1.494,03", "200"}  # dazu Fernlehre 9 D: 332,07-200 und 1229,89+2*132,07
+# ETHOS-Tabelle im Skriptum ist ein Bild (Seite 83): Woerter fuer die Pruefung abgeschrieben.
+FIG[("msk", 83)] = "Obdachlose Menschen öffentlichen Raum Verschlägen Brücken Notunterkünften Notschlafstellen Wärmestuben Wohnungsloseneinrichtungen Übergangswohnheime Asyle Herbergen Übergangswohnungen Frauenhäusern Frauenhäuser Einrichtungen MigrantInnen AsylwerberInnen Auffangstellen Quartiere ArbeitsmigrantInnen Institutionen entlassen Gefängnisse Strafanstalten Spitäler Heilanstalten Jugendheime Dauereinrichtungen Langzeitwohnheime ältere ambulante Wohnbetreuung Einzelwohnungen ungesicherten Wohnverhältnissen temporäre Unterkunft Freunden Bekannten Verwandten bestandsrechtliche Absicherung illegale Hausbesetzung Delogierung bedroht Gerichtliches Verfahren Auflösung Delogierungsbeschluss Enteignungsbeschluss Gewalt Strafanzeige Wegweisungsbeschluss Wohnprovisorien Wohnwägen Garagen Keller Dachböden Abbruchhäuser Zelte ungeeigneten Räumen Abbruchgebäuden überfüllten Räumen Mindestquadratmeter 1.1 2.1 3.1 3.2 3.3 4.1 5.1 5.2 6.1 6.2 6.3 7.1 7.2 8.1 8.2 8.3 9.1 9.2 9.3 10.1 11.1 11.2 11.3 12.1 13.1"

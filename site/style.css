@@ -100,6 +100,8 @@ body.running .main { padding-bottom: 0; }
 .stop h3 { font-size: 1.6rem; }
 .stop .span { color: var(--soft); font-size: .92rem; }
 .stop .sub { color: var(--soft); font-size: .95rem; margin-top: 2px; }
+.stop .sub.count { font-size: .85rem; }
+.count-all { margin-top: 14px; }
 .stop.sober h3 { color: var(--ink); }
 
 /* Fahrt */

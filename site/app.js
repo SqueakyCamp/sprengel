@@ -35,7 +35,7 @@ const BADGES = [
   ["bridge5", "Brückenbauer*in", "5 Exkurse gelesen", s => Object.keys(s.links).length >= 5],
   ["bridgeAll", "Das ganze Netz", "Alle Exkurse gelesen", s => LINKS.length && Object.keys(s.links).length >= LINKS.length],
   ["fristen", "Fristgerecht", "Recht: 5 Fernlehre-Fragen gestempelt", () => stampCount(DATA.recht) >= 5],
-  ["netz", "Zweites Netz", "MatSi: 5 Kernfragen gestempelt", () => stampCount(DATA.matsi) >= 5],
+  ["netz", "Zweites Netz", "MATS: 5 Kernfragen gestempelt", () => stampCount(DATA.matsi) >= 5],
   ["floete", "Flöte verteilt", "SoPol: 5 Kernfragen gestempelt", () => stampCount(DATA.sopol) >= 5],
   ["modul", "Modul im Griff", "In allen vier Teilen des Moduls gelernt", s => MODULE.every(c => (s.cx[c] || 0) > 0)],
 ];
@@ -142,6 +142,8 @@ const chapterOf = id => CHAPTER[id];
 const cardsIn = (ch, c = D) => c.cards.filter(k => topicOf(k.topic).ch === ch);
 const learned = k => (S.cards[k.id]?.box || 0) >= 2;
 function chapterPct(ch) { const c = cardsIn(ch); return c.length ? c.filter(learned).length / c.length : 0; }
+const answered = k => (S.cards[k.id]?.box || 0) >= 1; // zuletzt richtig beantwortet
+const cardCount = cards => `${cards.filter(answered).length} von ${cards.length} ${cards.length === 1 ? "Karte" : "Karten"} richtig beantwortet`;
 function coursePct(c) { const m = c.cards.filter(k => !k.extra); return m.length ? m.filter(learned).length / m.length : 0; }
 const lfKey = (n, c = D) => c.course.id === "geschichte" ? n : c.course.id + ":" + n;
 function lfScore(n, c = D) {
@@ -206,7 +208,8 @@ const chips = src => `<div class="chips">${uniq(src).map(chip).join("")}</div>`;
 function context(t, shown = []) {
   const ch = chapterOf(t.ch), have = new Set(shown.map(x => x.join(":")));
   const rest = uniq(t.src).filter(x => !have.has(x.join(":")));
-  return `<section class="context"><h3>${esc(t.title)}</h3><div class="era">${esc(ch.name)}${ch.span ? `, ${esc(ch.span)}` : ""}</div><p>${esc(t.text)}</p>${rest.length ? chips(rest) : ""}</section>`;
+  const tc = Object.values(CARD).filter(k => k.topic === t.id);
+  return `<section class="context"><h3>${esc(t.title)}</h3><div class="era">${esc(ch.name)}${ch.span ? `, ${esc(ch.span)}` : ""}${tc.length ? `<br>${cardCount(tc)}` : ""}</div><p>${esc(t.text)}</p>${rest.length ? chips(rest) : ""}</section>`;
 }
 const lfRefs = k => k.lf.length ? `<div class="lfrefs">Gehört zu ${esc(openName(DATA[k.course]))} ${k.lf.join(", ")}</div>` : "";
 const courseTag = cid => `<span class="ctag" style="--c:${DATA[cid].course.accent || "var(--petrol)"}">${esc(DATA[cid].course.short || "Geschichte")}</span>`;
@@ -247,7 +250,7 @@ function viewHub() {
     return `<button class="tile" data-go="#/${id}" style="--c:${c.course.accent || "#0F3D3E"}"><span class="tile-top"><b>${esc(id === "geschichte" ? "Geschichte der Sozialen Arbeit" : c.course.name)}</b>${ex && ex.left >= 0 ? `<em>${ex.left === 0 ? "Heute" : `${ex.left} ${ex.left === 1 ? "Tag" : "Tage"}`}</em>` : ""}</span>
       <span class="small">${esc(COURSE_LINE[id])}</span>
       <span class="tile-bar"><i style="width:${Math.round(pct * 100)}%"></i></span>
-      <span class="small">${r ? esc(r.name) + ", " : ""}${sub}</span></button>`;
+      <span class="small">${r ? esc(r.name) + ", " : ""}${sub}</span><span class="small">${cardCount(c.cards)}</span></button>`;
   };
   main.innerHTML = `<header class="hero"><div class="hero-in">
     <div class="hero-top"><h1>Sprengel</h1><div class="level">${esc(lv.name)}<br>${S.xp} XP</div></div>
@@ -256,7 +259,7 @@ function viewHub() {
       <div class="goal"><div class="bar"><i style="width:${Math.min(100, today / DAILY_GOAL * 100)}%"></i></div><span>Heute ${Math.min(today, DAILY_GOAL)} von ${DAILY_GOAL} XP</span></div>
     </div>
     <div class="starts">
-      <button class="start" data-run="mix"><b>Modul-Mix</b><span>12 Karten aus MatSi, Recht, SoPol und den Fällen</span></button>
+      <button class="start" data-run="mix"><b>Modul-Mix</b><span>12 Karten aus MATS, Recht und SoPol, aus den Fällen nur Einzelfragen</span></button>
       ${S.last && DATA[S.last] ? `<button class="start alt" data-go="#/${S.last}"><b>Weiter</b><span>${esc(DATA[S.last].course.short || "Geschichte")}</span></button>` : `<button class="start alt" data-go="#/faelle"><b>Fall</b><span>Fallwerkstatt öffnen</span></button>`}
     </div>
     <div class="quick">${wrong ? `<button data-run="wrongmix">Fehler im Modul üben (${wrong})</button>` : ""}<button data-go="#/netz">Exkurse zwischen den LVs</button></div>
@@ -315,6 +318,7 @@ function viewHome() {
     ${examBlock(ex)}
   </div></header>
   <div class="pad">
+    <p class="small count-all">Insgesamt ${cardCount(D.cards)}</p>
     ${D.course.upcoming ? `<p class="note upcoming">${esc(D.course.upcoming)}</p>` : ""}
     <h2 class="line-title">${esc(D.course.lineTitle || D.course.name)}</h2>
     <ol class="line">
@@ -323,7 +327,7 @@ function viewHome() {
         if (c.pending) return `<li class="stop pending"><span class="dot"></span><div class="stop-in"><h3>${esc(c.name)}</h3><div class="span">${esc(c.span)}</div><div class="sub">${esc(c.line)}</div></div></li>`;
         return `<li class="stop ${p >= .8 ? "done" : p > 0 ? "begun" : ""}">
           <span class="fill" style="height:${i < firstOpen || firstOpen < 0 ? "100%" : i === firstOpen ? Math.round(p * 100) + "%" : "0"}"></span><span class="dot"></span>
-          <button data-go="#/${id}/stoff/${c.id}"><h3>${esc(c.name)}</h3><div class="span">${esc(c.span)}${p > 0 ? `, ${Math.round(p * 100)} % gelernt` : ""}</div><div class="sub">${esc(c.line)}</div></button>
+          <button data-go="#/${id}/stoff/${c.id}"><h3>${esc(c.name)}</h3><div class="span">${esc(c.span)}${p > 0 ? `, ${Math.round(p * 100)} % gelernt` : ""}</div><div class="sub">${esc(c.line)}</div><div class="sub count">${cardCount(cardsIn(c.id))}</div></button>
         </li>`;
       }).join("")}
     </ol>
@@ -340,7 +344,7 @@ function viewCases() {
     <div class="quick">${wrong ? `<button data-run="wrong">Fehler üben (${wrong})</button>` : ""}<button data-run="blitz">Blitzrunde</button><button data-slide="cr:1">Fallanalyseraster öffnen</button></div>
   </div></header>
   <div class="pad">
-    <p class="note upcoming">Fallbearbeitung geht vor allem über MatSi. Punkte mit Recht-Blick und SoPol-Blick zeigen die Zusammenhänge. Die Lösungspunkte sind von Claude aus den Unterlagen abgeleitet und nicht von den Lehrenden; andere gut begründete Lösungen können genauso richtig sein.</p>
+    <p class="note upcoming">Fallbearbeitung geht vor allem über MATS. Punkte mit Recht-Blick und SoPol-Blick zeigen die Zusammenhänge. Die Lösungspunkte sind von Claude aus den Unterlagen abgeleitet und nicht von den Lehrenden; andere gut begründete Lösungen können genauso richtig sein.</p>
     <h2 class="line-title">Die Fälle</h2>
     <div class="tiles" style="margin-top:12px">${cases.map(cs => { const p = casePct(cs), d = caseDone(cs); return `<button class="tile case ${d ? "done" : ""}" data-go="#/faelle/fall/${cs.id}" style="--c:var(--petrol)"><span class="tile-top"><b>${esc(cs.title)}</b>${d ? `<em>Fertig</em>` : ""}</span><span class="small">${esc(cs.where)}, ${esc(cs.who)}</span><span class="tile-bar"><i style="width:${Math.round(p * 100)}%"></i></span><span class="ctags">${cs.tags.map(t => `<span class="ctag plain">${esc(t)}</span>`).join("")}</span></button>`; }).join("")}</div>
   </div>`;
@@ -429,7 +433,7 @@ function startRun(kind, opts = {}) {
   } else if (kind === "wrongmix") {
     items = spread(shuffle(wrongCards(MODULE)).slice(0, 12)); title = "Fehler üben";
   } else if (kind === "mix") {
-    const pool = MODULE.flatMap(id => DATA[id].cards);
+    const pool = MODULE.flatMap(id => DATA[id].cards).filter(k => k.course !== "faelle" || k.solo); // Fallketten und Reihungen brauchen den ganzen Fall
     items = pick(pool, 12); title = "Modul-Mix";
   } else if (kind === "chapter") {
     const ch = chapterOf(opts.ch);
@@ -731,7 +735,7 @@ function viewChapter(id) {
   const lfs = D.leitfragen.filter(l => l.ch === id);
   const hasCards = cardsIn(id).length > 0;
   main.innerHTML = `<div class="pad"><button class="back" data-go="#/${cid}/stoff">Stoff</button>
-    <h1 class="h1" style="margin-top:6px">${esc(c.name)}</h1><p class="lead">${esc(c.span)}, ${Math.round(chapterPct(id) * 100)} % gelernt</p>
+    <h1 class="h1" style="margin-top:6px">${esc(c.name)}</h1><p class="lead">${esc(c.span)}, ${Math.round(chapterPct(id) * 100)} % gelernt<br>${cardCount(cardsIn(id))}</p>
     <div class="pcta">${hasCards ? `<button class="btn" data-ch-run="${id}">${cid === "geschichte" ? "Diese Station üben" : "Dieses Kapitel üben"}</button>` : ""}${chapterDocs(c).map(([d, p], i) => `<button class="btn ghost" data-slide="${d}:${p}">${i ? `${esc(docName(d))}, S. ${p}` : `Dokument öffnen, S. ${p}`}</button>`).join("")}${c.book ? `<button class="btn ghost" data-slide="j:${c.book}">Im Zusatztext lesen</button>` : ""}</div>
     ${lfs.length ? `<section class="section"><h2>${esc(D.course.openNamePl || "Leitfragen")} dazu</h2><ol class="lflist" style="margin-top:0">${lfs.map(l => `<li class="${stamped(l.n) ? "done" : ""}"><button data-go="#/${cid}/lf/${l.n}"><span class="n">${l.n}</span><span>${esc(l.q)}</span></button></li>`).join("")}</ol></section>` : ""}
     <section class="section"><h2>Zusammenfassung</h2><div class="reading">${tp.map(t => context(t)).join("")}</div></section></div>`;
