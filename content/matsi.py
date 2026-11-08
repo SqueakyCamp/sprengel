@@ -499,3 +499,7 @@ TRAP("Geringfügig dazuverdienen zum Arbeitslosengeld?","Das MATS-Skriptum schre
 
 import matsi_plus
 matsi_plus.add(c)
+
+# Reihenfolge der Linie (Wunsch 9.11.2026): Familienleistungen und weitere Ansprüche nach m1, Grundversorgung und Wohnen nach m6
+ORDER = ["m1","m12","m13","m2","m3","m4","m5","m6","m14","m15","m7","m8","m9","m10","m11"]
+c.chapters.sort(key=lambda ch: ORDER.index(ch["id"]))
