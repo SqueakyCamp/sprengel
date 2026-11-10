@@ -4,17 +4,17 @@
 const STORE = "sprengel.v1";
 const DAILY_GOAL = 60;
 const BOX_DAYS = [0, 1, 2, 4, 8, 16];
-const COURSE_IDS = ["matsi", "recht", "sopol", "faelle", "geschichte"];
+const COURSE_IDS = ["matsi", "recht", "sopol", "faelle", "geschichte", "orbe"];
 const MODULE = ["matsi", "recht", "sopol", "faelle"];
 const COURSE_DOCS = {
   geschichte: ["e", "a1", "a2", "eb", "rw", "t", "n", "zs", "z", "lf", "j"], matsi: ["msp", "msk"],
   recht: ["f2", "f3", "f4", "f5", "f6", "f7", "rv", "r2", "r3"], sopol: ["s1", "s2", "s3", "s4", "s5", "s6", "zb", "zf", "zn", "zt", "zw"],
-  faelle: ["cr", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "cu", "cb"],
+  orbe: ["ob"], faelle: ["cr", "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "cu", "cb"],
 };
-const NAV_LABEL = { geschichte: "Leitfragen", recht: "Fernlehre", matsi: "Kernfragen", sopol: "Kernfragen" };
+const NAV_LABEL = { geschichte: "Leitfragen", recht: "Fernlehre", matsi: "Fragen", sopol: "Kernfragen", orbe: "Fragen" };
 const COURSE_LINE = {
   geschichte: "Leitfragen, Zeitstrahl, Personen", matsi: "WMS, Wohnen, Schulden", recht: "Fernlehren, Instanzen, Fristen",
-  sopol: "Gerechtigkeit, Sozialstaat, Arbeit, Vermögen", faelle: "11 Fälle nach dem Raster",
+  sopol: "Gerechtigkeit, Sozialstaat, Arbeit, Vermögen", faelle: "11 Fälle nach dem Raster", orbe: "Berufsfelder, Einrichtungen, Altfragen",
 };
 const LEVELS = [
   [0, "Ehrenamt"], [150, "Berufspflege"], [400, "Fachkurs"], [800, "Fürsorgeschule"], [1400, "Sprengeldienst"],
@@ -253,7 +253,7 @@ function viewHub() {
       <span class="small">${r ? esc(r.name) + ", " : ""}${sub}</span><span class="small">${cardCount(c.cards)}</span></button>`;
   };
   main.innerHTML = `<header class="hero"><div class="hero-in">
-    <div class="hero-top"><h1>Sprengel</h1><div class="level">${esc(lv.name)}<br>${S.xp} XP</div></div>
+    <div class="hero-top"><h1>Sprengel</h1><button class="level" data-go="#/stufen" aria-label="Stufe ${esc(lv.name)}, alle Stufen ansehen">${esc(lv.name)}<br>${S.xp} XP ›</button></div>
     <div class="stats">
       <div class="stat"><b>${st}</b><span>${st === 1 ? "Tag" : "Tage"} in Folge</span></div>
       <div class="goal"><div class="bar"><i style="width:${Math.min(100, today / DAILY_GOAL * 100)}%"></i></div><span>Heute ${Math.min(today, DAILY_GOAL)} von ${DAILY_GOAL} XP</span></div>
@@ -267,7 +267,7 @@ function viewHub() {
   <div class="pad">
     <section class="section" style="margin-top:18px"><h2>Tagesaufträge</h2><ul class="quests">${q.pick.map(i => { const [k, goal, label] = QUESTS[i], n = Math.min(q.n[k] || 0, goal), done = q.done.includes(i); return `<li class="${done ? "done" : ""}"><span>${esc(label)}</span><b>${done ? "+15 XP" : `${n}/${goal}`}</b></li>`; }).join("")}</ul></section>
     <section class="section"><h2>Modul Grundsicherung</h2><div class="tiles">${MODULE.map(tile).join("")}</div></section>
-    <section class="section"><h2>Weitere Lehrveranstaltungen</h2><div class="tiles">${tile("geschichte")}</div></section>
+    <section class="section"><h2>Weitere Lehrveranstaltungen</h2><div class="tiles">${tile("orbe")}${tile("geschichte")}</div></section>
   </div>`;
 }
 
@@ -450,6 +450,15 @@ function startRun(kind, opts = {}) {
     const n = D.course.id === "geschichte" ? 7 : Math.min(5, D.leitfragen.length);
     items = shuffle(D.leitfragen).slice(0, n).map(l => ({ type: "open", id: "lf" + l.n, lf: [l.n], leit: l, exam: true }));
     title = "Probeprüfung";
+  } else if (kind === "pf") {
+    const pool = pfCards().filter(k => !opts.block || k.pf === opts.block);
+    items = opts.one ? pool.filter(k => k.id === opts.one) : spread(shuffle(pool).sort((a, b) => (S.cards[a.id]?.box || 0) - (S.cards[b.id]?.box || 0)).slice(0, 15));
+    title = opts.block || pfName();
+  } else if (kind === "pfwrong") {
+    items = shuffle(pfCards().filter(k => S.cards[k.id]?.seen && S.cards[k.id].box === 0)); title = "Falsche wiederholen";
+  } else if (kind === "pfexam") {
+    const pf = D.course.pf, all = pfCards();
+    items = shuffle(all).slice(0, Math.min(pf.n || all.length, all.length)); title = "Prüfungssimulation";
   } else if (kind === "chains") {
     items = spread(shuffle(D.cards.filter(k => k.type === "chain")).sort((a, b) => (S.cards[a.id]?.box || 0) - (S.cards[b.id]?.box || 0)).slice(0, 4)); title = "Fallketten";
   } else if (kind === "calc") {
@@ -475,6 +484,7 @@ function startRun(kind, opts = {}) {
   document.body.classList.add("running");
   history.pushState({ run: 1 }, "", "#/fahrt");
   if (kind === "blitz") { R.end = Date.now() + 60000; R.timer = setInterval(blitzTick, 250); R.wrongList = []; }
+  if (kind === "pfexam") { R.quiet = true; R.end = Date.now() + D.course.pf.minutes * 60000; R.timer = setInterval(pfTick, 500); }
   renderCard();
 }
 function endRun() { if (R?.timer) clearInterval(R.timer); R = null; document.body.classList.remove("running"); }
@@ -486,13 +496,20 @@ function blitzTick() {
   if (left <= 0) { clearInterval(R.timer); renderArrive(); }
 }
 
+function pfTick() {
+  if (!R) return;
+  const left = R.end - Date.now(), lab = $("#pfclock");
+  if (lab) lab.textContent = clock(left);
+  if (left <= 0) { clearInterval(R.timer); R.timeout = true; renderArrive(); }
+}
+const clock = ms => { const t = Math.max(0, Math.ceil(ms / 1000)); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, "0")}`; };
 function runHeader(item) {
   if (R.kind === "blitz") return `<div class="run-top"><button class="run-x" data-quit aria-label="Runde beenden">×</button><div class="track blitz"><i id="blitzbar" style="width:${Math.max(0, (R.end - Date.now()) / 600)}%"></i></div><div class="combo"><span id="blitzsec">${Math.max(0, Math.ceil((R.end - Date.now()) / 1000))}</span></div></div>`;
   const sober = isSober(item);
   const n = R.items.length;
   return `<div class="run-top"><button class="run-x" data-quit aria-label="Runde beenden">×</button>
     <div class="track" aria-label="Karte ${R.i + 1} von ${n}"><i style="width:${R.i / n * 100}%"></i>${n <= 18 ? R.items.map((_, i) => `<b class="${i < R.i ? "on" : ""}"></b>`).join("") : ""}</div>
-    <div class="combo">${!sober && R.combo >= 3 ? `${R.combo}×` : ""}</div></div>`;
+    <div class="combo">${R.kind === "pfexam" ? `<span id="pfclock">${clock(R.end - Date.now())}</span>` : !sober && R.combo >= 3 ? `${R.combo}×` : ""}</div></div>`;
 }
 const isSober = item => item.topic ? chapterOf(topicOf(item.topic).ch).sober : (item.leit && chapterOf(item.leit.ch)?.sober);
 
@@ -574,13 +591,14 @@ function score(k, ok) {
   if (ok) { R.right++; R.combo++; R.bestCombo = Math.max(R.bestCombo, R.combo); S.bestCombo = Math.max(S.bestCombo, R.combo); }
   else {
     R.combo = 0; R.missed.push(k);
-    if (!R.retry.has(k.id) && R.kind !== "exam" && R.kind !== "blitz") { R.retry.add(k.id); R.items.push(k); } // am Ende nochmal
+    if (!R.retry.has(k.id) && R.kind !== "exam" && R.kind !== "blitz" && R.kind !== "pfexam") { R.retry.add(k.id); R.items.push(k); } // am Ende nochmal
   }
   R.xp += gain; addXp(gain, k.course); questTick("cards"); save();
   if (navigator.vibrate) navigator.vibrate(ok ? 12 : [25, 40, 25]);
   return gain;
 }
 function feedback(k, ok, gain, givenHtml) {
+  if (R.quiet) { R.answered = true; nextCard(); return; }
   const t = topicOf(k.topic), sober = isSober(k), l = sober ? null : linkFor(k);
   R.answered = true;
   const res = sober
@@ -653,29 +671,62 @@ function renderArrive() {
   const n = DATA.geschichte ? stampCount(DATA.geschichte) : 0;
   const badge = BADGES.filter(b => b[3](S, n) && !S["b_" + b[0]]);
   badge.forEach(b => S["b_" + b[0]] = 1); save();
+  const pfLine = r.kind === "pfexam" ? (() => { const pct = Math.round(r.right / r.items.length * 100), id = D.course.id; S.pfBest = S.pfBest || {}; S.pfBest[id] = Math.max(S.pfBest[id] || 0, pct); save();
+    return `<div><b>${pct} %</b><span>von ${r.items.length} richtig</span></div>`; })() : "";
+  const pfReview = r.kind === "pfexam" ? `<section class="review"><h2>${r.timeout ? "Zeit abgelaufen. " : ""}${r.missed.length ? "Das war nicht richtig" : "Alles richtig!"}</h2>
+    ${r.timeout && r.items.length > r.total ? `<p class="small">${r.items.length - r.total} Fragen nicht mehr beantwortet.</p>` : ""}
+    <div class="reading">${r.missed.map(k => `<div class="item"><h3>${esc(k.q)}</h3><p><b>${esc(rightText(k))}</b></p><p class="small">${esc(k.why)}</p>${chips(k.src)}</div>`).join("")}</div></section>` : "";
   const examLine = r.examPts[1] ? `<div><b>${Math.round(r.examPts[0] / r.examPts[1] * 100)} %</b><span>der Punkte genannt</span></div>` : "";
-  const back = r.kind === "mix" || r.kind === "wrongmix" ? "#/" : "#/" + (D?.course.id || "");
+  const back = r.kind === "mix" || r.kind === "wrongmix" ? "#/" : r.kind.startsWith("pf") ? `#/${D.course.id}/lf` : "#/" + (D?.course.id || "");
   const caseId = r.items[0]?.cs?.id;
   endRun();
   history.replaceState(null, "", "#/angekommen");
-  main.innerHTML = `<div class="pad arrive"><h1>${r.kind === "exam" ? "Probeprüfung fertig" : r.kind === "blitz" ? `${r.right} richtig` : "Angekommen"}</h1>
-    <div class="score">${examLine}<div><b>+${r.xp}</b><span>XP</span></div>${r.kind === "exam" || !r.total ? "" : `<div><b>${r.right}/${r.total}</b><span>richtig</span></div>`}<div><b>${streak()}</b><span>Tage in Folge</span></div></div>
+  main.innerHTML = `<div class="pad arrive"><h1>${r.kind === "pfexam" ? "Simulation fertig" : r.kind === "exam" ? "Probeprüfung fertig" : r.kind === "blitz" ? `${r.right} richtig` : "Angekommen"}</h1>
+    <div class="score">${pfLine}${examLine}<div><b>+${r.xp}</b><span>XP</span></div>${r.kind === "exam" || r.kind === "pfexam" || !r.total ? "" : `<div><b>${r.right}/${r.total}</b><span>richtig</span></div>`}<div><b>${streak()}</b><span>Tage in Folge</span></div></div>
     ${today >= DAILY_GOAL && today - r.xp < DAILY_GOAL ? `<p style="margin-top:14px"><b>Tagesziel geschafft.</b></p>` : ""}
     ${newStamps > 0 ? `<p style="margin-top:14px"><b>${newStamps === 1 ? "Neuer Stempel" : newStamps + " neue Stempel"}</b> auf deiner Karte.</p>` : ""}
+    ${pfReview}
     ${badge.length ? `<div class="badges">${badge.map(b => `<div class="badge on"><b>${esc(b[1])}</b>${esc(b[2])}</div>`).join("")}</div>` : ""}
-    ${missedTopics.length || missedLf.length ? `<section class="review"><h2>Noch einmal nachlesen</h2>
+    ${r.kind !== "pfexam" && (missedTopics.length || missedLf.length) ? `<section class="review"><h2>Noch einmal nachlesen</h2>
       <ul>${missedLf.map(l => `<li><button class="back" data-go="#/${l.course}/lf/${l.n}">${esc(openName(DATA[l.course]))} ${l.n}</button></li>`).join("")}</ul>
       <div class="reading">${missedTopics.slice(0, 3).map(t => context(t)).join("")}</div></section>` : ""}
-    <div style="margin-top:22px">${caseId ? `<button class="btn" data-go="#/faelle/fall/${caseId}">Zum Fall</button>` : `<button class="btn" data-run="${r.kind === "mix" ? "mix" : "5"}">Noch eine Runde</button>`}<button class="btn ghost" data-go="${back}">Zurück</button></div></div>`;
+    <div style="margin-top:22px">${caseId ? `<button class="btn" data-go="#/faelle/fall/${caseId}">Zum Fall</button>` : `<button class="btn" data-run="${r.kind === "mix" ? "mix" : r.kind === "pfexam" ? "pfexam" : "5"}">Noch eine Runde</button>`}<button class="btn ghost" data-go="${back}">Zurück</button></div></div>`;
   if (back === "#/") renderNav("hub"); else renderNav("home", D);
   window.scrollTo(0, 0);
 }
 
 /* ---------- Offene Fragen ---------- */
+let lfTab = {};
+const pfCards = (c = D) => c.cards.filter(k => k.pf);
+const pfName = (c = D) => c.course.pf.blocks.length === 1 ? c.course.pf.blocks[0] : "Prüfungsfragen";
+const lfTabs = () => D.course.pf ? `<div class="tabs"><button aria-pressed="${lfTab[D.course.id] !== "pf"}" data-lf-tab="kf">${esc(D.course.openNamePl)}</button><button aria-pressed="${lfTab[D.course.id] === "pf"}" data-lf-tab="pf">${esc(pfName())}</button></div>` : "";
+function rightText(k) {
+  if (k.type === "mc") return k.right;
+  if (k.type === "tf") return k.val ? "Stimmt" : "Falsch";
+  if (k.type === "multi") return k.right.join(" · ");
+  if (k.type === "match") return k.pairs.map(p => p[0] + ": " + p[1]).join(" · ");
+  if (k.type === "bucket") return k.items.map(x => x[0] + " → " + k.buckets[x[1]]).join(" · ");
+  return "";
+}
+function viewPf() {
+  const pf = D.course.pf, all = pfCards(), id = D.course.id;
+  const st = k => !S.cards[k.id]?.seen ? "" : S.cards[k.id].box > 0 ? "ok" : "bad";
+  const wrong = all.filter(k => st(k) === "bad").length, n = Math.min(pf.n || all.length, all.length);
+  const block = b => { const ks = all.filter(k => k.pf === b);
+    return `<section class="section"><h2>${esc(b)}</h2><p class="small">${cardCount(ks)}</p>
+      <div class="pcta" style="margin-top:6px"><button class="btn small" data-pf-run="${esc(b)}">${ks.length > 15 ? `Üben, 15 von ${ks.length} pro Runde` : `${ks.length} Fragen üben`}</button></div>
+      <ol class="pflist">${ks.map((k, i) => `<li class="${st(k)}"><button data-pf-one="${k.id}"><span class="n">${pf.ordered ? i + 1 : st(k) === "ok" ? "✓" : st(k) === "bad" ? "✗" : "·"}</span><span>${esc(k.q)}${st(k) ? `<small>${st(k) === "ok" ? "zuletzt richtig" : "zuletzt falsch"}</small>` : ""}</span></button></li>`).join("")}</ol></section>`; };
+  main.innerHTML = `<div class="pad"><h1 class="h1">${esc(pfName())}</h1>${lfTabs()}
+    <p class="lead">${esc(pf.info)}</p><p class="small">Insgesamt ${cardCount(all)}.${S.pfBest?.[id] !== undefined ? ` Beste Simulation: ${S.pfBest[id]} %.` : ""}</p>
+    <div class="pcta"><button class="btn" data-run="pfexam">Simulation, ${n} Fragen in ${pf.minutes} Min.</button>${wrong ? `<button class="btn ghost" data-run="pfwrong">Falsche wiederholen (${wrong})</button>` : ""}${pf.blocks.length > 1 ? `<button class="btn ghost" data-pf-run="">Alle gemischt üben</button>` : ""}</div>
+    <p class="small" style="margin-top:6px">In der Simulation gibt es keine Rückmeldung zwischendurch, die Auflösung kommt am Ende.</p>
+    ${pf.blocks.map(block).join("")}</div>`;
+}
 function viewLf() {
+  if (D.course.pf && lfTab[D.course.id] === "pf") return viewPf();
   const id = D.course.id, lead = D.course.openLead || "Die Prüfung stellt 7 Überblicksfragen aus diesem Themenkreis. Ein Stempel kommt, wenn du die Punkte frei nennen kannst und die Quizkarten sitzen.";
   let lastGroup = null;
-  main.innerHTML = `<div class="pad"><h1 class="h1">${id === "geschichte" ? "Stempelkarte" : esc(D.course.openNamePl)}</h1>
+  main.innerHTML = `<div class="pad"><h1 class="h1">${id === "geschichte" ? "Stempelkarte" : esc(D.course.openNamePl)}</h1>${lfTabs()}
     <p class="lead">${esc(lead)}</p>
     <div class="stamps">${D.leitfragen.map(l => { const s = lfScore(l.n), d = stamped(l.n); return `<button class="field ${d ? "done" : ""}" data-go="#/${id}/lf/${l.n}" aria-label="${esc(openName())} ${l.n}, ${s} Prozent"><i style="height:${s}%"></i><span>${l.n}</span></button>`; }).join("")}</div>
     <div class="pcta"><button class="btn" data-run="exam">${id === "geschichte" ? "Probeprüfung starten" : "Probelauf starten"}</button></div>
@@ -741,11 +792,26 @@ function viewChapter(id) {
     <section class="section"><h2>Zusammenfassung</h2><div class="reading">${tp.map(t => context(t)).join("")}</div></section></div>`;
 }
 
+/* ---------- Stufen ---------- */
+function viewLevels() {
+  const lv = level();
+  const row = (r, i, cur, xp, list) => { const next = list[i + 1], done = xp >= r[0], here = i === cur;
+    return `<li class="lvl ${done ? "done" : ""} ${here ? "here" : ""}"><span class="n">${done ? "✓" : i + 1}</span><span><b>${esc(r[1])}</b><small>${r[0]} XP${here ? (next ? `, du bist hier, noch ${next[0] - xp} XP bis „${esc(next[1])}“` : ", höchste Stufe erreicht") : done ? ", erreicht" : `, noch ${r[0] - xp} XP`}</small></span></li>`; };
+  const rankIdx = (r, xp) => { let i = 0; while (i + 1 < r.length && xp >= r[i + 1][0]) i++; return i; };
+  main.innerHTML = `<div class="pad"><button class="back" data-go="#/ich">Ich</button><h1 class="h1" style="margin-top:6px">Stufen</h1>
+    <p class="lead">Du hast ${S.xp} XP und bist „${esc(lv.name)}“. XP gibt es für jede Karte, für freie Antworten, Tagesaufträge und Exkurse.</p>
+    <ol class="lflist lvls">${LEVELS.map((r, i) => row(r, i, lv.i, S.xp, LEVELS)).join("")}</ol>
+    <section class="section"><h2>Ränge in den Lehrveranstaltungen</h2><p class="small">Jede LV hat eigene Ränge, gezählt werden nur die XP aus dieser LV.</p>
+    ${COURSE_IDS.map(id => { const c = DATA[id], r = c.course.ranks; if (!r) return ""; const xp = S.cx[id] || 0;
+      return `<details class="rankbox"><summary><b>${esc(c.course.short || "Geschichte")}</b> <span class="small">${esc(r[rankIdx(r, xp)][1])}, ${xp} XP</span></summary><ol class="lflist lvls">${r.map((x, i) => row(x, i, rankIdx(r, xp), xp, r)).join("")}</ol></details>`; }).join("")}</section></div>`;
+}
+
 /* ---------- Ich ---------- */
 function viewMe() {
   const lv = level(), n = stampCount(DATA.geschichte);
   const seen = Object.keys(S.cards).length, total = COURSE_IDS.reduce((a, id) => a + DATA[id].cards.length, 0);
   main.innerHTML = `<div class="pad"><h1 class="h1">${esc(lv.name)}</h1>
+    <button class="btn small ghost" data-go="#/stufen" style="margin-top:6px">Alle Stufen ansehen</button>
     <div class="levelbar"><div class="progress"><i style="width:${lv.pct * 100}%"></i></div>
     <p class="small" style="margin-top:4px">${S.xp} XP${lv.next ? `, nächste Stufe „${esc(lv.next[1])}“ bei ${lv.next[0]} XP` : ""}</p></div>
     <p class="small" style="margin-top:6px">${seen} von ${total} Karten gesehen, längste Serie ${S.bestStreak} Tage, ${casesDone()} Fälle fertig, ${Object.keys(S.links).length} Exkurse gelesen</p>
@@ -753,7 +819,7 @@ function viewMe() {
     <section class="section"><h2>Abzeichen</h2><div class="badges">${BADGES.map(b => `<div class="badge ${b[3](S, n) ? "on" : ""}"><b>${esc(b[1])}</b>${esc(b[2])}</div>`).join("")}</div></section>
     <section class="section"><h2>Prüfungstermine</h2>
       ${COURSE_IDS.filter(id => id !== "faelle").map(id => { const c = DATA[id], ex = c.course.exams || [], cur = daysToExam(c); return `<div class="exam-row"><b>${esc(c.course.short || "Geschichte")}</b>${ex.length ? `<div class="field-row">${ex.map(e => `<button class="btn small ${cur?.id === e.id ? "" : "ghost"}" data-exam2="${id}:${e.id}">${esc(e.label)}, ${e.date.slice(8)}.${e.date.slice(5, 7)}.</button>`).join("")}</div>` : `<form class="field-row" data-exam-form data-c="${id}"><input name="d" type="date" value="${esc(S.exDate[id] || "")}" aria-label="Prüfungstermin ${esc(c.course.short)}"><button class="btn small ghost">Speichern</button></form>`}</div>`; }).join("")}
-      <p class="small" style="margin-top:6px">SoPol-Termin laut Semesterplan, Geschichte laut Einführungsfolie. Bei Geschichte kommt die schriftliche Reflexion mit mindestens 3500 Zeichen dazu.</p></section>
+      <p class="small" style="margin-top:6px">ORBE-Termin bitte selbst eintragen. SoPol-Termin laut Semesterplan, Geschichte laut Einführungsfolie. Bei Geschichte kommt die schriftliche Reflexion mit mindestens 3500 Zeichen dazu.</p></section>
     <section class="section"><h2>Folien</h2>
       ${S.key ? `<p>Folien sind freigeschaltet.</p>` : `<p>Folien sind gesperrt. Gib den Code ein, um sie zu öffnen.</p><form class="field-row" data-unlock-form><input type="text" name="code" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Zugangscode" aria-label="Zugangscode"><button class="btn small">Freischalten</button></form><p class="small" data-unlock-msg></p>`}
       ${S.key ? `<div class="field-row"><button class="btn small ghost" data-offline>${S.offline ? "Folien und Texte neu für offline laden" : "Alle Folien und Texte für offline laden (ca. 130 MB)"}</button></div><div id="dl" hidden><div class="progress"><i style="width:0"></i></div><p class="small" style="margin-top:4px"></p></div>` : ""}
@@ -871,6 +937,9 @@ document.addEventListener("click", e => {
   if (has("data-go")) { if (R) quitRun(); go(a("data-go")); return; }
   if (has("data-run")) { startRun(a("data-run")); return; }
   if (has("data-ch-run")) { startRun("chapter", { ch: a("data-ch-run") }); return; }
+  if (has("data-lf-tab")) { lfTab[D.course.id] = a("data-lf-tab"); viewLf(); return; }
+  if (has("data-pf-run")) { startRun("pf", { block: a("data-pf-run") }); return; }
+  if (has("data-pf-one")) { startRun("pf", { one: a("data-pf-one") }); return; }
   if (has("data-lf-run")) { startRun("lf", { n: +a("data-lf-run") }); return; }
   if (has("data-open-run")) { startRun("open", { n: +a("data-open-run") }); return; }
   if (has("data-case-all")) { startRun("case", { id: a("data-case-all") }); return; }
@@ -994,6 +1063,7 @@ function route() {
     else viewHome();
   } else if (p[0] === "ich") { clearCourse(); renderNav("me", D && S.last ? DATA[S.last] : null); viewMe(); }
   else if (p[0] === "netz") { renderNav("netz"); viewNet(); }
+  else if (p[0] === "stufen") { clearCourse(); renderNav("me", null); viewLevels(); }
   else { renderNav("hub"); viewHub(); }
   window.scrollTo(0, 0);
   main.focus({ preventScroll: true });
@@ -1016,6 +1086,14 @@ window.addEventListener("popstate", () => {
     c.cards.forEach(k => { k.course = id; CARD[k.id] = k; });
     c.leitfragen.forEach(l => { l.course = id; });
   });
+  // MATS-Kernfragen wurden am 11.11.2026 neu nummeriert: gespeicherten Fortschritt mitnehmen
+  const rn = DATA.matsi?.course.renumber;
+  if (rn && !S.migMatsi1) {
+    const lo = {}, peek = {};
+    for (const [k, v] of Object.entries(S.lfOpen)) { const m = k.match(/^matsi:(\d+)$/); lo[m && rn[m[1]] ? "matsi:" + rn[m[1]] : k] = v; }
+    for (const k of Object.keys(S)) { const m = k.match(/^peekmatsi:(\d+)$/); if (m) { peek["peekmatsi:" + (rn[m[1]] || m[1])] = S[k]; delete S[k]; } }
+    S.lfOpen = lo; Object.assign(S, peek); S.migMatsi1 = 1; save();
+  }
   const hk = location.hash.match(/^#key=(.+)$/);
   if (hk) {
     try { await unlock(decodeURIComponent(hk[1])); } catch {}

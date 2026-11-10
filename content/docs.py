@@ -25,6 +25,8 @@ DOCS = {
   "zn": ("Nullmeier 2019 - Begründungen des Wohlfahrtsstaats.pdf", "Zusatztext: Nullmeier 2019", True),
   "zt": ("Tálos Obinger 2020, S. 9-23.pdf", "Zusatztext: Tálos/Obinger 2020", True),
   "zw": ("WuG_2023_3_02+WEB.pdf", "Zusatztext: Wirtschaft & Gesellschaft 2023", True),
+  # Orientierung und Berufsfelder
+  "ob": ("VO_OR_Berufsfelder_Skriptum_2026_27.pdf", "ORBE Skriptum", False),
   # Fälle
   "cr": ("Fallanalyseraster-1.pdf", "Fallanalyseraster", False),
   "c1": ("2026 Teamteaching_Fall 1 Herr Z..pdf", "Fall 1: Herr Z.", False),
@@ -53,12 +55,14 @@ WEB = {
   "io": ("RIS: Insolvenzordnung (§§ 28, 29, 43, 199)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001736"),
   "eheg": ("RIS: Ehegesetz (§ 98 Ausfallsbürgschaft)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10001871"),
   "mschg": ("RIS: Mutterschutzgesetz (§§ 15, 15a Karenz)", "https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10008464"),
+  "kja": ("Stadt Wien, MA 13: Folder Wiener Kinder- und Jugendarbeit (im Skriptum S. 86 zitiert)", "https://www.wien.gv.at/freizeit/bildungjugend/pdf/leporello-folder.pdf"),
   "shneu": ("Bundeskanzleramt: Ministerratsvortrag zur Sozialhilfe NEU", "https://www.bundeskanzleramt.gv.at/dam/jcr:4aedd2b4-539a-4e30-81e4-53fae18b6699/21a_1_mrv.pdf"),
 }
 # Nur zum Weiterlesen, daraus stammt keine Aussage in der App.
 MORE = {
   "matsi": [("Fonds Soziales Wien", "https://www.fsw.at/"), ("Schuldenberatung Wien", "https://www.schuldenberatung.wien/"), ("Stadt Wien", "https://www.wien.gv.at/")],
   "recht": [("oesterreich.gv.at: Themen", "https://www.oesterreich.gv.at/de/themen"), ("Jusline", "https://www.jusline.at/"), ("RIS", "https://www.ris.bka.gv.at/")],
+  "orbe": [("Fonds Soziales Wien", "https://www.fsw.at/"), ("Sozialinfo Wien", "https://sozialinfo.wien.at/"), ("Neustart", "https://www.neustart.at/")],
   "sopol": [("Armutskonferenz", "https://www.armutskonferenz.at/armut-in-oesterreich/aktuelle-armuts-und-verteilungszahlen.html"), ("wahlkabine.at", "https://wahlkabine.at/nationalratswahl-2024/stellungnahmen"), ("verteilung.at", "https://www.verteilung.at")],
 }
 # Zahlen, die nur in Grafiken stehen (von Hand abgelesen), damit die Zahlenpruefung sie kennt.

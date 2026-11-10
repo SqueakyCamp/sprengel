@@ -503,3 +503,21 @@ matsi_plus.add(c)
 # Reihenfolge der Linie (Wunsch 9.11.2026): Familienleistungen und weitere Ansprüche nach m1, Grundversorgung und Wohnen nach m6
 ORDER = ["m1","m12","m13","m2","m3","m4","m5","m6","m14","m15","m7","m8","m9","m10","m11"]
 c.chapters.sort(key=lambda ch: ORDER.index(ch["id"]))
+
+# Kernfragen nach der Reihung der Linie nummerieren (Wunsch 11.11.2026). RENUMBER alt -> neu, die App zieht den Fortschritt mit.
+_old = sorted(c.opens, key=lambda o: (ORDER.index(o["ch"]), o["n"]))
+RENUMBER = {o["n"]: i + 1 for i, o in enumerate(_old)}
+for o in c.opens: o["n"] = RENUMBER[o["n"]]
+c.opens.sort(key=lambda o: o["n"])
+for k in c.cards: k["lf"] = [RENUMBER[n] for n in k["lf"]]
+
+# Pruefungsfragen aus der Sammlung „MATS Fragen“, eigener Tab
+import matsi_pf
+matsi_pf.add(c)
+c.meta["pf"] = dict(blocks=matsi_pf.BLOCKS, info=matsi_pf.INFO, n=40, minutes=30)
+c.meta["renumber"] = {str(a): b for a, b in RENUMBER.items() if a != b}
+TRAP("Mitschrift: subsidiär Schutzberechtigte bekommen WMS?","Die Mitschrift zu den Prüfungsfragen zählt subsidiär Schutzberechtigte noch zu den Berechtigten. Seit der Novelle 2026 sind sie ausgeschlossen (Präsentation: NEU). Die Karten folgen der Präsentation.",[("msp",11)])
+TRAP("Mitschrift: Bezirksgericht bis 15.000, Landesgericht bis 75.000","Die Mitschrift folgt hier dem Skriptum (Bezirksgericht bis 15.000 Euro, Mahnklage am Landesgericht bis 75.000 Euro, darüber ordentliches Verfahren). Die Präsentation schreibt Bezirksgericht bis 75.000 Euro.",[("msk",117),("msp",62)])
+TRAP("Mitschrift: Tilgungsplan 3 Jahre","Die Mitschrift nennt einen 3-jährigen Tilgungsplan. Laut Skriptum steht er Privatpersonen seit 16.7.2026 nicht mehr zur Verfügung; der Abschöpfungsplan dauert 5 Jahre, der Zahlungsplan höchstens 7.",[("msk",129),("msp",71)])
+TRAP("Mitschrift: Wohnbedarfsgründe für Gemeindewohnungen","Die Mitschrift listet Wohnbedarfsgründe wie Jungwiener*innen unter 30 und Alleinerziehende. Seit der Wohnungsvergabe NEU (September 2026) arbeitet das Skriptum mit Bonuspunkten, etwa Jungwiener*in unter 25. Gelernt wird die Fassung des Skriptums.",[("msk",73)])
+TRAP("Mitschrift: Schuldenberatung vertritt nicht vor Gericht","Skriptum S. 104: Berater*innen staatlich anerkannter Schuldenberatungen dürfen im Privatkonkurs begleiten und rechtlich vertreten. Skriptum S. 109: In Wien wird in der Regel keine Vertretung übernommen. Die Prüfungsfrage zielt auf die Berechtigung, also: Vertreten ist erlaubt.",[("msk",104),("msk",109)])

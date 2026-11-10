@@ -153,7 +153,7 @@ def build(name):
     (ROOT / f"site/data/{name}.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")))
     print(name, "Karten", len(out), "Themen", len(c.topics), "Fragen", len(c.opens))
 
-for n in ["recht", "matsi", "sopol", "faelle"]:
+for n in ["recht", "matsi", "sopol", "faelle", "orbe"]:
     build(n)
 
 import links

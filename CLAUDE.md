@@ -1,6 +1,6 @@
 # Sprengel
 
-Mobiles Lernzentrum fuer das Studium Soziale Arbeit, statisch auf GitHub Pages. LVs: Geschichte der Sozialen Arbeit und das Modul Grundsicherung (Materielle Sicherung, Recht, Sozialpolitik, Fallwerkstatt). Uebergreifend: XP, Level, Streak, Tagesauftraege, Abzeichen, Exkurse.
+Mobiles Lernzentrum fuer das Studium Soziale Arbeit, statisch auf GitHub Pages. LVs: Geschichte der Sozialen Arbeit, ORBE (Orientierung und Berufsfelder) und das Modul Grundsicherung (Materielle Sicherung, Recht, Sozialpolitik, Fallwerkstatt). Uebergreifend: XP, Level, Streak, Tagesauftraege, Abzeichen, Exkurse.
 
 - `content/geschichte.py`: alle Lerninhalte (Karten, Themen, 26 Leitfragen, Zeitstrahl, Stolperfallen), jede Aussage mit Folienverweis `("doc", seite)`.
 - `tools/build_content.py`: baut `site/data/geschichte.json` und prueft Verweise. Jede Zahl in Antwort oder Erklaerung muss auf einer zitierten Seite stehen, sonst bricht der Build ab.
@@ -33,3 +33,11 @@ Regeln:
 - `source/` und `.slide-passphrase` bleiben ausserhalb von Git: Die Folien gehoeren der Lehrveranstaltung, das Repo ist oeffentlich.
 - Kapitel mit `sober=True` (NS) bekommen keine Spiel-Effekte.
 - Abhaengigkeiten der Tools: `pymupdf`, `cryptography`.
+
+## Prüfungsfragen-Tab und ORBE (11.11.2026)
+
+- Karten mit `pf="<Block>"` erscheinen im Tab „Prüfungsfragen“ bzw. „Altfragen“ neben den Kernfragen (`course.pf` = blocks, info, n, minutes). Dort gibt es Üben je Block, „Falsche wiederholen“ und eine Simulation ohne Zwischen-Rückmeldung mit Timer.
+- MATS: `content/matsi_pf.py`, Fragen aus der Sammlung „MATS Fragen“ (Ausnahme zur Regel oben, ausdrücklicher Wunsch). Antworten kommen aus Präsentation/Skriptum; Abweichungen der Mitschrift als TRAP.
+- MATS-Kernfragen sind nach der Reihung der Linie nummeriert (`ORDER` in matsi.py). `course.renumber` (alt -> neu) zieht in der App den gespeicherten Fortschritt einmal mit (`S.migMatsi1`). Neue Kernfragen hinten anhängen geht, die Nummern werden automatisch neu vergeben.
+- ORBE: `content/orbe.py`, Skriptum `ob`. Klein gehalten. Nicht abfragen: die langen Texte zu Behinderung und Alter, Einrichtungslisten. Die Altfragen (Mitschrift) sind die `pf`-Karten. Altfrage 39 stützt sich auf den MA-13-Folder `@kja`.
+- `#/stufen`: Übersicht der globalen Stufen und der Ränge je LV, erreichbar über das Level im Hub und unter „Ich“.
