@@ -2,7 +2,7 @@ from dsl import Course
 c = Course("faelle", name="Fallwerkstatt", short="Fälle", term="Modul Grundsicherung", lecturer="Teamteaching",
            exams=[], accent="#17614A", lineTitle="Die Fälle", stopWord="Fall",
            openName="Rasterfrage", openNamePl="Rasterfragen", openLead="",
-           ranks=[[0,"Praktikum"],[100,"Erstgespräch"],[300,"Fallführung"],[650,"Vernetzung"],[1100,"Intervision"],[1700,"Teamleitung"],[2500,"Fachaufsicht"]],
+           ranks=[[0,"Praktikum"],[100,"Erstgespräch"],[250,"Anamnese"],[500,"Fallführung"],[850,"Hilfeplan"],[1300,"Vernetzung"],[1900,"Helfer*innenkonferenz"],[2700,"Intervision"],[3700,"Supervision"],[5000,"Teamleitung"],[6500,"Fachaufsicht"],[8500,"Fallwerkstatt-Meister*in"]],
            modes=["cases","blitz"], source="9 Teamteaching-Fälle, Übungsfall und Fall Sozialzentrum nach dem Fallanalyseraster. Die Lösungspunkte hat Claude aus Präsentation, Skripten und Fernlehren abgeleitet; sie stammen nicht von den Lehrenden.")
 CH,T,MC,TF,ORD,MATCH,MULTI,BUCKET,CHAIN = c.CH,c.T,c.MC,c.TF,c.ORD,c.MATCH,c.MULTI,c.BUCKET,c.CHAIN
 

@@ -2,7 +2,7 @@ from dsl import Course
 c = Course("recht", name="Rechtliche Bezüge zur materiellen Sicherung", short="Recht", term="WS 2026/27", lecturer="Verena Musil",
            exams=[], accent="#3B3F8F", lineTitle="Der Instanzenzug", stopWord="Station",
            openName="Fernlehre-Frage", openNamePl="Fernlehre-Fragen", openLead="Die Themen der Fernlehren sind das Wichtigste. Hier sind ihre Fragen: Erst selbst antworten, dann mit der Antwort aus der Fernlehre vergleichen. Offene Rechercheaufgaben sind auf das Kernwissen gekürzt.",
-           ranks=[[0,"Rechtsunterworfen"],[100,"Partei"],[300,"Beschwerde eingebracht"],[650,"Landesverwaltungsgericht"],[1100,"VwGH"],[1700,"VfGH"],[2500,"EGMR"]],
+           ranks=[[0,"Rechtsunterworfen"],[150,"Partei"],[400,"Akteneinsicht"],[800,"Bescheid gelesen"],[1400,"Beschwerde eingebracht"],[2200,"Landesverwaltungsgericht"],[3300,"Revision"],[4700,"VwGH"],[6500,"VfGH"],[9000,"EuGH"],[12000,"EGMR"],[16000,"Verfassungsrichter*in"]],
            modes=["chains","blitz"], source="Fernlehre-Antworten 2 bis 7, Folien Verfassungs- und Verwaltungsrecht und Skript Teil 2 und 3. Zu den Fernlehren 8 bis 11 gab es nur die Aufgaben: Die Antworten hat Claude aus den Skripten und den Gesetzestexten im RIS erarbeitet.",
            upcoming="Fernlehren 8 bis 11: Die Antworten stammen von Claude, nicht aus einer Musterlösung der Lehrveranstaltung.")
 CH,T,MC,TF,ORD,MATCH,MULTI,BUCKET,CHAIN,CALC,OPEN,TERM,TRAP = c.CH,c.T,c.MC,c.TF,c.ORD,c.MATCH,c.MULTI,c.BUCKET,c.CHAIN,c.CALC,c.OPEN,c.TERM,c.TRAP
@@ -11,14 +11,16 @@ CH("rn","Recht und Normen","Fernlehre 3 C","Recht, Moral, Gerechtigkeit",["rv"])
 CH("rs","Stufenbau","Fernlehre 2","Was steht über wem?",["f2"])
 CH("rp","Verfassungsprinzipien","Fernlehre 4 und 5","Sechs Baugesetze, Bund und Länder",["f4"])
 CH("rg","Grundrechte","Fernlehre 2 D, 5 D","Gelten gegenüber dem Staat",["f5"])
+CH("re","EU und Europa","Fernlehre 6","Nur was auf den Folien steht",["f6"])
 CH("ri","Wer entscheidet?","Fernlehre 3 D","Gericht oder Behörde, Frist, Instanz",["f3"])
 CH("rw","Verwaltungsverfahren","Fernlehre 7 A","Partei, Bescheid, Beschwerde",["f7"])
 CH("rz","Zivilverfahren und Mahnklage","Fernlehre 7 B","Zahlungsbefehl, Einspruch, Kosten",["f7"])
 CH("rf","Zustellung und Fristen","Fernlehre 7 B","RSa, RSb, Hinterlegung, Fristenlauf",["r2"])
-CH("rx","Exekution und Insolvenz","Skript Teil 2","Titel, Pfändung, Abschöpfung",["r2"])
-CH("re","EU und Europa","Fernlehre 6","Nur was auf den Folien steht",["f6"])
-CH("rl","Sozialhilfe und Arbeitslosenversicherung","Skript Teil 2 und Teil 3 bis Seite 19","Art 12, Versicherung, Versorgung, Fürsorge",["r3"])
-CH("rkb","Kinderbetreuungsgeld","Skript Teil 3, Seite 25 bis 32","Konto, einkommensabhängig, Familienzeit",["r3"])
+CH("r8","Verträge, Konsumentenschutz und Miete","Fernlehre 8, Skript Teil 2, KSchG, ABGB, MRG","Kleingedrucktes, Kredit, Gewährleistung, Befristung, Kündigung",["r2"])
+CH("rx","Exekution und Insolvenz","Skript Teil 2, Fernlehre 10, Insolvenzordnung","Titel, Pfändung, Bürgschaft, Anfechtung, Abschöpfung",["r2"])
+CH("r9","Sozialhilfe und Mindestsicherung","Skript Teil 2, Fernlehre 9, MATS-Skriptum","Art 12, drei Prinzipien, Reformen, Pflege und Regress",["r2"])
+CH("rl","Arbeitslosenversicherung","Skript Teil 3 bis Seite 19, Fernlehre 11","Anwartschaft, Zumutbarkeit, Sperre, Notstandshilfe",["r3"])
+CH("rkb","Kinderbetreuungsgeld und Karenz","Skript Teil 3, Seite 25 bis 32, Fernlehre 11","Konto, einkommensabhängig, Familienzeit, Karenz",["r3"])
 
 # ------------------------------------------------------------ Themen
 T("r-norm","rn","Recht und andere Normen","Normen sagen, wie etwas sein soll. Rechtsnormen setzt eine staatliche Autorität, sie werden kundgemacht und können mit staatlichem Zwang durchgesetzt werden. Moral und Sitte setzt der Staat nicht, sie können aber bei der Auslegung einfließen.",[("rv",3),("rv",7),("f3",2)])
@@ -58,8 +60,8 @@ T("r-exmin","rx","Existenzminimum","Unpfändbar bleibt 2026 ein Grundbetrag von 
 T("r-ins","rx","Privatinsolvenz","Einzige echte Voraussetzung ist die Zahlungsunfähigkeit. Zinsen und Exekutionen stoppen, außer Unterhaltsexekution. Zahlungsplan: maximal 7 Jahre, Gläubigermehrheit nötig. Abschöpfung: für Anträge ab 17.7.2026 fünf Jahre, auch gegen den Willen der Gläubiger*innen.",[("r2",48),("r2",49),("r2",50),("r2",51)])
 T("r-eu","re","EU-Institutionen","Kommission: EU-Interessen, Hüterin der Verträge. Rat der EU: Minister*innen, Interessen der Staaten. Parlament: Unionsbürger*innen, 720 Abgeordnete. EuGH in Luxemburg. Der Europäische Rat macht politische Zielvorgaben, keine Gesetze.",[("rv",80),("rv",81),("rv",82),("rv",83),("rv",85)])
 T("r-egmr","re","EGMR ist nicht EU","Der Europäische Gerichtshof für Menschenrechte in Straßburg ist keine EU-Institution, sondern gehört zum Europarat. Er wacht über die Europäische Menschenrechtskonvention, die in Österreich Verfassungsrang hat. Jede Einzelperson kann dort Beschwerde einlegen, nachdem der innerstaatliche Rechtsweg ausgeschöpft ist. Nicht verwechseln mit dem EuGH in Luxemburg, dem Gerichtshof der EU.",[("rv",84),("f2",6)])
-T("r-sh","rl","Sozialhilfe im Stufenbau","Armenwesen ist Art 12 B-VG: Grundsatzgesetz des Bundes, Ausführungsgesetze und Vollziehung der Länder. Darum ist die Wiener Mindestsicherung Landesrecht und die MA 40 Landesbehörde. Das Sozialhilfe-Grundsatzgesetz 2019 regelt Höchstsätze statt Mindeststandards.",[("r2",61),("r2",63),("f3",4)])
-T("r-prinzipien","rl","Drei Prinzipien sozialer Sicherung","Soziale Sicherung folgt drei Prinzipien. Versicherungsprinzip: Wer Beiträge zahlt, bekommt im Versicherungsfall eine Gegenleistung, etwa Arbeitslosengeld oder Pension. Versorgungsprinzip: Leistung ohne Vorleistung, wenn eine bestimmte Situation eintritt, etwa Familienbeihilfe oder Kinderbetreuungsgeld. Sozialhilfeprinzip: Hilfe bei Hilfsbedürftigkeit, subsidiär und früher oft mit Regress, heute in der WMS mit Rechtsanspruch.",[("r2",61),("r2",62),("r2",63)])
+T("r-sh","r9","Sozialhilfe im Stufenbau","Armenwesen ist Art 12 B-VG: Grundsatzgesetz des Bundes, Ausführungsgesetze und Vollziehung der Länder. Darum ist die Wiener Mindestsicherung Landesrecht und die MA 40 Landesbehörde. Das Sozialhilfe-Grundsatzgesetz 2019 regelt Höchstsätze statt Mindeststandards.",[("r2",61),("r2",63),("f3",4)])
+T("r-prinzipien","r9","Drei Prinzipien sozialer Sicherung","Soziale Sicherung folgt drei Prinzipien. Versicherungsprinzip: Wer Beiträge zahlt, bekommt im Versicherungsfall eine Gegenleistung, etwa Arbeitslosengeld oder Pension. Versorgungsprinzip: Leistung ohne Vorleistung, wenn eine bestimmte Situation eintritt, etwa Familienbeihilfe oder Kinderbetreuungsgeld. Sozialhilfeprinzip: Hilfe bei Hilfsbedürftigkeit, subsidiär und früher oft mit Regress, heute in der WMS mit Rechtsanspruch.",[("r2",61),("r2",62),("r2",63)])
 T("r-alv","rl","Arbeitslosengeld","Anspruch hat, wer der Vermittlung zur Verfügung steht, die Anwartschaft erfüllt und die Bezugsdauer nicht erschöpft hat. Zur Verfügung steht, wer arbeitsfähig, arbeitswillig und arbeitslos ist. Grundbetrag: 55 % des Nettoeinkommens.",[("r3",7),("r3",8),("r3",15)])
 T("r-schutz","rl","Berufs- und Entgeltschutz","Beim Arbeitslosengeld schützt das Gesetz am Anfang vor dem Abstieg. Berufsschutz: In den ersten 100 Tagen darf man nicht in einen anderen Beruf vermittelt werden, wenn das die künftige Arbeit im eigenen Beruf wesentlich erschwert. Entgeltschutz: In den ersten 120 Tagen muss eine Stelle mindestens 80 % der Bemessungsgrundlage bringen, danach 75 %. In der Notstandshilfe gibt es weder Berufs- noch Entgeltschutz.",[("r3",9),("r3",17)])
 T("r-nh","rl","Notstandshilfe","Notstandshilfe gibt es auf Antrag, wenn das Arbeitslosengeld erschöpft ist und eine Notlage besteht; die Voraussetzungen sind sonst wie beim Arbeitslosengeld. Sie wird für bis zu 52 Wochen gewährt, Folgeanträge sind unbegrenzt möglich. Seit 2018 wird das Einkommen des Partners oder der Partnerin nicht mehr angerechnet, nur das eigene. Bezieher*innen sind kranken- und pensionsversichert.",[("r3",17),("r3",18)])

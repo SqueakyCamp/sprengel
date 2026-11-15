@@ -8,7 +8,7 @@ from dsl import Course
 c = Course("orbe", name="Orientierung und Berufsfelder", short="ORBE", term="WS 2026/27", lecturer="Gabriele Kronberger",
            exams=[], accent="#2F5D7C", lineTitle="Die Berufsfelder", stopWord="Feld",
            openName="Kernfrage", openNamePl="Kernfragen", openLead="Ein paar Überblicksfragen über die Berufsfelder. Für die Prüfung sind die Altfragen der beste Maßstab, die findest du im Tab „Altfragen“.",
-           ranks=[[0,"Schnuppertag"],[80,"Praktikum"],[200,"Journaldienst"],[400,"Fallführung"],[700,"Netzwerkerin"],[1100,"Soziallandschaft-Profi"]],
+           ranks=[[0,"Schnuppertag"],[80,"Infotag"],[200,"Praktikum"],[400,"Journaldienst"],[700,"Fallführung"],[1100,"Netzwerker*in"],[1700,"Berufsfeld-Kenner*in"],[2500,"Soziallandschaft-Profi"],[3500,"Wegweiser*in"],[5000,"Sozialatlas"]],
            modes=["blitz"], source="Skriptum „Überblick über Berufsfelder der Sozialen Arbeit“ (Gabriele Kronberger). Die Altfragen stammen aus einer Mitschrift von Studierenden; ihre Antworten wurden mit dem Skriptum geprüft. Die langen Texte zu Behinderung und Alter sowie die Einrichtungslisten werden nicht abgefragt.")
 CH,T,MC,TF,ORD,MATCH,MULTI,BUCKET,CHAIN,OPEN,TERM,TRAP = c.CH,c.T,c.MC,c.TF,c.ORD,c.MATCH,c.MULTI,c.BUCKET,c.CHAIN,c.OPEN,c.TERM,c.TRAP
 

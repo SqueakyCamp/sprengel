@@ -2,7 +2,7 @@ from dsl import Course
 c = Course("matsi", name="Materielle Sicherung", short="MATS", term="WS 2026/27", lecturer="Thomas Valina u. a.",
            exams=[], accent="#7A4A12", lineTitle="Das Netz unter dem Netz", stopWord="Knoten",
            openName="Kernfrage", openNamePl="Kernfragen", openLead="Diese Fragen folgen den Themen der Präsentation, dem Wichtigsten für die Prüfung. Das Skriptum liefert die Erklärungen. Antworte frei und hake dann an, was du genannt hättest. Beträge musst du nicht auswendig können, sie ändern sich jedes Jahr; wichtig sind Regeln, Prozentsätze und Fristen.",
-           ranks=[[0,"Erstgespräch"],[100,"Journaldienst"],[300,"Antrag eingebracht"],[650,"Bescheid gelesen"],[1100,"Kontoplan steht"],[1700,"Delogierung abgewendet"],[2500,"Housing First"]],
+           ranks=[[0,"Erstgespräch"],[150,"Journaldienst"],[400,"Antrag eingebracht"],[800,"Bescheid gelesen"],[1400,"Unterlagen komplett"],[2200,"Kontoplan steht"],[3300,"Mietrückstand geklärt"],[4700,"Delogierung abgewendet"],[6500,"Schuldenregulierung"],[9000,"Wohnung gesichert"],[12000,"Housing First"],[16000,"MATS-Profi"]],
            modes=["chains","blitz"], source="Präsentation (Thomas Valina) und Skriptum „Handlungsfeld Materielle Sicherung“. Der Schwerpunkt liegt auf den Präsentationsthemen, dazu Kapitel 2, 4 und 5 des Skriptums. Beträge stehen in den Erklärungen, abgefragt werden Regeln und Prozentsätze. Deine Notizen sind eingearbeitet und als solche gekennzeichnet.")
 CH,T,MC,TF,ORD,MATCH,MULTI,BUCKET,CHAIN,CALC,OPEN,TERM,TRAP = c.CH,c.T,c.MC,c.TF,c.ORD,c.MATCH,c.MULTI,c.BUCKET,c.CHAIN,c.CALC,c.OPEN,c.TERM,c.TRAP
 

@@ -41,3 +41,17 @@ Regeln:
 - MATS-Kernfragen sind nach der Reihung der Linie nummeriert (`ORDER` in matsi.py). `course.renumber` (alt -> neu) zieht in der App den gespeicherten Fortschritt einmal mit (`S.migMatsi1`). Neue Kernfragen hinten anhängen geht, die Nummern werden automatisch neu vergeben.
 - ORBE: `content/orbe.py`, Skriptum `ob`. Klein gehalten. Nicht abfragen: die langen Texte zu Behinderung und Alter, Einrichtungslisten. Die Altfragen (Mitschrift) sind die `pf`-Karten. Altfrage 39 stützt sich auf den MA-13-Folder `@kja`.
 - `#/stufen`: Übersicht der globalen Stufen und der Ränge je LV, erreichbar über das Level im Hub und unter „Ich“.
+
+## Ausbau 15.11.2026
+
+- Stufen: `ETAPPEN` in app.js, 40 Stufen in 6 Etappen (Berufsweg Soziale Arbeit, nicht Geschichte), Schwelle `60k²+90k` gerundet, danach Ehrenstufen alle `HONOR` XP. Aufstieg zeigt nach der Runde ein Overlay (`celebrate`, `S.lvSeen`). Geschichte behält die alten Namen als LV-Ränge (`GESCH_RANKS`). LV-Ränge stehen in den Kursdateien, nach dem letzten Rang gibt es Sterne.
+- Abzeichen: `BADGES` mit Stufen Bronze bis Platin, gefeierte Stufe in `S.bd`.
+- Blitzrunde: 3 XP je richtige Antwort, 15 für neuen Rekord.
+- Prüfungsplan: `planFor` rechnet aus offenen Karten (neu/falsch 2, Box 1 eine, fällig eine) und Tagen bis zum Termin ein Tagesziel, fixiert pro Tag in `S.plan`.
+- Kapitel-Boss: ab 80 % gelernt (`bossState`), 10 schwere Karten, 2 Herzen, Sieg in `S.boss`. Nicht für `sober`-Kapitel und Fälle.
+- Akten: Fallwerkstatt-Fälle haben 8 Vermerke (6 Rasterschritte ab 50 %, Fallkette, Prioritäten einmal richtig, `S.aktOk`); geschlossen in `S.akten`.
+- Offene Fragen in 3 Stufen: Erkennen (eigene Punkte zwischen fremden derselben LV), Ergänzen (Schlüsselwort-Lücken, automatisch gewählt), frei. Normale Runden nehmen die nächste offene Stufe (`nextLfItem`), Probeläufe immer frei. Jede offene Frage und Stufe hat „Überspringen“ ohne Wertung.
+- Sicherung als JSON-Datei (`backupFile`/`restoreState`), Hinweis im Hub nach 7 Tagen ohne Sicherung.
+- Grafiken: `content/figs.py` (kinds lanes, pyramid, compare), je Kapitel; gebaut in `figs` der Kurs-JSON, Zahlen und Seiten geprüft wie Karten. Lange Wörter mit `­` trennen.
+- Recht: Fernlehre-Kapitel aufgelöst und thematisch einsortiert (r8 Verträge/Miete, r9 Sozialhilfe, rx Insolvenz, rl ALV, rkb KBG/Karenz). Die Fragenseite gruppiert nach Fernlehre (`course.groupedLf`).
+- Hub verlinkt die Sozialarbeitskarte unten unter „Mehr zum Studium“.

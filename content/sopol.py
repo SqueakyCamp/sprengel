@@ -2,7 +2,7 @@ from dsl import Course
 c = Course("sopol", name="Sozialpolitische und ökonomische Bezüge", short="SoPol", term="WS 2026/27", lecturer="Dominik Klaus, Maddalena Lamura",
            exams=[dict(id="p", label="Prüfung", date="2026-11-30")], accent="#8C2F39", lineTitle="Die Einheiten", stopWord="Einheit",
            openName="Kernfrage", openNamePl="Kernfragen", openLead="Die Präsentationen sind das Relevanteste. Beantworte die Fragen frei, vergleiche danach mit den Punkten von den Folien.",
-           ranks=[[0,"Wohlfahrtsneuling"],[100,"Flötenrichter*in"],[300,"Esping-Andersen-Kenner*in"],[650,"Umverteiler*in"],[1100,"Marienthal-Forscher*in"],[1700,"Gini-Profi"],[2500,"Sozialstaatsarchitekt*in"]],
+           ranks=[[0,"Wohlfahrtsneuling"],[100,"Flötenrichter*in"],[250,"Zeitungsleser*in"],[500,"Esping-Andersen-Kenner*in"],[850,"Umverteiler*in"],[1300,"Marienthal-Forscher*in"],[1900,"Armutskonferenz"],[2700,"Gini-Profi"],[3700,"Sozialbericht"],[5000,"Policy-Analyst*in"],[6500,"Sozialstaatsarchitekt*in"],[8500,"Sozialminister*in"]],
            modes=["chains","blitz"], source="Präsentationen der Einheiten 1 bis 6. Zusatztexte und Webseiten sind als Zusatz gekennzeichnet und kommen seltener. Vier Einheiten fehlen noch.",
            upcoming="Noch 4 Einheiten: Armut (Gastvortrag), Klima und Sozialpolitik, Gesundheit und Ungleichheit, Wiederholung.")
 CH,T,MC,TF,ORD,MATCH,MULTI,BUCKET,CHAIN,CALC,OPEN,TERM,TRAP,TL,PERSON = c.CH,c.T,c.MC,c.TF,c.ORD,c.MATCH,c.MULTI,c.BUCKET,c.CHAIN,c.CALC,c.OPEN,c.TERM,c.TRAP,c.TL,c.PERSON

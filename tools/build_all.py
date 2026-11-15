@@ -12,6 +12,7 @@ import pymupdf
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "content"))
 import docs as D
+import figs as figs_mod
 
 OLD = {"e":"Geschichte der Sozialen Arbeit Einführung WS 26&27.pdf","a1":"Armenfürsorge I.pdf","rw":"Fürsorge im Roten Wien ohne Abb-1.pdf"}
 TEXT = {}
@@ -141,7 +142,18 @@ def build(name):
             check_words(f"F{o['n']}", p["t"], p["src"])
     for x in c.terms + c.people + c.timeline + c.traps:
         check_src(x.get("term") or x.get("name") or x.get("y") or x.get("title"), x["src"])
-    data = dict(course=c.meta, chapters=c.chapters, topics=c.topics, cards=out, leitfragen=c.opens, people=c.people, terms=c.terms, timeline=c.timeline, traps=c.traps, more=D.MORE.get(name, []))
+    figs = figs_mod.FIGS.get(name, [])
+    for f in figs:
+        if f["ch"] not in chs:
+            errors.append(f"Grafik {f['id']}: Kapitel {f['ch']}")
+        parts = f.get("nodes", []) + [n for col in f.get("cols", []) for n in col["nodes"]] + [col for col in f.get("cols", []) if col["text"]]
+        for n in parts:
+            lab = f"Grafik {f['id']} {n.get('label') or n.get('title')}"
+            check_src(lab, n["src"])
+            cells = " ".join(x if isinstance(x, str) else x[0] for x in n.get("cells", []))
+            check_numbers(lab, " ".join([n["text"], n.get("sub", ""), n.get("edge", ""), cells]), [tuple(x) for x in n["src"]])
+            check_words(lab, n["text"], [tuple(x) for x in n["src"]])
+    data = dict(course=c.meta, figs=figs, chapters=c.chapters, topics=c.topics, cards=out, leitfragen=c.opens, people=c.people, terms=c.terms, timeline=c.timeline, traps=c.traps, more=D.MORE.get(name, []))
     if name == "faelle":
         data["cases"] = mod.CASES
         data["sections"] = mod.SECTIONS
