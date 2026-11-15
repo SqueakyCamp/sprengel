@@ -349,21 +349,12 @@ function viewHub() {
     <div class="quick">${wrong ? `<button data-run="wrongmix">Fehler im Modul üben (${wrong})</button>` : ""}<button data-go="#/netz">Exkurse zwischen den LVs</button></div>
   </div></header>
   <div class="pad">
-    ${planSection()}
     <section class="section" style="margin-top:18px"><h2>Tagesaufträge</h2><ul class="quests">${q.pick.map(i => { const [k, goal, label] = QUESTS[i], n = Math.min(q.n[k] || 0, goal), done = q.done.includes(i); return `<li class="${done ? "done" : ""}"><span>${esc(label)}</span><b>${done ? "+15 XP" : `${n}/${goal}`}</b></li>`; }).join("")}</ul></section>
     ${backupNag()}
     <section class="section"><h2>Modul Grundsicherung</h2><div class="tiles">${MODULE.map(tile).join("")}</div></section>
     <section class="section"><h2>Weitere Lehrveranstaltungen</h2><div class="tiles">${tile("orbe")}${tile("geschichte")}</div></section>
     <section class="section"><h2>Mehr zum Studium</h2><div class="tiles"><a class="tile ext" href="https://squeakycamp.github.io/sozialarbeitskarte/" target="_blank" rel="noopener" style="--c:#2E6B4F"><span class="tile-top"><b>Sozialarbeitskarte</b><em>öffnet neu ↗</em></span><span class="small">Wien-Karte sozialer Einrichtungen: wer was anbietet und wo</span></a></div></section>
   </div>`;
-}
-function planSection() {
-  const ps = plans(); if (!ps.length) return "";
-  return `<section class="section" style="margin-top:18px"><h2>Prüfungsplan</h2><p class="small">Rückwärts vom Termin gerechnet: so viele Antworten pro Tag, damit bis zur Prüfung alle Karten sicher sitzen. Der letzte Tag bleibt für die Wiederholung.</p>
-    <div class="plans">${ps.map(p => { const left = Math.max(0, p.target - p.did), ok = p.done || (p.target === 0);
-      return `<div class="plan ${ok ? "ok" : ""}" style="--c:${p.c.course.accent || "var(--petrol)"}"><div class="plan-top"><b>${esc(p.c.course.short)}</b><em>${p.ex.left === 1 ? "morgen" : `in ${p.ex.left} Tagen`}</em></div>
-        <div class="plan-bars"><span>${Math.round(p.pct * 100)} % sicher gelernt</span><span class="tile-bar"><i style="width:${Math.round(p.pct * 100)}%"></i></span></div>
-        <div class="plan-row"><span>${p.target === 0 ? "Alles sitzt. Heute nur wiederholen, wenn du magst." : ok ? `Heute geschafft: ${p.did} von ${p.target} Antworten` : `Heute ${p.did} von ${p.target} Antworten`}</span>${ok ? `<b class="plan-check">✓</b>` : `<button class="btn small" data-plan="${p.id}">${Math.min(15, Math.max(5, left))} Karten</button>`}</div></div>`; }).join("")}</div></section>`;
 }
 function backupNag() {
   if (Object.keys(S.cards).length < 20) return "";
