@@ -13,6 +13,7 @@ DOCS = {
   "f5": ("Antworten 5. fl-einheit.pdf", "Fernlehre 5", False),
   "f6": ("Antworten 6. fl-einheit.pdf", "Fernlehre 6", False),
   "f7": ("Antworten 7 fl-einheitl.pdf", "Fernlehre 7", False),
+  "fs": ("Pruefungsfragestunde_Recht_der_sozialen_Arbeit.pdf", "Recht: Prüfungsfragestunde (Mitschrift)", False),
   # Sozialpolitik
   "s1": ("WS26 SOPOL Einheit 1.pdf", "SoPol Einheit 1", False),
   "s2": ("WS26 SOPOL Einheit 2.pdf", "SoPol Einheit 2", False),

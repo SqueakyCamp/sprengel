@@ -225,10 +225,13 @@ const topicOf = id => TOPIC[id];
 const chapterOf = id => CHAPTER[id];
 const cardsIn = (ch, c = D) => c.cards.filter(k => topicOf(k.topic).ch === ch);
 const learned = k => (S.cards[k.id]?.box || 0) >= 2;
-function chapterPct(ch) { const c = cardsIn(ch); return c.length ? c.filter(learned).length / c.length : 0; }
+// Offene Fragen zaehlen zum Fortschritt, sobald der Lueckentext (Stufe 2) sitzt; der Stempel verlangt weiter die freie Antwort.
+const lfDone = (l, c = DATA[l.course]) => (canStage(l) && stageOf(l, c) >= 2) || openCredit(S.lfOpen[lfKey(l.n, c)]?.best || 0) >= .5;
+const lfsIn = (ch, c = D) => c.leitfragen.filter(l => l.ch === ch);
+function chapterPct(ch) { const c = cardsIn(ch), l = lfsIn(ch), n = c.length + l.length; return n ? (c.filter(learned).length + l.filter(x => lfDone(x)).length) / n : 0; }
 const answered = k => (S.cards[k.id]?.box || 0) >= 1; // zuletzt richtig beantwortet
 const cardCount = cards => `${cards.filter(answered).length} von ${cards.length} ${cards.length === 1 ? "Karte" : "Karten"} richtig beantwortet`;
-function coursePct(c) { const m = c.cards.filter(k => !k.extra); return m.length ? m.filter(learned).length / m.length : 0; }
+function coursePct(c) { const m = c.cards.filter(k => !k.extra), l = c.leitfragen || [], n = m.length + l.length; return n ? (m.filter(learned).length + l.filter(x => lfDone(x, c)).length) / n : 0; }
 const lfKey = (n, c = D) => c.course.id === "geschichte" ? n : c.course.id + ":" + n;
 function lfScore(n, c = D) {
   const cards = c.cards.filter(k => k.lf.includes(n) && !k.extra); // Zusatztext zaehlt nicht gegen den Stempel
@@ -544,10 +547,17 @@ function lfItem(l, stage) {
   if (stage === 1 || stage === 2) return { type: "stage" + stage, id: `st${stage}-${l.course}-${l.n}`, lf: [l.n], leit: l };
   return { type: "open", id: "lf" + l.n, lf: [l.n], leit: l };
 }
-const nextLfItem = l => lfItem(l, canStage(l) ? Math.min(3, stageOf(l) + 1) : 3);
+const nextStage = l => canStage(l) ? Math.min(3, stageOf(l) + 1) : 3;
+const nextLfItem = l => lfItem(l, nextStage(l));
+// Erst Stufe 1 aller Fragen, dann Stufe 2 aller, dann frei; innerhalb einer Stufe die schwaechsten zuerst.
 function pickLf(n, focus) {
-  const scored = shuffle(D.leitfragen).filter(l => !focus || l.ch === focus).sort((a, b) => lfScore(a.n) - lfScore(b.n));
+  const scored = shuffle(D.leitfragen).filter(l => !focus || l.ch === focus).sort((a, b) => nextStage(a) - nextStage(b) || lfScore(a.n) - lfScore(b.n));
   return scored.slice(0, n).map(nextLfItem);
+}
+function mixIn(items, extra) { // offene Fragen gleichmaessig zwischen die Karten
+  const out = [...items], step = (out.length + 1) / (extra.length + 1);
+  extra.forEach((x, i) => out.splice(Math.round(step * (i + 1)) + i, 0, x));
+  return out;
 }
 /* ---------- Kapitel-Boss ---------- */
 const BOSS_N = 10, BOSS_LIVES = 2;
@@ -581,8 +591,10 @@ function startRun(kind, opts = {}) {
     items = pick(pool, 12); title = "Modul-Mix";
   } else if (kind === "chapter") {
     const ch = chapterOf(opts.ch);
-    items = pick(cardsIn(opts.ch), 10); title = ch.name;
-    items.splice(5, 0, ...pickLf(1, opts.ch));
+    const cards = cardsIn(opts.ch), left = cards.filter(k => !learned(k)).length, todo = lfsIn(opts.ch).filter(l => !lfDone(l)).length;
+    // Fehlen nur noch wenige Karten, kommen die offenen Fragen gleich mit, damit man nicht endlos Karten wiederholt.
+    const nLf = !todo ? 1 : left <= 3 ? Math.min(todo, 4) : todo >= 3 ? 2 : 1;
+    items = mixIn(pick(cards, left === 0 && todo ? 6 : 10), pickLf(nLf, opts.ch)); title = ch.name;
   } else if (kind === "lf") {
     const lf = D.leitfragen.find(l => l.n === opts.n);
     items = pick(D.cards.filter(k => k.lf.includes(opts.n)), 6);
@@ -1050,7 +1062,7 @@ function viewChapter(id) {
   const lfs = D.leitfragen.filter(l => l.ch === id);
   const hasCards = cardsIn(id).length > 0;
   main.innerHTML = `<div class="pad"><button class="back" data-go="#/${cid}/stoff">Stoff</button>
-    <h1 class="h1" style="margin-top:6px">${esc(c.name)}</h1><p class="lead">${esc(c.span)}, ${Math.round(chapterPct(id) * 100)} % gelernt<br>${cardCount(cardsIn(id))}</p>
+    <h1 class="h1" style="margin-top:6px">${esc(c.name)}</h1><p class="lead">${esc(c.span)}, ${Math.round(chapterPct(id) * 100)} % gelernt<br>${cardCount(cardsIn(id))}${lfs.length ? `<br>${lfs.filter(l => lfDone(l)).length} von ${lfs.length} ${esc(lfs.length === 1 ? openName() : D.course.openNamePl || "Leitfragen")} bis zum Lückentext geschafft` : ""}</p>
     <div class="pcta">${hasCards ? `<button class="btn" data-ch-run="${id}">${cid === "geschichte" ? "Diese Station üben" : "Dieses Kapitel üben"}</button>` : ""}${chapterDocs(c).map(([d, p], i) => `<button class="btn ghost" data-slide="${d}:${p}">${i ? `${esc(docName(d))}, S. ${p}` : `Dokument öffnen, S. ${p}`}</button>`).join("")}${c.book ? `<button class="btn ghost" data-slide="j:${c.book}">Im Zusatztext lesen</button>` : ""}</div>
     ${bossPanel(id)}
     ${lfs.length ? `<section class="section"><h2>${esc(D.course.openNamePl || "Leitfragen")} dazu</h2><ol class="lflist" style="margin-top:0">${lfs.map(l => `<li class="${stamped(l.n) ? "done" : ""}"><button data-go="#/${cid}/lf/${l.n}"><span class="n">${l.n}</span><span>${esc(l.q)}${l.group && D.course.groupedLf ? `<small>${esc(l.group)}</small>` : ""}</span></button></li>`).join("")}</ol></section>` : ""}

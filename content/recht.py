@@ -479,3 +479,6 @@ TRAP("Geringfügig dazuverdienen zum Arbeitslosengeld?","Das MATS-Skriptum (Stan
 
 import recht_fl
 recht_fl.add(c)
+import recht_fs
+recht_fs.add(c)
+c.meta["pf"] = dict(blocks=recht_fs.BLOCKS, info=recht_fs.INFO, n=20, minutes=30)

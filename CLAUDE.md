@@ -55,3 +55,9 @@ Regeln:
 - Grafiken: `content/figs.py` (kinds lanes, pyramid, compare), je Kapitel; gebaut in `figs` der Kurs-JSON, Zahlen und Seiten geprüft wie Karten. Lange Wörter mit `­` trennen.
 - Recht: Fernlehre-Kapitel aufgelöst und thematisch einsortiert (r8 Verträge/Miete, r9 Sozialhilfe, rx Insolvenz, rl ALV, rkb KBG/Karenz). Die Fragenseite gruppiert nach Fernlehre (`course.groupedLf`).
 - Hub verlinkt die Sozialarbeitskarte unten unter „Mehr zum Studium“.
+
+## Prüfungsfragestunde Recht und offene Fragen im Fortschritt (17.11.2026)
+
+- Dokument `fs` = Mitschrift der Prüfungsfragestunde Recht (über other/Jakob). `content/recht_fs.py`: neue Themen (r-form, r-gutschein, r-alvweg, r-beweis, r-mandat, r-ngo, r-wmg) und 64 Karten mit `pf`, Tab „Prüfungsfragen“ in Recht (6 Blöcke, Simulation 20 Fragen in 30 Min., Zeit ist geschätzt). Antworten mit Skript/Folien belegt; Abweichungen der Mitschrift als TRAP. „Hebel“ in der Mitschrift = vermutlich HibL.
+- Recht-Skript Teil 2: Seitenzahl im PDF ist gedruckte Seite + 1 (Gutscheine stehen auf PDF-Seite 59).
+- App: Offene Fragen zählen zum Kapitel- und LV-Prozent (`lfDone`: Stufe 2 Lückentext geschafft oder freie Antwort ab 50 %). Stempel braucht weiter die freie Antwort. `pickLf` nimmt erst Stufe 1 aller Fragen, dann Stufe 2, dann frei. Kapitelrunde: Fehlen höchstens 3 Karten, kommen bis zu 4 offene Fragen dazu (`mixIn` verteilt sie).
