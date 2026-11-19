@@ -406,6 +406,7 @@ function viewHome() {
     </div>
     <div class="quick">
       ${wrong ? `<button data-run="wrong">Fehler üben (${wrong})</button>` : ""}
+      ${D.course.exam ? `<button data-px-start>Prüfungsmodus (${D.course.exam.n} Fragen, ${D.course.exam.minutes} Min.)</button>` : ""}
       <button data-run="exam">${id === "geschichte" ? "Probeprüfung mit 7 Fragen" : `Probelauf mit ${examN} offenen Fragen`}</button>
       ${modes.includes("blitz") ? `<button data-run="blitz">Blitzrunde${S.blitz[id] ? ` (Rekord ${S.blitz[id]})` : ""}</button>` : ""}
       ${modes.includes("chains") ? `<button data-run="chains">Fallketten</button>` : ""}
@@ -833,7 +834,9 @@ function gapWord(t) {
 function renderStage2(k) {
   const l = k.leit, s = R.state;
   if (!s.gaps) {
-    s.gaps = shuffle(l.points).slice(0, 6).map(p => ({ p, w: gapWord(p.t) })).filter(g => g.w);
+    // Auswahl zufaellig, Reihenfolge wie in der Antwort, damit die Punkte logisch aufeinander folgen (z. B. Instanzenzug)
+    const pick6 = new Set(shuffle(l.points.map((_, i) => i)).slice(0, 6));
+    s.gaps = l.points.filter((_, i) => pick6.has(i)).map(p => ({ p, w: gapWord(p.t) })).filter(g => g.w);
     const extra = stageForeign(l, 6).map(p => gapWord(p.t)).filter(w => w && !s.gaps.some(g => g.w === w)).slice(0, 2);
     s.bank = shuffle([...s.gaps.map(g => g.w), ...extra]); s.fill = s.gaps.map(() => null); s.cur = 0;
     if (s.gaps.length < 2) { k.type = "open"; return renderOpen(k); }
@@ -949,6 +952,122 @@ function renderArrive() {
   if (!sober) celebrate();
 }
 
+/* ---------- Prüfungsmodus (Recht): Aufbau wie die echte Prüfung, frei springen und markieren, Plus- und Minuspunkte ---------- */
+let PX = null;
+const PX_TYPES = ["mc", "tf", "multi"];
+function startPx() {
+  const ex = D.course.exam, used = new Set(), closed = [], nClosed = ex.n - ex.open;
+  const pools = ex.blocks.map(b => shuffle(D.cards.filter(k => !k.extra && PX_TYPES.includes(k.type) && k.q.length < 260 && (b.tf ? k.type === "tf" && k.lf.length : b.topics.includes(k.topic)))));
+  for (let i = 0, guard = 0; closed.length < nClosed && guard < 400; i++, guard++) {
+    const bi = i % pools.length, k = pools[bi].find(x => !used.has(x.id));
+    if (k) { used.add(k.id); closed.push({ kind: "c", k, block: ex.blocks[bi].name, opts: k.type === "tf" ? null : shuffle(k.type === "mc" ? [k.right, ...k.wrong] : [...k.right, ...k.wrong]), sel: new Set(), tf: null }); }
+  }
+  closed.sort((a, b) => ex.blocks.findIndex(x => x.name === a.block) - ex.blocks.findIndex(x => x.name === b.block));
+  const opens = Object.entries(ex.topf).map(([t, ns]) => { const l = shuffle(D.leitfragen.filter(x => ns.includes(x.n)))[0]; return l && { kind: "o", l, topf: t, text: "", pts: new Set() }; }).filter(Boolean);
+  PX = { qs: [...closed, ...opens], i: 0, mark: new Set(), end: Date.now() + ex.minutes * 60000, phase: "run", start: Date.now() };
+  PX.timer = setInterval(pxTick, 500);
+  document.body.classList.add("running");
+  history.pushState({ run: 1 }, "", "#/pruefung");
+  renderPx();
+}
+function endPx() { if (PX?.timer) clearInterval(PX.timer); PX = null; document.body.classList.remove("running"); }
+function pxTick() {
+  if (!PX || PX.phase !== "run") return;
+  const left = PX.end - Date.now(), lab = $("#pxclock");
+  if (lab) { lab.textContent = clock(left); lab.classList.toggle("late", left < 5 * 60000); }
+  if (left <= 0) { PX.timeout = true; pxSubmit(); }
+}
+const pxAnswered = q => q.kind === "o" ? !!q.text.trim() : q.k.type === "tf" ? q.tf !== null : q.sel.size > 0;
+function pxScore(q) { // Anteil 0..1; falsche Kreuze ziehen so viel ab, wie ein richtiges bringt, nie unter 0
+  const k = q.k;
+  if (k.type === "tf") return q.tf === null ? 0 : (q.tf === k.val ? 1 : 0);
+  const right = k.type === "mc" ? [k.right] : k.right;
+  let hit = 0, bad = 0; q.sel.forEach(i => right.includes(q.opts[i]) ? hit++ : bad++);
+  return Math.max(0, (hit - bad) / right.length);
+}
+function renderPx() {
+  const ex = D.course.exam, q = PX.qs[PX.i], n = PX.qs.length;
+  const nav = `<nav class="pxnav" aria-label="Fragen">${PX.qs.map((x, i) => `<button class="${i === PX.i ? "cur" : ""} ${pxAnswered(x) ? "ans" : ""} ${PX.mark.has(i) ? "mk" : ""}" data-px-go="${i}" aria-label="Frage ${i + 1}${pxAnswered(x) ? ", beantwortet" : ""}${PX.mark.has(i) ? ", markiert" : ""}">${i + 1}</button>`).join("")}</nav>`;
+  let body;
+  if (q.kind === "o") {
+    body = `<div class="tag">Offene Frage, Topf ${q.topf} · zusammen ${ex.openPts} Punkte für alle offenen</div><p class="q">${esc(q.l.q.replace(/^Topf \d: /, ""))}</p>
+      <textarea id="pxtext" placeholder="Antworte wie in der Prüfung, in Stichworten oder ganzen Sätzen.">${esc(q.text)}</textarea>`;
+  } else if (q.k.type === "tf") {
+    body = `<div class="tag">${esc(q.block)}</div><p class="tag" style="margin-top:4px">Stimmt die Aussage?</p><p class="q">${esc(q.k.q)}</p><div class="grow"></div>
+      <div class="tf"><button class="opt ${q.tf === true ? "picked" : ""}" data-px-tf="1" aria-pressed="${q.tf === true}">Stimmt</button><button class="opt ${q.tf === false ? "picked" : ""}" data-px-tf="0" aria-pressed="${q.tf === false}">Falsch</button></div>`;
+  } else {
+    body = `<div class="tag">${esc(q.block)}</div><p class="q">${esc(q.k.q)}</p><p class="tag" style="margin-top:4px">${q.k.type === "mc" ? "Eine Antwort ist richtig." : "Eine oder mehrere Antworten sind richtig. Falsche Kreuze geben Minuspunkte."}</p><div class="grow"></div>
+      <div class="answers">${q.opts.map((o, i) => `<button class="opt ${q.sel.has(i) ? "picked" : ""}" aria-pressed="${q.sel.has(i)}" data-px-opt="${i}">${esc(o)}</button>`).join("")}</div>`;
+  }
+  const open = PX.qs.filter(x => !pxAnswered(x)).length;
+  main.innerHTML = `<div class="run px"><div class="run-top"><button class="run-x" data-quit aria-label="Prüfung abbrechen">×</button><div class="pxtitle">Prüfungsmodus · Frage ${PX.i + 1} von ${n}</div><div class="combo"><span id="pxclock">${clock(PX.end - Date.now())}</span></div></div>
+    ${nav}${body}
+    <div class="pxbar"><button class="btn ghost small" data-px-prev ${PX.i ? "" : "disabled"}>Zurück</button><button class="btn ghost small ${PX.mark.has(PX.i) ? "on" : ""}" data-px-mark aria-pressed="${PX.mark.has(PX.i)}">${PX.mark.has(PX.i) ? "Markiert" : "Markieren"}</button>${PX.i + 1 < n ? `<button class="btn small" data-px-next>Weiter</button>` : ""}</div>
+    <div style="margin-top:14px"><button class="btn ${PX.i + 1 === n ? "" : "ghost"}" data-px-submit>Abgeben${open ? ` (${open} offen)` : ""}</button></div></div>`;
+}
+function pxSubmit() {
+  if (PX.phase !== "run") return;
+  clearInterval(PX.timer); PX.phase = "self"; PX.used = Date.now() - PX.start;
+  renderPxSelf();
+}
+function renderPxSelf() {
+  const ex = D.course.exam, os = PX.qs.filter(q => q.kind === "o");
+  main.innerHTML = `<div class="pad"><h1 class="h1">${PX.timeout ? "Zeit abgelaufen" : "Abgegeben"}</h1>
+    <p class="lead">Die geschlossenen Fragen wertet die App selbst. Bei den offenen Fragen hakst du jetzt ab, welche Punkte deine Antwort enthält.</p>
+    ${os.map((q, qi) => `<section class="section"><h2>Offene Frage ${qi + 1} (Topf ${q.topf})</h2><p class="q small">${esc(q.l.q.replace(/^Topf \d: /, ""))}</p>
+      ${q.text.trim() ? `<div class="mine">${esc(q.text)}</div>` : `<p class="small">Keine Antwort geschrieben.</p>`}
+      <ul class="points">${q.l.points.map((p, i) => `<li class="point"><label><input type="checkbox" data-pxpt="${PX.qs.indexOf(q)}:${i}" ${q.pts.has(i) ? "checked" : ""}><span>${esc(p.t)}</span></label>${chips(p.src)}</li>`).join("")}</ul></section>`).join("")}
+    <div style="margin-top:18px"><button class="btn" data-px-result>Auswerten</button></div></div>`;
+  window.scrollTo(0, 0);
+}
+function pxResult() {
+  main.querySelectorAll("[data-pxpt]").forEach(b => { const [qi, i] = b.dataset.pxpt.split(":").map(Number); b.checked ? PX.qs[qi].pts.add(i) : PX.qs[qi].pts.delete(i); });
+  const ex = D.course.exam, cs = PX.qs.filter(q => q.kind === "c"), os = PX.qs.filter(q => q.kind === "o");
+  const per = (ex.total - ex.openPts) / cs.length, perOpen = ex.openPts / os.length;
+  let cPts = 0, oPts = 0;
+  cs.forEach(q => { q.s = pxScore(q); cPts += q.s * per; if (pxAnswered(q)) grade(q.k.id, q.s === 1, D.course.id); });
+  os.forEach(q => { q.s = q.pts.size / q.l.points.length; oPts += q.s * perOpen;
+    const key = lfKey(q.l.n), rec = S.lfOpen[key] || { best: 0, tries: 0 }; rec.tries++; rec.best = Math.max(rec.best, q.s); rec.last = q.s; S.lfOpen[key] = rec; });
+  const tot = cPts + oPts, pct = Math.round(tot / ex.total * 100), gain = 40 + Math.round(pct / 2);
+  S.exams++; S.pxBest = S.pxBest || {}; S.pxBest[D.course.id] = Math.max(S.pxBest[D.course.id] || 0, pct);
+  S.pxLog = [...(S.pxLog || []), { d: dayKey(), c: D.course.id, p: pct }].slice(-20);
+  addXp(gain); save();
+  const blocks = ex.blocks.map(b => { const qs = cs.filter(q => q.block === b.name); return qs.length ? [b.name, qs.reduce((a, q) => a + q.s, 0), qs.length] : null; }).filter(Boolean);
+  const fmt = x => x.toLocaleString("de-AT", { maximumFractionDigits: 1 });
+  const wrong = cs.filter(q => q.s < 1);
+  const mine = q => q.k.type === "tf" ? (q.tf === null ? "keine Antwort" : q.tf ? "Stimmt" : "Falsch") : q.sel.size ? [...q.sel].map(i => q.opts[i]).join(" · ") : "keine Antwort";
+  PX.phase = "done";
+  main.innerHTML = `<div class="pad arrive"><h1>Prüfungsmodus fertig</h1>
+    <div class="score"><div><b>${pct} %</b><span>${fmt(tot)} von ${ex.total} Punkten</span></div><div><b>${fmt(cPts)}</b><span>von ${ex.total - ex.openPts} geschlossen</span></div><div><b>${fmt(oPts)}</b><span>von ${ex.openPts} offen</span></div><div><b>+${gain}</b><span>XP</span></div></div>
+    <p class="small" style="margin-top:10px">Zeit: ${clock(PX.used)} von ${ex.minutes}:00.${S.pxLog.filter(x => x.c === D.course.id).length > 1 ? ` Bisher: ${S.pxLog.filter(x => x.c === D.course.id).map(x => x.p + " %").join(", ")}.` : ""} Die Punkte je geschlossener Frage (${fmt(per)}) sind eine Annahme, genannt wurden nur die ${ex.openPts} Punkte für die offenen Fragen.</p>
+    <section class="review"><h2>Nach Themenblock</h2><ul class="pxblocks">${blocks.map(([n, s, c]) => `<li><span>${esc(n)}</span><b>${fmt(s)} / ${c}</b></li>`).join("")}${os.map(q => `<li><span>Offen: ${esc(q.l.q.replace(/^Topf \d: /, "").slice(0, 70))}…</span><b>${Math.round(q.s * 100)} %</b></li>`).join("")}</ul></section>
+    <section class="review"><h2>${wrong.length ? "Nicht ganz richtig" : "Alle geschlossenen Fragen richtig!"}</h2>
+      <div class="reading">${wrong.map(q => `<div class="item"><h3>${esc(q.k.q)}</h3><p class="small">Deine Antwort: ${esc(mine(q))}${q.s > 0 ? ` (${Math.round(q.s * 100)} % der Punkte)` : ""}</p><p><b>${esc(rightText(q.k))}</b></p><p class="small">${esc(q.k.why)}</p>${chips(q.k.src)}</div>`).join("")}</div></section>
+    <div style="margin-top:22px"><button class="btn" data-px-start>Noch einmal</button><button class="btn ghost" data-px-leave>Zurück</button></div></div>`;
+  clearInterval(PX.timer); document.body.classList.remove("running");
+  history.replaceState(null, "", "#/angekommen");
+  renderNav("home", D); window.scrollTo(0, 0);
+  celebrate();
+}
+function pxClick(b) {
+  const has = x => b.hasAttribute(x), a = x => b.getAttribute(x);
+  if (has("data-px-start")) { endPx(); startPx(); return; }
+  if (has("data-px-leave")) { endPx(); go(`#/${D.course.id}/lf`); return; }
+  if (!PX) return;
+  if (has("data-px-result")) { pxResult(); return; }
+  if (PX.phase !== "run") return;
+  const q = PX.qs[PX.i];
+  if (has("data-px-go")) PX.i = +a("data-px-go");
+  else if (has("data-px-prev")) PX.i = Math.max(0, PX.i - 1);
+  else if (has("data-px-next")) PX.i = Math.min(PX.qs.length - 1, PX.i + 1);
+  else if (has("data-px-mark")) PX.mark.has(PX.i) ? PX.mark.delete(PX.i) : PX.mark.add(PX.i);
+  else if (has("data-px-tf")) q.tf = q.tf === (a("data-px-tf") === "1") ? null : a("data-px-tf") === "1";
+  else if (has("data-px-opt")) { const i = +a("data-px-opt"); if (q.k.type === "mc") { const was = q.sel.has(i); q.sel.clear(); if (!was) q.sel.add(i); } else q.sel.has(i) ? q.sel.delete(i) : q.sel.add(i); }
+  else if (has("data-px-submit")) { const open = PX.qs.filter(x => !pxAnswered(x)).length; if (PX.end > Date.now() && !confirm(open ? `${open} Fragen sind noch offen. Trotzdem abgeben?` : "Prüfung abgeben?")) return; pxSubmit(); return; }
+  renderPx();
+  if (has("data-px-go") || has("data-px-prev") || has("data-px-next")) window.scrollTo(0, 0);
+}
+
 /* ---------- Offene Fragen ---------- */
 let lfTab = {};
 const pfCards = (c = D) => c.cards.filter(k => k.pf);
@@ -995,7 +1114,8 @@ function viewLfGrouped() {
   const id = D.course.id, groups = [...new Set(D.leitfragen.map(l => l.group))];
   main.innerHTML = `<div class="pad"><h1 class="h1">${esc(D.course.openNamePl)}</h1>${lfTabs()}
     <p class="lead">${esc(D.course.openLead)}</p>
-    <div class="pcta"><button class="btn" data-run="exam">Probelauf starten</button></div>
+    <div class="pcta">${D.course.exam ? `<button class="btn" data-px-start>Prüfungsmodus: ${D.course.exam.n} Fragen, ${D.course.exam.minutes} Min.</button>` : ""}<button class="btn ${D.course.exam ? "ghost" : ""}" data-run="exam">Probelauf nur offene Fragen</button></div>
+    ${D.course.exam ? `<p class="small" style="margin-top:6px">${esc(D.course.exam.info)}${S.pxBest?.[id] !== undefined ? ` Bestes Ergebnis: ${S.pxBest[id]} %.` : ""}</p>` : ""}
     ${D.course.upcoming ? `<p class="small" style="margin-top:10px">${esc(D.course.upcoming)}</p>` : ""}
     <nav class="gjump" aria-label="Zu einer Gruppe springen">${groups.map((g, i) => `<button data-jump="g${i}">${esc(g.replace("Fernlehre ", "FL "))}</button>`).join("")}</nav>
     ${groups.map((g, gi) => { const ls = D.leitfragen.filter(l => l.group === g).sort((a, b) => a.n - b.n), done = ls.filter(l => stamped(l.n)).length;
@@ -1281,6 +1401,7 @@ document.addEventListener("click", e => {
   if (has("data-lfgroup")) { startRun("lfgroup", { g: a("data-lfgroup") }); return; }
   if (has("data-backup-file")) { backupFile(); if (location.hash === "#/ich") viewMe(); else b.closest(".nag")?.remove(); return; }
   if (has("data-akt-close")) { const id = a("data-akt-close"), cs = allCases().find(x => x.id === id); if (cs && aktReady(cs) && !S.akten[id]) { S.akten[id] = dayKey(); addXp(50, "faelle"); save(); viewCase(id); $(".akt")?.classList.add("justclosed"); toast("Akte geschlossen. +50 XP"); const nb = celebrateBadges(); if (nb.length) toast(`Neues Abzeichen: ${nb.map(x => x.b[1]).join(", ")}`); celebrate(); } return; }
+  if ([...b.attributes].some(x => x.name.startsWith("data-px"))) { pxClick(b); return; }
   if (has("data-go")) { if (R) quitRun(); go(a("data-go")); return; }
   if (has("data-run")) { startRun(a("data-run")); return; }
   if (has("data-ch-run")) { startRun("chapter", { ch: a("data-ch-run") }); return; }
@@ -1295,7 +1416,7 @@ document.addEventListener("click", e => {
   if (has("data-exam")) { S.ex[D.course.id] = a("data-exam"); save(); route(); return; }
   if (has("data-exam2")) { const [c, id] = a("data-exam2").split(":"); S.ex[c] = id; save(); route(); return; }
   if (has("data-stoff-tab")) { stoffTab = a("data-stoff-tab"); viewStoff(); return; }
-  if (has("data-quit")) { history.back(); return; }
+  if (has("data-quit")) { if (PX && PX.phase === "run" && !confirm("Prüfungsmodus abbrechen? Die Antworten gehen verloren.")) return; history.back(); return; }
   if (has("data-next")) { nextCard(); return; }
   if (has("data-reveal")) { revealOpen(R.items[R.i]); return; }
   if (has("data-open-done")) { finishOpen(R.items[R.i]); return; }
@@ -1406,6 +1527,8 @@ function quitRun() { if (R) endRun(); }
 function route() {
   const h = location.hash.replace(/^#/, "") || "/";
   if (h === "/fahrt") { if (R) return; history.replaceState(null, "", "#/"); return route(); }
+  if (h === "/pruefung") { if (PX) return; history.replaceState(null, "", "#/"); return route(); }
+  if (PX) endPx();
   if (R) endRun();
   let p = h.split("/").filter(Boolean);
   if (p[0] === "lf" || p[0] === "stoff") p = ["geschichte", ...p]; // alte Links
@@ -1427,9 +1550,11 @@ function route() {
   main.focus({ preventScroll: true });
 }
 window.addEventListener("hashchange", route);
+main.addEventListener("input", e => { if (PX && PX.phase === "run" && e.target.id === "pxtext") PX.qs[PX.i].text = e.target.value; });
 window.addEventListener("popstate", () => {
   if (!viewerEl.hidden && !history.state?.viewer) { closeSlide(); return; }
   if (R && !history.state?.run) { quitRun(); route(); }
+  if (PX && !history.state?.run) { endPx(); route(); }
 });
 
 (async function init() {

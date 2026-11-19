@@ -6,7 +6,7 @@ BLOCKS = ["Verträge und Gewährleistung", "AMS, Notstandshilfe, KBG", "Verfahre
 INFO = ("Laut Prüfungsfragestunde hat die Prüfung 23 Fragen, davon 3 offene. Dazu kommen ungefähr 0 bis 2 Zahleneingaben, je 3 bis 4 Wahr/Falsch- und Single-Choice-Fragen "
         "und etwa 7 bis 10 Multiple-Choice-Fragen; die Aufteilung ist nur eine Schätzung der Lehrenden. Ihre Tipps: die offenen Fragen sicher können, die Fernlehren und das Skript "
         "mindestens einmal durchgehen, die Folien zur Mindestsicherung wiederholen und genau lesen, denn viele Antworten klingen plausibel und sind trotzdem falsch. "
-        "Hier stehen die Fragen aus der Fragestunde mit Antworten aus Skript und Folien. Sie ist nicht der ganze Stoff. Eine Prüfungszeit wurde nicht genannt, die Simulation nimmt 20 geschlossene Fragen in 30 Minuten an.")
+        "Hier stehen die Fragen aus der Fragestunde mit Antworten aus Skript und Folien. Sie ist nicht der ganze Stoff. Die zweite Fragestunde bestätigt 30 Minuten und nennt 44 Punkte für die 3 offenen Fragen; falsche Kreuze geben Minuspunkte. Dazu kommen die Altfragen vom Vorjahr als eigener Block. Die echte Prüfung mit offenen Fragen probst du im Prüfungsmodus auf der Seite „Fernlehre-Fragen“.")
 
 
 def add(c):

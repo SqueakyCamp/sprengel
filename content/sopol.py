@@ -3,21 +3,20 @@ c = Course("sopol", name="Sozialpolitische und ökonomische Bezüge", short="SoP
            exams=[dict(id="p", label="Prüfung", date="2026-11-30")], accent="#8C2F39", lineTitle="Die Einheiten", stopWord="Einheit",
            openName="Kernfrage", openNamePl="Kernfragen", openLead="Die Präsentationen sind das Relevanteste. Beantworte die Fragen frei, vergleiche danach mit den Punkten von den Folien.",
            ranks=[[0,"Wohlfahrtsneuling"],[100,"Flötenrichter*in"],[250,"Zeitungsleser*in"],[500,"Esping-Andersen-Kenner*in"],[850,"Umverteiler*in"],[1300,"Marienthal-Forscher*in"],[1900,"Armutskonferenz"],[2700,"Gini-Profi"],[3700,"Sozialbericht"],[5000,"Policy-Analyst*in"],[6500,"Sozialstaatsarchitekt*in"],[8500,"Sozialminister*in"]],
-           modes=["chains","blitz"], source="Präsentationen der Einheiten 1 bis 6. Zusatztexte und Webseiten sind als Zusatz gekennzeichnet und kommen seltener. Vier Einheiten fehlen noch.",
-           upcoming="Noch 4 Einheiten: Armut (Gastvortrag), Klima und Sozialpolitik, Gesundheit und Ungleichheit, Wiederholung.")
+           modes=["chains","blitz"], source="Präsentationen der Einheiten 1 bis 8. Zusatztexte und Webseiten sind als Zusatz gekennzeichnet und kommen seltener. Der Armut-Gastvortrag hat keine Folien und ist nicht direkt prüfungsrelevant.",
+           upcoming="Damit ist der Prüfungsstoff vollständig. Die Wiederholung am 23.11. bringt keine neuen Inhalte, höchstens noch Folien.")
 CH,T,MC,TF,ORD,MATCH,MULTI,BUCKET,CHAIN,CALC,OPEN,TERM,TRAP,TL,PERSON = c.CH,c.T,c.MC,c.TF,c.ORD,c.MATCH,c.MULTI,c.BUCKET,c.CHAIN,c.CALC,c.OPEN,c.TERM,c.TRAP,c.TL,c.PERSON
 
 CH("e1","Einheit 1: Was ist Sozialpolitik?","21.09.","Sozialstaat und Soziale Arbeit",["s1"])
 CH("e2","Einheit 2: Gerechtigkeit und Wohlfahrtsstaaten","23.09.","Die Flöte, Bismarck, Esping-Andersen",["s2"])
 CH("e3","Einheit 3: Der österreichische Sozialstaat","05.10.","Einnahmen, Ausgaben, Umverteilung",["s3"])
-CH("ea","Armut: Gastvortrag Martin Schenk","15.10., Folien fehlen","Bis dahin nur aus Zusatzquellen",["zw"])
+CH("ea","Armut: Gastvortrag Martin Schenk","15.10., keine Folien","Nicht prüfungsrelevant, nur Zusatzquellen zum Lesen",["zw"])
 CH("e4","Einheit 4: Arbeit und Arbeitslosigkeit","19.10.","Marienthal, Jahoda, working poor",["s4"])
 CH("e5","Einheit 5: Arbeitsmarktpolitik","21.10.","Von Vollbeschäftigung zu Workfare",["s5"])
 CH("e6","Einheit 6: Vermögen","28.10.","Gini, Steuern, Überreichtum",["s6"])
-CH("ep","Standpunkte","Zusatzquelle","Was Parteien 2024 sagten",[])
-CH("ek","Klima und Sozialpolitik","09.11., folgt noch","Folien kommen noch",[],pending=True)
-CH("eg","Gesundheit und Ungleichheit","18.11., folgt noch","Folien kommen noch",[],pending=True)
-CH("ew","Wiederholung und Fallbesprechung","23.11., folgt noch","Folien kommen noch",[],pending=True)
+CH("ek","Einheit 7: Klima und Sozialpolitik","09.11.","Verteilung, Umweltgerechtigkeit, nachhaltiger Wohlfahrtsstaat",["s7"])
+CH("eg","Einheit 8: Gesundheit und Ungleichheit","18.11.","Sozialversicherung, Zugang, sozialer Gradient",["s8"])
+CH("ew","Wiederholung","23.11.","Keine neuen Inhalte, eventuell noch Folien",[],pending=True)
 
 T("s-rahmen","e1","Rahmenbedingungen im Modul","Das Modul Grundsicherung hat vier Teile mit gemeinsamer Note: Materielle Sicherung, Rechtliche Grundlagen, Sozialpolitik und Fallanalyse, jeweils 25 von 100 Punkten. Die Teile hängen eng zusammen, darum verbinden die Exkurse in Sprengel sie miteinander. Die Prüfung in Sozialpolitik steht laut Semesterplan am 30.11.",[("s1",2),("s1",8)])
 T("s-def","e1","Was Sozialpolitik ist","Eng gefasst: staatliche Sozialleistungen. Weit gefasst: Interventionsform zur sozialen Absicherung und zur Gestaltung von Lebensbedingungen. Sie will Risiken vorbeugen, zur Bewältigung befähigen, Wirkungen ausgleichen und Lebenslagen sichern.",[("s1",4),("s1",5)])
@@ -57,7 +56,6 @@ T("s-haeq","e6","Haushaltsäquivalenzeinkommen","Das Haushaltsäquivalenzeinkomm
 T("s-verm","e6","Vermögen und Steuern","Vermögen ist sehr ungleich verteilt, besonders bei Immobilien: 50,1 % der Haushalte haben keine. Arbeit und Konsum tragen am meisten bei, vermögensbezogene Steuern nur 3,1 %. Vermögensteuer bis 1993, Erbschaftssteuer bis 2008; der VfGH hob sie 2007 aus formalen Gründen auf.",[("s6",6),("s6",11),("s6",12),("s6",14)])
 T("s-vorschlag","e6","Überreichtum und Reformvorschläge","Fessler und Schürz schlagen Grundsteuer, Erbschaftssteuer und Überreichtumssteuer vor. Überreichtum heißt: Vermögen wird zu politischer und wirtschaftlicher Macht. Die Debatte über Legitimität dreht sich sonst meist um Armutsbetroffene.",[("s6",16),("s6",17)])
 T("s-falter","e6","Zusatztext: Falter zur Nationalbank-Studie","Die OeNB ersuchte die Autoren, sich auf den analytisch-deskriptiven Teil zu beschränken, sie sagten ihre Teilnahme ab. Immobilieneigentum beginnt erst in der oberen Hälfte der Vermögensverteilung. Empfehlung: Besteuerung leistungsloser Einkommen.",[("zf",1)])
-T("s-stand","ep","Standpunkte 2024","Die Wahlkabine zur Nationalratswahl 2024 zeigt, wie Parteien sozialpolitische Fragen beantwortet haben. Das hilft, Gerechtigkeitskonzepte politisch einzuordnen, ist aber eine Selbstauskunft aus dem Wahlkampf.",[("@wk",0)])
 
 OPEN(1,"Einheit 1","Was ist Sozialpolitik, was der Sozialstaat, und wie stehen Soziale Arbeit und Sozialpolitik zueinander?","Absicherung und Gestaltung; politische Bearbeitung von Marktrisiken; Soziale Arbeit als Teil davon.",
  [("Eng: staatliche Sozialleistungen. Weit: Interventionsform zur Absicherung und Gestaltung von Lebensbedingungen und Partizipationschancen.",[("s1",4)]),
@@ -237,3 +235,6 @@ CHAIN("s-gerecht",[2,10],"Debatte um eine Erbschaftssteuer","In einer Diskussion
  ("Und C.?","Bedarfsgerechtigkeit",["Leistungsgerechtigkeit","Besitzstand"],"C. denkt bedarfsgerecht: Geld soll dorthin, wo der Bedarf ist, etwa zur Vermeidung von Kinderarmut. Das ist die Sicherung des Existenzminimums, politisch dem Sozialismus zugeordnet.",[("s2",5)]),
  ("Was sagen Fessler und Schürz zur Erbschaftssteuer?","Sie besteuert leistungslose Zuwächse und stärkt Chancengleichheit",["Sie sei nicht umsetzbar","Sie treffe vor allem Arme"],"Fessler und Schürz sehen in der Erbschaftssteuer eine Steuer auf leistungslose Zuwächse, die die Chancengleichheit stärkt. Österreich hat seit 2008 keine Erbschaftssteuer mehr, nachdem der VfGH sie 2007 aus formalen Gründen aufgehoben hatte.",[("s6",16),("s6",14)]),
 ],"Gerechtigkeitskonzepte helfen, politische Positionen zu ordnen: Hinter jeder Steuerdebatte steht ein Verständnis davon, was gerecht ist. Wer Besitz schützt, argumentiert konservativ; wer auf Leistung pocht, kann Erbschaften kaum begründen; wer auf Bedarf schaut, will umverteilen. In der Prüfung lohnt es, Positionen so zuzuordnen.")
+
+import sopol_kg
+sopol_kg.add(c)

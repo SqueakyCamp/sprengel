@@ -481,4 +481,7 @@ import recht_fl
 recht_fl.add(c)
 import recht_fs
 recht_fs.add(c)
-c.meta["pf"] = dict(blocks=recht_fs.BLOCKS, info=recht_fs.INFO, n=20, minutes=30)
+import recht_alt
+recht_alt.add(c)
+c.meta["exam"] = recht_alt.exam_meta(c)
+c.meta["pf"] = dict(blocks=recht_fs.BLOCKS + [recht_alt.ALT], info=recht_fs.INFO, n=20, minutes=30)

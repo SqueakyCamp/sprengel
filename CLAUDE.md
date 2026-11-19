@@ -23,7 +23,7 @@ Dokument `j` ist der Zusatztext „100 Jahre Wiener Jugendamt“ (Seiten entspre
 - Modul-Mix: Karten der Fallwerkstatt nur mit `solo=True` (ohne Fall verstaendlich), keine Fallketten und Reihungen.
 - Fernlehren 8 bis 11 kamen ohne Musterantworten: Antworten von Claude aus Skripten und RIS-Gesetzestexten (`@kschg`, `@mrg` usw. in `docs.WEB`). Recht-Skript Teil 2: PDF-Seite = gedruckte Seite + 1, Verweise nutzen die PDF-Seite.
 - Studierenden-Fragensammlungen (z. B. „Potenzielle Prüfungsfragen MATS“) nur als Themenhinweis, nie als Quelle oder Dokument.
-- Neue Fernlehren oder Einheiten: PDF nach `source/gs/`, in `docs.py` eintragen, `build_slides.py <id>` und Inhalte ergaenzen; den Eintrag mit `pending=True` im Kurs ersetzen. Es fehlen noch SoPol-Einheiten (Klima, Gesundheit, Wiederholung) und die Armut-Folien.
+- Neue Fernlehren oder Einheiten: PDF nach `source/gs/`, in `docs.py` eintragen, `build_slides.py <id>` und Inhalte ergaenzen; den Eintrag mit `pending=True` im Kurs ersetzen. SoPol ist vollständig (Einheiten 1 bis 8); Armut-Gastvortrag ohne Folien und nicht prüfungsrelevant, Wiederholung 23.11. bringt keine neuen Inhalte.
 - Bettinger und Talos/Obinger sind Scans: Ihr OCR-Text liegt in `source/gs/*.ocr.json`.
 - Fall-Loesungspunkte stammen von Claude, nicht von den Lehrenden; das steht auch in der App.
 - Notizen aus den PDFs sind nachrangig und als „Deine Notiz“ gekennzeichnet. Bei Widerspruechen in `TRAP`.
@@ -61,3 +61,10 @@ Regeln:
 - Dokument `fs` = Mitschrift der Prüfungsfragestunde Recht (über other/Jakob). `content/recht_fs.py`: neue Themen (r-form, r-gutschein, r-alvweg, r-beweis, r-mandat, r-ngo, r-wmg) und 64 Karten mit `pf`, Tab „Prüfungsfragen“ in Recht (6 Blöcke, Simulation 20 Fragen in 30 Min., Zeit ist geschätzt). Antworten mit Skript/Folien belegt; Abweichungen der Mitschrift als TRAP. „Hebel“ in der Mitschrift = vermutlich HibL.
 - Recht-Skript Teil 2: Seitenzahl im PDF ist gedruckte Seite + 1 (Gutscheine stehen auf PDF-Seite 59).
 - App: Offene Fragen zählen zum Kapitel- und LV-Prozent (`lfDone`: Stufe 2 Lückentext geschafft oder freie Antwort ab 50 %). Stempel braucht weiter die freie Antwort. `pickLf` nimmt erst Stufe 1 aller Fragen, dann Stufe 2, dann frei. Kapitelrunde: Fehlen höchstens 3 Karten, kommen bis zu 4 offene Fragen dazu (`mixIn` verteilt sie).
+
+## Altfragen, Fragestunde 2, Prüfungsmodus, SoPol 7 und 8 (19.11.2026)
+
+- Recht: Dokumente `fz` (zweite Prüfungsfragestunde) und `fa` (Altfragen und Inhalte vom Vorjahr, Mitschrift). `content/recht_alt.py`: neue Themen (materiell/formell, Auslegung, Instanzenzug, Gerichtspersonen, Außerstreit, BP/Bundesversammlung, Neutralität, Exekutionsbewilligung, Schuldenregulierung, Insolvenz-Änderungen, Anwartschaft, EU-Grundfreiheiten), offene Altfragen 52 bis 59 (Gruppe „Altfragen voriges Jahr“), pf-Block „Altfragen voriges Jahr“, TRAPs zu Abweichungen der Mitschriften.
+- Prüfungsmodus (`course.exam`, nur Recht, `recht_alt.exam_meta`): 23 Fragen in 30 Min., 20 geschlossene (2 je Themenblock aus `EXAM_BLOCKS`, nur mc/tf/multi), 3 offene je eine aus Topf 1/2/3 (`EXAM_TOPF`). Frei springen, markieren, abgeben; danach Selbsteinschätzung der offenen Fragen, dann Auswertung. Plus/Minus: (richtige minus falsche Kreuze) durch Anzahl richtiger, min. 0. 44 Punkte für offene Fragen sind genannt, 100 gesamt ist eine Annahme. Code: `startPx`/`renderPx`/`pxResult` in app.js, Route `#/pruefung`, Zustand `PX`.
+- Lückentext (Stufe 2): Punkte bleiben in der Reihenfolge der Antwort (vorher gemischt).
+- SoPol: `content/sopol_kg.py` mit Einheit 7 (Klima, `s7`) und 8 (Gesundheit, `s8`), offene Fragen 11 bis 14. Bildfolien abgeschrieben in `docs.FIG`. Kapitel „Standpunkte“ und Wahlkabine-Quelle entfernt (nicht prüfungsrelevant).

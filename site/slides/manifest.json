@@ -277,6 +277,30 @@
    "pages": 24,
    "blank": [],
    "extra": false
+  },
+  "fz": {
+   "name": "Recht: Prüfungsfragestunde 2 (Mitschrift)",
+   "pages": 7,
+   "blank": [],
+   "extra": false
+  },
+  "fa": {
+   "name": "Recht: Altfragen und Inhalte voriges Jahr (Mitschrift)",
+   "pages": 19,
+   "blank": [],
+   "extra": false
+  },
+  "s7": {
+   "name": "SoPol Einheit 7: Klima",
+   "pages": 29,
+   "blank": [],
+   "extra": false
+  },
+  "s8": {
+   "name": "SoPol Einheit 8: Gesundheit",
+   "pages": 26,
+   "blank": [],
+   "extra": false
   }
  }
 }
