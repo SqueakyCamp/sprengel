@@ -68,3 +68,9 @@ Regeln:
 - Prüfungsmodus (`course.exam`, nur Recht, `recht_alt.exam_meta`): 23 Fragen in 30 Min., 20 geschlossene (2 je Themenblock aus `EXAM_BLOCKS`, nur mc/tf/multi), 3 offene je eine aus Topf 1/2/3 (`EXAM_TOPF`). Frei springen, markieren, abgeben; danach Selbsteinschätzung der offenen Fragen, dann Auswertung. Plus/Minus: (richtige minus falsche Kreuze) durch Anzahl richtiger, min. 0. 44 Punkte für offene Fragen sind genannt, 100 gesamt ist eine Annahme. Code: `startPx`/`renderPx`/`pxResult` in app.js, Route `#/pruefung`, Zustand `PX`.
 - Lückentext (Stufe 2): Punkte bleiben in der Reihenfolge der Antwort (vorher gemischt).
 - SoPol: `content/sopol_kg.py` mit Einheit 7 (Klima, `s7`) und 8 (Gesundheit, `s8`), offene Fragen 11 bis 14. Bildfolien abgeschrieben in `docs.FIG`. Kapitel „Standpunkte“ und Wahlkabine-Quelle entfernt (nicht prüfungsrelevant).
+
+## Korrekturen 23.11.2026
+
+- Offene Fragen: Jeder Antwortpunkt muss zur angezeigten Frage passen. Beantwortet ein Punkt eine Teilfrage der Fernlehre, die nicht im Fragetext steht, die Teilfrage in den Fragetext aufnehmen oder den Punkt streichen (Fälle waren Nr. 13, 15, 18, 21, 23).
+- Keine Geld-Rechenaufgaben (weder `calc` noch MC mit ausgerechneten Summen) und keine Fristrechnungen mit Datum, in keiner LV. Stattdessen abfragen, wie sich ein Betrag zusammensetzt bzw. wann eine Frist beginnt und endet.
+- Instanzen: Karten zur Zuständigkeit nach Strafdrohung (BG bis 1 Jahr, LG Einzelrichter*in bis 5 Jahre, Schöff*innen darüber, Geschworene bei den schwersten Delikten) und Streitwert in `recht_alt.py`.

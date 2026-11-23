@@ -48,7 +48,7 @@ def add(c):
       [("rv", 21), ("fz", 2)])
     T("r-instanz", "ri", "Instanzenzug im Straf- und Zivilrecht",
       "Das gerichtliche Strafverfahren ist nur in 2 Instanzen angelegt: Urteilt das Bezirksgericht, geht die Berufung binnen 4 Wochen an das Landesgericht; im Strafprozess muss man das Rechtsmittel nach der Verkündung binnen 3 Tagen anmelden. Urteilt das Landesgericht, geht es laut Altfragen-Mitschrift mit Berufung an das Oberlandesgericht oder mit Nichtigkeitsbeschwerde an den OGH. "
-      "Am Landesgericht entscheiden je nach Schwere Einzelrichter*innen, Schöff*innensenate oder Geschworenengerichte; die Mitwirkung von Schöff*innen und Geschworenen ist ein Grundsatz der Gerichtsbarkeit und Ausdruck des demokratischen Prinzips. "
+      "Welches Gericht in erster Instanz zuständig ist, hängt von der Strafdrohung ab: Bei einer Strafdrohung bis zu einem Jahr, etwa beim einfachen Diebstahl, urteilt das Bezirksgericht. Bis 5 Jahre Freiheitsstrafe entscheidet am Landesgericht ein*e Einzelrichter*in, darüber ein Schöff*innensenat (Berufsrichter*innen und 2 Schöff*innen). Das Geschworenengericht (3 Berufsrichter*innen und 8 Geschworene, die allein über die Schuld entscheiden) ist für die schwersten Delikte wie Mord und für politische Delikte zuständig; die Mitwirkung von Schöff*innen und Geschworenen ist ein Grundsatz der Gerichtsbarkeit und Ausdruck des demokratischen Prinzips. "
       "Das Zivilverfahren hat grundsätzlich 3 Instanzen: Bezirksgericht, Landesgericht, OGH oder Landesgericht, Oberlandesgericht, OGH. Gegen Urteile erster Instanz gibt es Berufung (in der Regel vier Wochen), gegen Urteile zweiter Instanz Revision, gegen Beschlüsse Rekurs. Zum OGH kommt man nur in wichtigen Rechtssachen, wenn eine erhebliche Rechtsfrage vorliegt.",
       [("f3", 6), ("r2", 29), ("r2", 30), ("rv", 73), ("fa", 1), ("fa", 2)])
     T("r-gerichtspers", "ri", "Gerichtspersonen",
@@ -97,12 +97,13 @@ def add(c):
       [("rv", 78), ("fa", 12), ("fa", 18), ("fa", 19)])
 
     # ---------------- offene Altfragen ----------------
-    OPEN(52, GROUP, "Topf 1: Beschreibe den Instanzenzug im Strafrecht.", "Zwei Instanzen: BG, Berufung ans LG; oder LG, Berufung ans OLG bzw. Nichtigkeitsbeschwerde an den OGH. Am LG Einzelrichter*in, Schöff*innen oder Geschworene.",
+    OPEN(52, GROUP, "Topf 1: Beschreibe den Instanzenzug im Strafrecht.", "Zwei Instanzen: BG (bis 1 Jahr), Berufung ans LG; oder LG (Einzelrichter*in bis 5 Jahre, darüber Schöff*innen, schwerste Delikte Geschworene), Berufung ans OLG bzw. Nichtigkeitsbeschwerde an den OGH.",
          [("Das Strafverfahren ist nur in 2 Instanzen angelegt.", [("f3", 6)]),
           ("Bezirksgericht urteilt, Berufung binnen 4 Wochen an das Landesgericht, dann ist Schluss.", [("f3", 6), ("fa", 1)]),
           ("Landesgericht urteilt, dann Berufung an das Oberlandesgericht oder Nichtigkeitsbeschwerde an den OGH.", [("fa", 2)]),
           ("Das Rechtsmittel muss nach der Urteilsverkündung binnen 3 Tagen angemeldet werden, die 4-Wochen-Frist läuft ab der schriftlichen Ausfertigung.", [("f3", 6)]),
-          ("Am Landesgericht je nach Strafdrohung Einzelrichter*in, Schöff*innensenat oder Geschworenengericht.", [("fa", 1)]),
+          ("Zuständigkeit nach der Strafdrohung: bis 1 Jahr Bezirksgericht, etwa Diebstahl nach § 127 StGB.", [("f3", 6)]),
+          ("Bis 5 Jahre Freiheitsstrafe Landesgericht mit Einzelrichter*in, über 5 Jahre Landesgericht mit Schöff*innensenat, bei den schwersten und politischen Delikten wie Mord das Geschworenengericht.", [("fa", 1)]),
           ("Schöff*innen und Geschworene sind Ausdruck des demokratischen Prinzips in der Gerichtsbarkeit.", [("rv", 73), ("fa", 1)])], "ri")
     OPEN(53, GROUP, "Topf 1: Beschreibe den Instanzenzug im Zivilrecht.", "Drei Instanzen: BG, LG, OGH oder LG, OLG, OGH; Berufung, Revision, Rekurs.",
          [("Das Zivilverfahren hat grundsätzlich 3 Instanzen.", [("r2", 29)]),
@@ -171,6 +172,37 @@ def add(c):
        "So steht es im Skript zu den Rechtsmitteln im Zivilprozess. In der Verwaltung heißt das Rechtsmittel gegen Bescheide Beschwerde und geht an das Verwaltungsgericht.", [("r2", 29), ("r2", 16)])
     TF(None, "r-instanz", [53], "Jede zivilrechtliche Streitigkeit kann bis zum OGH gebracht werden.", False,
        "Falsch. Eine Revision an den OGH ist nur zulässig, wenn gewisse Wertgrenzen überschritten sind und eine erhebliche Rechtsfrage vorliegt, etwa weil das Berufungsgericht von der OGH-Rechtsprechung abweicht.", [("r2", 29), ("r2", 30)])
+    # Zuständigkeit nach Strafdrohung und Streitwert (Wunsch 23.11.2026: mehr zu den Instanzen)
+    MC(None, "r-instanz", [52, 9], "A. stiehlt ein Parfüm. Einfacher Diebstahl (§ 127 StGB) hat eine Strafdrohung bis zu einem Jahr. Welches Gericht urteilt in erster Instanz?", "Das Bezirksgericht",
+       ["Das Landesgericht mit Einzelrichter*in", "Das Landesgericht mit Schöff*innensenat", "Die Landespolizeidirektion"],
+       "Bei einer Strafdrohung bis zu einem Jahr ist das Bezirksgericht zuständig. Die Berufung geht dann an das Landesgericht, und damit ist der Instanzenzug zu Ende.", [("f3", 6)])
+    MA(ALT, "r-instanz", [52], "Strafrecht: Welches Gericht ist in erster Instanz zuständig?", [["Strafdrohung bis 1 Jahr", "Bezirksgericht"], ["Bis 5 Jahre Freiheitsstrafe", "Landesgericht, Einzelrichter*in"], ["Über 5 Jahre Freiheitsstrafe", "Landesgericht, Schöff*innensenat"], ["Schwerste und politische Delikte, etwa Mord", "Landesgericht, Geschworenengericht"]],
+       "Je schwerer die Strafdrohung, desto höher das Gericht und desto mehr Laien wirken mit. Bezirksgerichte urteilen bis zu einem Jahr, das Landesgericht darüber: bis 5 Jahre mit Einzelrichter*in, darüber mit Schöff*innen, bei den schwersten Delikten mit Geschworenen.", [("f3", 6), ("fa", 1)])
+    ORD("r-instanz", [52], "Strafrecht: Ordne die Gerichtsbesetzung von der leichtesten zur schwersten Strafdrohung.", ["Bezirksgericht", "Landesgericht mit Einzelrichter*in", "Landesgericht mit Schöff*innensenat", "Landesgericht mit Geschworenengericht"],
+        "Bis 1 Jahr Bezirksgericht, bis 5 Jahre Landesgericht mit Einzelrichter*in, über 5 Jahre Schöff*innensenat, die schwersten und politischen Delikte Geschworenengericht.", [("f3", 6), ("fa", 1)])
+    MC(ALT, "r-instanz", [52], "Einem Angeklagten drohen für Vergewaltigung mehr als 5 Jahre Freiheitsstrafe. Wer entscheidet in erster Instanz?", "Das Landesgericht als Schöff*innensenat",
+       ["Das Bezirksgericht", "Das Landesgericht mit Einzelrichter*in", "Der OGH"],
+       "Über 5 Jahre Strafdrohung entscheidet am Landesgericht ein Schöff*innensenat aus Berufsrichter*innen und 2 Schöff*innen. Die Altfragen-Mitschrift nennt Vergewaltigung und Drogenhandel als Beispiele.", [("fa", 1)])
+    MC(ALT, "r-instanz", [52], "Wer entscheidet über eine Anklage wegen Mordes?", "Das Geschworenengericht am Landesgericht",
+       ["Ein Schöff*innensenat am Bezirksgericht", "Ein*e Einzelrichter*in am Landesgericht", "Der Verfassungsgerichtshof"],
+       "Das Geschworenengericht ist für die schwersten Delikte zuständig, bei denen schon die Untergrenze der Strafe hoch liegt, und für politische Delikte wie Verhetzung. Es besteht aus 3 Berufsrichter*innen und 8 Geschworenen.", [("fa", 1)])
+    MC(ALT, "r-instanz", [52], "Ein leichter Raub wird mit bis zu 5 Jahren Freiheitsstrafe bedroht. Wer entscheidet?", "Ein*e Einzelrichter*in am Landesgericht",
+       ["Das Bezirksgericht", "Ein Schöff*innensenat", "Ein Geschworenengericht"],
+       "Bis 5 Jahre Strafdrohung entscheidet am Landesgericht ein*e Einzelrichter*in allein. Das Bezirksgericht ist nur bis zu einem Jahr zuständig, Schöff*innen kommen erst über 5 Jahren dazu.", [("fa", 1), ("f3", 6)])
+    TF(ALT, "r-instanz", [52], "Im Geschworenengericht entscheiden die Geschworenen ohne die Berufsrichter*innen, ob jemand schuldig ist.", True,
+       "Stimmt. Das Geschworenengericht besteht aus 3 Berufsrichter*innen und 8 Geschworenen; über die Schuldfrage beraten die Geschworenen allein. Im Schöff*innensenat entscheiden Berufsrichter*innen und Schöff*innen dagegen gemeinsam.", [("fa", 1)])
+    TF(None, "r-instanz", [52], "Das Bezirksgericht ist in Strafsachen bis zu einer Strafdrohung von 5 Jahren zuständig.", False,
+       "Falsch. Das Bezirksgericht urteilt nur bei einer Strafdrohung bis zu einem Jahr. Bis 5 Jahre entscheidet am Landesgericht ein*e Einzelrichter*in.", [("f3", 6), ("fa", 1)])
+    MA(None, "r-instanz", [53, 10, 11, 24], "Zivilrecht: Wo beginnt das Verfahren?", [["Klage über 14.000 Euro", "Bezirksgericht"], ["Klage über 25.000 Euro", "Landesgericht"], ["Kindesunterhalt", "Bezirksgericht, Pflegschaftsabteilung"]],
+       "Bis zu einem Streitwert von 15.000 Euro ist das Bezirksgericht zuständig, darüber das Landesgericht. Familiensachen wie Unterhalt und Obsorge laufen im Außerstreitverfahren am Bezirksgericht.", [("f3", 7), ("f7", 3)])
+    MA(None, "r-instanz", [53, 7, 8], "Wer ist die zweite Instanz?", [["Zivilurteil des Bezirksgerichts", "Landesgericht"], ["Zivilurteil des Landesgerichts", "Oberlandesgericht"], ["Strafurteil des Bezirksgerichts", "Landesgericht"], ["Bescheid der MA 40", "Landesverwaltungsgericht"], ["Bescheid des AMS", "Bundesverwaltungsgericht"]],
+       "In der ordentlichen Gerichtsbarkeit geht es vom Bezirksgericht zum Landesgericht und vom Landesgericht zum Oberlandesgericht. Gegen Bescheide gibt es keinen Instanzenzug zu den ordentlichen Gerichten: Landesbehörden wie die MA 40 gehen an das Landesverwaltungsgericht, Bundesbehörden wie das AMS an das Bundesverwaltungsgericht.", [("r2", 30), ("f3", 4), ("f3", 6), ("r3", 24)])
+    BU(None, "r-instanz", [7, 52, 53], "Welches Höchstgericht ist am Ende zuständig?", ["OGH", "VwGH", "VfGH"],
+       [("Revision in einem Zivilprozess", 0), ("Nichtigkeitsbeschwerde gegen ein Strafurteil des Landesgerichts", 0), ("Revisionsrekurs im Unterhaltsverfahren", 0), ("Revision gegen ein Erkenntnis des Landesverwaltungsgerichts", 1), ("Außerordentliche Beschwerde wegen Verletzung von Grundrechten durch eine Verwaltungsentscheidung", 2)],
+       "Der OGH ist das Höchstgericht für Zivil- und Strafsachen. In der Verwaltung geht es nach dem Verwaltungsgericht mit Revision an den VwGH oder mit außerordentlicher Beschwerde an den VfGH, wenn verfassungsgesetzlich gewährleistete Rechte verletzt sein könnten.", [("r2", 30), ("f3", 4), ("f3", 7), ("fa", 2)])
+    MC(None, "r-instanz", [53], "Wie viele Oberlandesgerichte gibt es in Österreich?", "4: Wien, Graz, Linz und Innsbruck",
+       ["9, eines je Bundesland", "1, in Wien", "2: Wien und Innsbruck"],
+       "Österreich hat 4 OLG-Sprengel: Wien, Graz, Linz und Innsbruck. Sie sind die zweite Instanz, wenn ein Zivilverfahren am Landesgericht beginnt.", [("r2", 30)])
     MC(None, "r-ausserstreit", [53, 58], "Was unterscheidet das Außerstreitverfahren vom Zivilprozess?", "Es ist rechtsfürsorglich und kann auch von Amts wegen eingeleitet werden",
        ["Es wird nur auf Klage eingeleitet", "Es ist formstrenger und teurer", "Es läuft vor Verwaltungsbehörden"], "Der Zivilprozess wird nur auf Klage eingeleitet und ist formstrenger mit höherem Kostenrisiko. Das Außerstreitverfahren läuft auch vor den Zivilgerichten, aber auf Antrag oder von Amts wegen.", [("r2", 23)])
     MU(ALT, "r-ausserstreit", [58], "Was wird laut Altfragen-Mitschrift im Außerstreitverfahren entschieden?", ["Obsorge", "Unterhalt", "Verlassenschaft", "Einvernehmliche Scheidung"], ["Schadenersatzklage", "Mahnklage"],

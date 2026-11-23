@@ -132,13 +132,14 @@ OPEN(13,"Fernlehre 4","„Die Bundespräsidentin gewährt die Demokratie, prüft
  [("Sie gewährt keine Grundprinzipien, sondern ist Bestandteil eines Zusammenspiels von Nationalrat, Bundesrat, VfGH, EMRK.",[("f4",1)]),
   ("Die Unterschrift beurkundet das ordnungsgemäße Zustandekommen. Das ist eine rein formale Prüfung.",[("f4",1)]),
   ("Der einzige Fall einer Verweigerung (Heinz Fischer) betraf rückwirkende Strafvorschriften und kann als inhaltlich eingeordnet werden.",[("f4",1)]),
-  ("Auch der VfGH prüft nicht jedes Gesetz, sondern nur auf bestimmten Wegen, etwa durch außerordentliche Beschwerde oder Bürger*innenbeschwerde.",[("f4",1)])],"rp")
+  ("Auch der VfGH prüft nicht jedes Gesetz, sondern nur auf bestimmten Wegen, etwa durch außerordentliche Beschwerde oder Bürger*innenbeschwerde.",[("f4",1)]),
+  ("Die Bundespräsidentin lobt die Bundesregierung an, bestimmt aber nicht allein die Regierungsparteien: Die Regierung ist dem Nationalrat politisch verantwortlich, der sie mit einem Misstrauensvotum stürzen kann.",[("rv",59)])],"rp")
 OPEN(14,"Fernlehre 4","Welche Elemente direkter Demokratie gibt es, und wie stark sind sie?","Volksbefragung, Volksabstimmung, Volksbegehren. Schwach ausgeprägt.",
  [("Volksbefragung, Volksabstimmung und Volksbegehren.",[("f4",2)]),
   ("Im Gegensatz zur Schweiz nicht sehr ausgeprägt.",[("f4",2)]),
   ("Volksbefragungen binden rechtlich nicht, auch erfolgreiche Volksbegehren müssen nicht umgesetzt werden.",[("f4",2)])],"rp")
-OPEN(15,"Fernlehre 4","Was heißt „Österreich ist ein Bundesstaat“? Was bleibt beim Bund, was bekommen die Länder?","Aufteilung nach Art 10 bis 15 B-VG.",
- [("Gesetzgebung und Vollziehung sind aufgeteilt: Art 10 bis 15 B-VG.",[("f4",3)]),
+OPEN(15,"Fernlehre 4","Was heißt „Österreich ist ein Bundesstaat“? Was bleibt beim Bund, was bekommen die Länder? Haben die Länder eigene Verfassungen?","Aufteilung nach Art 10 bis 15 B-VG; eigene Landesverfassungen, aber ein Staat.",
+ [("Die Zuständigkeiten sind nach Art 10 bis 15 B-VG zwischen Bund und Ländern aufgeteilt, getrennt nach Gesetzgebung und Vollziehung: Bund und Bund, Bund und Land oder Land und Land.",[("f4",3)]),
   ("Zivilrecht, Strafrecht, Arbeitsrecht und Finanzrecht sind ausschließlich Bund (Art 10), damit sie überall gleich gelten.",[("f4",3)]),
   ("Art 15 ist Auffangtatbestand: Alles Übrige bleibt den Ländern.",[("f4",3)]),
   ("Jedes Bundesland hat eine eigene Landesverfassung, aber kein eigenes Staatssystem.",[("f4",3)])],"rp")
@@ -156,8 +157,9 @@ OPEN(17,"Fernlehre 4","Du möchtest König*in von Österreich werden. Was müsst
 OPEN(18,"Fernlehre 5","Was bedeutet „Die Gesetzgebung ist von der Vollziehung getrennt“? Was ist Vollziehung?","Gewaltenteilung. Vollziehung ist Gerichtsbarkeit plus Verwaltung.",
  [("Die Staatsfunktionen werden von voneinander unabhängigen Organen ausgeübt, die nicht in andere eingreifen dürfen.",[("f5",1)]),
   ("Vollziehung erfolgt über Gerichtsbarkeit und Verwaltung, die in allen Instanzen getrennt sind und einander nicht anweisen.",[("f5",1)]),
-  ("Alle Gerichte sind Bundesbehörden, auch das Landesgericht.",[("f5",1)]),
-  ("Falsch. Gerichtsbarkeit und Verwaltung sind in allen Instanzen getrennt. Gegen einen Bescheid geht man mit Beschwerde zum Verwaltungsgericht, nicht zum Bezirksgericht. Ein ordentliches Gericht kann eine Behörde nicht anweisen.",[("f5",1)])],"rp")
+  ("Gerichtsbarkeit üben unabhängige Richter*innen aus. Alle Gerichte sind Bundesbehörden, auch wenn sie Landesgericht oder Bezirksgericht heißen.",[("f5",1)]),
+  ("Verwaltung führt die Aufgaben durch, die Verfassungen und Gesetze staatlichen Organen und Behörden übertragen.",[("f5",1)]),
+  ("Es gibt keinen Instanzenzug zwischen Gerichtsbarkeit und Verwaltung.",[("f5",1)])],"rp")
 OPEN(19,"Fernlehre 5","Welche Grundsätze beinhaltet das rechtsstaatliche Prinzip?","Willkür verhindern: Gesetzgeber an die Verfassung binden, Vollziehung an die Gesetze.",
  [("Es soll Willkür verhindern und Freiheit und Würde sichern.",[("f5",2)]),
   ("Der Gesetzgeber ist an die Verfassung gebunden, Verwaltung und Gerichte an die Gesetze.",[("f5",2)]),
@@ -169,9 +171,8 @@ OPEN(20,"Fernlehre 5","„Das Grundrecht auf Eigentum heißt, der Staat teilt mi
   ("Fast alle Grundrechte stehen unter Eingriffs- oder Gesetzesvorbehalt.",[("f5",3)]),
   ("Grundrechte enden dort, wo Grundrechte anderer beginnen.",[("f5",3)]),
   ("Eigentumsschutz bedeutet Schutz des vorhandenen Eigentums, keine Zuteilung; Art 10 EMRK erlaubt gesetzliche Einschränkungen.",[("f5",4)])],"rg")
-OPEN(21,"Fernlehre 6","Wie erlangen EU-Rechtsakte Verbindlichkeit? Welche EU-Institutionen musst du kennen?","Nur was auf den Folien steht: Richtlinie umsetzen, Verordnung gilt direkt, vier Hauptorgane.",
- [("Zur Prüfung nur lernen, was auf den Folien steht.",[("f6",1)]),
-  ("Richtlinien setzen die Staaten um, EU-Verordnungen gelten unmittelbar.",[("f2",3)]),
+OPEN(21,"Fernlehre 6","Wie erlangen EU-Rechtsakte Verbindlichkeit? Welche EU-Institutionen musst du kennen?","Richtlinie umsetzen, Verordnung gilt direkt, vier Hauptorgane.",
+ [  ("Richtlinien setzen die Staaten um, EU-Verordnungen gelten unmittelbar.",[("f2",3)]),
   ("Kommission, Rat der EU, Parlament und EuGH.",[("rv",79)]),
   ("Der EGMR ist keine EU-Institution.",[("rv",84)])],"re")
 OPEN(22,"Fernlehre 7","Worin unterscheiden sich Gerichtsverfahren und Verwaltungsverfahren?","Unabhängigkeit, Entscheidungsform, Einleitung, Vertretung, Grundsätze.",
@@ -181,11 +182,11 @@ OPEN(22,"Fernlehre 7","Worin unterscheiden sich Gerichtsverfahren und Verwaltung
   ("Verwaltungsstrafrecht: Kumulationsprinzip, kein kodifiziertes Gesetz, Ankläger*innen und Richter*innen nicht getrennt.",[("f7",2)]),
   ("Anwaltspflicht bei Gericht ab gewissen Größen, im Verwaltungsverfahren kann sich die Partei selbst vertreten.",[("f7",2)]),
   ("Vor Gericht schon in 1. Instanz Mündlichkeit, Unmittelbarkeit, Öffentlichkeit.",[("f7",2)])],"rw")
-OPEN(23,"Fernlehre 7","Parteienrechte, Mindestinhalt eines Bescheids, Rechtsmittel: Was sagt das Skript?","Partei hat Akteneinsicht, Gehör, Rechtsmittel. Bescheid mit Spruch, Begründung, Belehrung.",
+OPEN(23,"Fernlehre 7","Was sagt das Skript zu den Parteienrechten im Verwaltungsverfahren, zum Mindestinhalt eines Bescheids und zu den Rechtsmitteln im Verwaltungs- und Verwaltungsstrafverfahren?","Partei hat Akteneinsicht, Gehör, Rechtsmittel. Bescheid mit Spruch, Begründung, Belehrung.",
  [("Parteien: Akteneinsicht, Parteiengehör, Zustellung, Rechtsmittel, Wiederaufnahme, Geltendmachung der Entscheidungspflicht.",[("r2",10)]),
   ("Bescheid: Bezeichnung, Behörde, Spruch, Begründung, Rechtsmittelbelehrung, Unterschrift und Datum.",[("r2",14),("r2",15)]),
   ("Beschwerde binnen 4 Wochen an das Verwaltungsgericht, in der Regel aufschiebend.",[("r2",16)]),
-  ("Im Verwaltungsstrafrecht entscheidet die Behörde des Tatorts; Anhaltung bis 6 Wochen.",[("r2",20)])],"rw")
+  ("Im Verwaltungsstrafverfahren entscheiden in 2. Instanz die Landesverwaltungsgerichte oder das Bundesverwaltungsgericht. Erst dort gelten Mündlichkeit, Unmittelbarkeit und Öffentlichkeit.",[("r2",19)])],"rw")
 OPEN(24,"Fernlehre 7","Maya M. will 25.000 Euro einklagen, die sie L. gegeben hat. Wo, wie, mit welchem Risiko?","Landesgericht, Mahnklage, Anwaltspflicht. Beweis- und Einbringlichkeitsrisiko.",
  [("Beweislast bei Maya: Zeug*innen und Kontoauszüge. Das Gericht könnte eine Schenkung annehmen oder mangels Fälligkeit abweisen.",[("f7",3)]),
   ("Risiko Zeug*innen: Widersprüche und teure Vertagungen.",[("f7",3)]),
@@ -199,10 +200,11 @@ OPEN(25,"Fernlehre 7","R. Luger hat keinen Zahlungsbefehl bekommen, weil die dem
   ("Fehlerhafte Zustellung geltend machen und gleichzeitig Eventual-Wiedereinsetzungsantrag und Einspruch einbringen.",[("f7",4)]),
   ("Schuldet sie den Betrag, einfach zahlen, aber die Zustellung im Akt dokumentieren lassen und unnötige Kosten nicht zahlen.",[("f7",4)]),
   ("Die Demenz ist für den Zusteller nicht relevant, solange er nicht informiert ist oder es ihm auffallen musste.",[("f7",4)])],"rf")
-OPEN(26,"Fernlehre 7","Schützt es, einfach nicht abzuholen oder umzuziehen? Bis wann läuft die Frist bei Hinterlegung am Montag, 19. Oktober 2026?","Nein. Fristende Dienstag, 17. November 2026.",
+OPEN(26,"Fernlehre 7","Schützt es vor einer Zustellung, einen hinterlegten Brief einfach nicht abzuholen oder umzuziehen? Ab wann läuft die Frist bei Hinterlegung?","Nein. Die Hinterlegung wirkt, die Frist läuft ab Beginn der Abholfrist.",
  [("Kurze Ortsabwesenheit kann man später nachweisen. Sonst wirkt die Hinterlegung nach den Voraussetzungen.",[("f7",5)]),
   ("Wer möglicher Schuldner ist, muss Adressänderungen melden. Gläubiger*innen dürfen an die letzte bekanntgegebene Anschrift adressieren.",[("f7",5)]),
-  ("Laut Fernlehre beginnt die Frist am Tag nach der Hinterlegung: ab Dienstag 20. Oktober plus 4 Wochen ergibt Dienstag 17. November.",[("f7",5)]),
+  ("Ein hinterlegtes Schriftstück gilt mit dem ersten Tag der Abholfrist als zugestellt, ab dann läuft die Frist, egal ob man es abholt.",[("r2",41),("r2",43)]),
+  ("Wochenfristen enden am gleichnamigen Wochentag.",[("r2",44)]),
   ("Fiele das Ende auf Samstag, Sonntag oder Feiertag, wäre der nächste Werktag das Fristende.",[("f7",5)])],"rf")
 
 # ------------------------------------------------------------ Karten: Normen, Stufenbau
@@ -316,9 +318,7 @@ MC("r-zust",[25],"Ein Zahlungsbefehl wird an die erwachsene Mitbewohnerin überg
 MC("r-zust",[26],"Frau E. holt den Gerichtsbrief nicht ab. Was gilt?","Er gilt trotzdem als zugestellt, die Frist läuft",["Dann gibt es keine Frist","Das Gericht muss es nochmal versuchen","Der Fall ruht"],"Ein hinterlegter Brief gilt mit dem ersten Abholtag als zugestellt, egal ob man ihn holt. Die Frist läuft also. Wer die Annahme verweigert, ändert daran nichts; das hat oft weitreichende Folgen, etwa einen rechtskräftigen Zahlungsbefehl.",[("r2",41),("r2",43)])
 TF("r-zust",[26],"Wer umzieht, ist vor rechtswirksamer Zustellung geschützt.",False,"Falsch. Wer mit Forderungen rechnen muss, hat Adressänderungen zu melden. Gläubiger*innen dürfen an die letzte bekanntgegebene Anschrift schicken. Nur eine kurze Ortsabwesenheit kann man später nachweisen.",[("f7",5)])
 MULTI("r-maengel",[25],"Was ist ein Zustellmangel?",["RSa-Brief an Ersatzempfänger*in","Falscher Name","Zustellung trotz bekannter Ortsabwesenheit"],["Empfängerin hat keine Lust abzuholen","Brief ist unangenehm"],"Zustellmängel sind etwa falscher Name oder falsche Adresse, RSa an eine Ersatzperson oder Zustellung trotz bekannter Abwesenheit. Der Mangel heilt aber, sobald das Dokument die Person tatsächlich erreicht; ab dann läuft die Frist.",[("r2",43)])
-CALC("r-frist",[26],"Hinterlegung am Montag, 19. Oktober 2026. 4 Wochen Beschwerdefrist. Der wievielte November ist das Fristende?","17","November",["Fristlauf laut Fernlehre ab dem Tag danach: Dienstag, 20. Oktober.","4 Wochen später ist Dienstag, 17. November."],"Wochenfristen enden am gleichnamigen Wochentag. Laut Fernlehre beginnt die Frist am Tag nach der Hinterlegung, vier Wochen später ist Dienstag, 17. November. Fiele das Ende auf Samstag, Sonntag oder Feiertag, wäre es der nächste Werktag.",[("f7",5)],tol=0)
-CALC("r-frist",[],"Zustellung am Freitag, 6. November 2026. 2 Wochen Frist, Wochenfristen enden am gleichnamigen Tag. Der wievielte November ist das Fristende?","20","November",["2 Wochen nach Freitag dem 6. ist Freitag der 20."],"Zwei Wochen nach Freitag ist wieder ein Freitag. Wochenenden und Feiertage zählen beim Fristenlauf mit; nur wenn das Ende auf einen solchen Tag fällt, verschiebt es sich auf den nächsten Werktag.",[("r2",44)],tol=0)
-TF("r-frist",[],"Bei verfahrensrechtlichen Fristen reicht es, die Erklärung am letzten Tag zur Post zu bringen.",True,"Bei verfahrensrechtlichen Fristen, etwa für eine Beschwerde oder einen Einspruch, zählt der Postweg nicht in die Frist: Die Aufgabe am letzten Tag reicht. Bei materiellen Fristen, etwa einer Mietkündigung, muss die Erklärung dagegen rechtzeitig angekommen sein. Im Zweifel rechtzeitig und eingeschrieben schicken.",[("r2",43)])
+TF("r-frist",[26],"Bei verfahrensrechtlichen Fristen reicht es, die Erklärung am letzten Tag zur Post zu bringen.",True,"Bei verfahrensrechtlichen Fristen, etwa für eine Beschwerde oder einen Einspruch, zählt der Postweg nicht in die Frist: Die Aufgabe am letzten Tag reicht. Bei materiellen Fristen, etwa einer Mietkündigung, muss die Erklärung dagegen rechtzeitig angekommen sein. Im Zweifel rechtzeitig und eingeschrieben schicken.",[("r2",43)])
 TF("r-frist",[],"Der Einwurf in den gerichtlichen Einlaufpostkasten zählt sofort als Eingang.",False,"Der Einwurf in den gerichtlichen Einlaufpostkasten zählt erst bei dessen Leerung, unter Umständen also erst am nächsten Tag. Wer am letzten Tag einer Frist einwirft, riskiert die Versäumung. Sicherer ist die Postaufgabe oder die Abgabe in der Einlaufstelle.",[("r2",44)])
 
 # Exekution
@@ -326,10 +326,10 @@ MC("r-exe",[12],"Was ist kein Exekutionstitel?","Ein einfaches Gesetz",["Ein Urt
 TF("r-exe",[],"Der Gläubiger, der zuerst exekutiert, wird zuerst befriedigt.",True,"Stimmt, das ist das Prioritätsprinzip: Der Rang entscheidet. Wer zuerst die Exekution erwirkt, bekommt alles Pfändbare, bis seine Forderung getilgt ist. Nachrangige gehen oft leer aus, während ihre Forderungen weiter wachsen.",[("r2",35)])
 MULTI("r-exe",[],"Was ist bei der Fahrnispfändung unpfändbar?",["Bett","Kühlschrank","Waschmaschine","Für den Beruf notwendige Gegenstände"],["Zweites Auto","Luxusuhr"],"Gerichtsvollzieher*innen pfänden bewegliche Sachen, aber was für eine bescheidene Lebensführung oder für den Beruf nötig ist, bleibt. Schuldner*innen sollen weiterleben und weiterarbeiten können, sonst wäre auch für die Gläubiger*innen nichts gewonnen.",[("r2",37)])
 TF("r-exe",[],"Mein Name steht nicht auf der Rechnung des Fernsehers meiner Mitbewohnerin. Der Exekutor darf ihn sicher nicht mitnehmen.",False,"Der Gerichtsvollzieher darf im Zweifel alles in der Wohnung pfänden, was dem Schuldner gehören könnte. Gehört der Fernseher wirklich der Mitbewohnerin, muss sie sich mit einer Exszindierungsklage wehren. Rechnungen auf den eigenen Namen helfen, das Eigentum zu beweisen.",[("r2",37)])
-MC("r-exmin",[],"Wie hoch ist 2026 der allgemeine Grundbetrag bei Lohnpfändung?","1.308 Euro",["1.229,89 Euro","1.827 Euro","900 Euro"],"Bei AMS-Bezug 1.526 Euro. 1.827 Euro wäre die Armutsgefährdungsschwelle, deren Höhe Schuldenberatungen und Armutskonferenz als Grenze fordern.",[("r2",38),("r2",39)])
+MC("r-exmin",[],"Warum ist der unpfändbare Grundbetrag bei Arbeitslosengeld und Notstandshilfe höher als bei Lohn?","Weil diese Leistungen nur 12-mal im Jahr ausbezahlt werden, ohne Sonderzahlungen",["Weil das AMS es so verlangt","Weil diese Leistungen gar nicht pfändbar sind","Weil Arbeitslose keine Unterhaltspflichten haben"],"Lohn wird meist 14-mal ausbezahlt, Arbeitslosengeld und Notstandshilfe nur 12-mal. Damit am Jahresende gleich viel bleibt, ist der monatliche Grundbetrag bei AMS-Bezug erhöht. Dazu kommen je Unterhaltspflicht ein Unterhaltsgrundbetrag und Steigerungsbeträge.",[("r2",38),("r2",40)])
 BUCKET("r-exmin",[],"Ist das bei einer Exekution pfändbar oder nicht?",["Beschränkt pfändbar","Nicht pfändbar"],[("Lohn",0),("Notstandshilfe",0),("Krankengeld",0),("Mindestsicherung",1),("Familienbeihilfe",1),("Kinderbetreuungsgeld",1),("Wohnbeihilfe",1)],"Lohn, Arbeitslosengeld, Notstandshilfe und Krankengeld sind beschränkt pfändbar, das Existenzminimum bleibt. Mindestsicherung, Familienbeihilfe, Kinderbetreuungsgeld und Wohnbeihilfe sind gar nicht pfändbar. Bei Arbeitslosengeld und Notstandshilfe gilt ein erhöhter Grundbetrag, weil sie nur 12-mal ausbezahlt werden.",[("r2",40)])
 MC("r-exmin",[],"Warum ist die Unterhaltsexekution so hart?","Es bleiben nur 75 % des Grundbetrags, ohne Unterhaltsbeträge",["Sie ist unbegrenzt","Sie betrifft auch Beihilfen","Sie läuft in Haft"],"Bei Unterhaltsexekution bleiben nur 75 % des Grundbetrags, und es gibt keine Unterhaltsbeträge. Das soll Unterhaltspflichtige zum Zahlen bewegen, weil Kinder Vorrang haben. In der Praxis führt es aber oft zu akuter Existenzgefährdung.",[("r2",40)])
-CALC("r-exmin",[],"Herr P. bezieht Notstandshilfe und ist für ein Kind unterhaltspflichtig. Wie hoch ist die Summe aus erhöhtem Grundbetrag und einem Unterhaltsgrundbetrag?","1526+261","Euro",["Erhöhter Grundbetrag bei AMS-Bezug: 1.526 Euro.","Unterhaltsgrundbetrag: 261 Euro.","Summe: 1.787 Euro, dazu kämen noch Steigerungsbeträge."],"Bei Unterhaltspflichten steigt das Existenzminimum, bei AMS-Bezug ist der Grundbetrag höher, weil es keine Sonderzahlungen gibt. Das System verstehen zählt, nicht das Rechnen im Detail; die Schuldenberatung hat einen Rechner.",[("r2",38),("r2",40)],tol=0)
+MULTI("r-exmin",[],"Wovon hängt ab, wie viel bei einer Lohnpfändung unpfändbar bleibt?",["Ob es ein AMS-Bezug ist, weil dort der Grundbetrag höher ist","Wie viele Unterhaltspflichten die Person hat","Wie hoch das Einkommen ist"],["Wie hoch die Schulden sind","Wie viele Gläubiger*innen es gibt"],"Das Existenzminimum setzt sich aus einem Grundbetrag, Unterhaltsgrundbeträgen je Unterhaltspflicht und Steigerungsbeträgen je nach Einkommen zusammen. Bei Arbeitslosengeld und Notstandshilfe ist der Grundbetrag erhöht, weil es keine Sonderzahlungen gibt. Die genauen Beträge ändern sich jährlich; die Schuldenberatung hat einen Rechner.",[("r2",38),("r2",40)])
 TF("r-ins",[],"Für den Privatkonkurs muss vorher ein außergerichtlicher Ausgleich versucht werden.",False,"Falsch, ein außergerichtlicher Ausgleich ist keine Voraussetzung mehr. Einzige echte Voraussetzung ist die Zahlungsunfähigkeit. In wenigen Fällen, etwa mit wenigen Gläubiger*innen, kann ein Ausgleich trotzdem sinnvoll sein.",[("r2",48)])
 MC("r-ins",[],"Was stoppt die Insolvenzeröffnung NICHT?","Unterhaltsexekution",["Zinsenlauf","Andere Exekutionen","Weitere Kosten"],"Die Insolvenzeröffnung stoppt Zinsen und Exekutionen, mit einer wichtigen Ausnahme: Die Unterhaltsexekution läuft weiter. Laufender Unterhalt muss also immer bezahlt werden, auch im Konkurs.",[("r2",49)])
 MC("r-ins",[],"Wie lange dauert ein Abschöpfungsverfahren bei Antrag ab 17.7.2026?","5 Jahre",["3 Jahre","7 Jahre","10 Jahre"],"Für Anträge ab 17.7.2026 dauert das Abschöpfungsverfahren 5 Jahre, die 3-jährige Variante mit Tilgungsplan ist weggefallen. Gegen die Ungleichbehandlung mit Unternehmer*innen werden verfassungsrechtliche Bedenken wegen des Gleichheitsgrundsatzes vorgebracht. Es ist davon auszugehen, dass der VfGH die Frage prüfen wird.",[("r2",50),("r2",51)])
